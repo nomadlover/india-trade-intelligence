@@ -1,0 +1,97 @@
+{
+  "catalog_version": "1.0.0",
+  "project": "India Trade Intelligence",
+  "last_updated": "2026-10-15",
+  "sources": [
+    {
+      "id": "world_bank_wdi",
+      "name": "World Bank World Development Indicators",
+      "publisher": "The World Bank Group",
+      "url": "https://api.worldbank.org/v2/country/IND/indicator/",
+      "license": "Creative Commons Attribution 4.0 International (CC-BY 4.0)",
+      "retrieval_method": "REST API (JSON format)",
+      "retrieval_date": "2026-10-15",
+      "coverage": "1990 - 2025",
+      "frequency": "Annual",
+      "series": [
+        {
+          "code": "NE.EXP.GNFS.CD",
+          "name": "Exports of goods and services",
+          "units": "Current US Dollars",
+          "definition": "Value of all goods and market services provided to the rest of the world, including merchandise, freight, insurance, travel, and other services."
+        },
+        {
+          "code": "NE.IMP.GNFS.CD",
+          "name": "Imports of goods and services",
+          "units": "Current US Dollars",
+          "definition": "Value of all goods and market services received from the rest of the world."
+        },
+        {
+          "code": "NY.GDP.MKTP.CD",
+          "name": "Gross Domestic Product (GDP)",
+          "units": "Current US Dollars",
+          "definition": "Sum of gross value added by all resident producers in the economy plus any product taxes minus subsidies."
+        },
+        {
+          "code": "PA.NUS.FCRF",
+          "name": "Official Exchange Rate (INR / USD)",
+          "units": "Indian Rupee per US Dollar (annual period average)",
+          "definition": "Official exchange rate determined by national authorities or rate in the legally sanctioned exchange market."
+        },
+        {
+          "code": "FP.CPI.TOTL.ZG",
+          "name": "Consumer Price Index (CPI) Inflation",
+          "units": "Annual Percentage Change (%)",
+          "definition": "Annual percentage change in the cost to the average consumer of acquiring a basket of goods and services."
+        },
+        {
+          "code": "NE.TRD.GNFS.ZS",
+          "name": "Trade as share of GDP",
+          "units": "Percentage of GDP (%)",
+          "definition": "Sum of exports and imports of goods and services measured as a share of gross domestic product."
+        }
+      ]
+    },
+    {
+      "id": "dgcis_eidb",
+      "name": "Directorate General of Commercial Intelligence and Statistics (DGCI&S)",
+      "publisher": "Department of Commerce, Ministry of Commerce and Industry, Government of India",
+      "url": "https://tradestat.commerce.gov.in/eidb/",
+      "license": "Government Open Data License - India (GODL)",
+      "retrieval_method": "Official Trade Statistics / EIDB Data Bank",
+      "retrieval_date": "2026-10-15",
+      "coverage": "FY 2013-14 to FY 2024-25",
+      "frequency": "Financial Year (April - March) & Monthly",
+      "series": [
+        {
+          "name": "Bilateral Direction of Trade",
+          "units": "USD Million & INR Crore",
+          "definition": "Total merchandise exports, imports, and trade balance disaggregated by partner country across major global economies."
+        },
+        {
+          "name": "Principal Commodity Group Trade",
+          "units": "USD Million & INR Crore",
+          "definition": "Trade values broken down by major sectors (Petroleum, Electronics, Engineering, Gems & Jewellery, Chemicals, Agriculture, etc.)."
+        }
+      ]
+    },
+    {
+      "id": "rbi_dbie",
+      "name": "Reserve Bank of India (RBI) Database on Indian Economy",
+      "publisher": "Reserve Bank of India",
+      "url": "https://data.rbi.org.in/",
+      "license": "Official Public RBI Release",
+      "retrieval_method": "Monthly Bulletin and External Sector Foreign Trade Statistics",
+      "retrieval_date": "2026-10-15",
+      "coverage": "2018-01 to 2025-03",
+      "frequency": "Monthly",
+      "series": [
+        {
+          "name": "Monthly Merchandise Trade",
+          "units": "USD Million",
+          "definition": "Monthly merchandise exports, imports, non-oil exports, and oil imports facilitating high-frequency trend and volatility analysis."
+        }
+      ]
+    }
+  ]
+}

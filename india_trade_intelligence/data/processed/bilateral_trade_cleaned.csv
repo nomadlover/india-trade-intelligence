@@ -1,0 +1,3 @@
+financial_year,country,exports_usd_million,imports_usd_million,trade_balance_usd_million,total_trade_usd_million,iso3,fy_start_year,fy_end_year,exports_usd_billion,imports_usd_billion,trade_balance_usd_billion,total_trade_usd_billion
+2023-24,United States,100.0,50.0,50.0,150.0,USA,2023,2024,0.1,0.05,0.05,0.15
+2023-24,China,10.0,80.0,-70.0,90.0,CHN,2023,2024,0.01,0.08,-0.07,0.09

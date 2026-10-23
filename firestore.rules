@@ -1,0 +1,185 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: users
+// Document ID: {userId} (Matches Firebase Auth UID)
+// Fields:
+//   - uid: string (required, 1-128 chars, matches Auth UID and document ID, immutable)
+//   - username: string (required, 3-15 chars)
+//   - username_lowercase: string (required, 3-15 chars)
+//   - avatar_id: string (required, 1-50 chars)
+//   - level: int (required, >= 1)
+//   - xp: int (required, >= 0)
+//   - total_xp: int (required, >= 0)
+//   - gold: int (required, >= 0)
+//   - streak_days: int (required, >= 0)
+//   - last_completed_date: string (YYYY-MM-DD) or null (optional/nullable)
+//   - is_pro: bool (required, initialized to false on create, immutable on update)
+//   - interested_in_pro: bool (optional)
+//   - created_at: timestamp or ISO string (optional, immutable once set)
+//   - updated_at: timestamp or ISO string (optional)
+//
+// Subcollection: users/{userId}/habits
+// Document ID: {habitId} (String, 1-128 chars)
+// Fields:
+//   - id: string (optional, 1-128 chars, immutable if present)
+//   - title: string (required, 1-100 chars)
+//   - difficulty: string (required, 'easy' | 'medium' | 'hard')
+//   - icon: string (required, 1-50 chars)
+//   - completed_dates: list (required, size <= 3660)
+//   - created_at: timestamp or ISO string (required, immutable)
+//   - updated_at: timestamp or ISO string (optional)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -----------------------------------------------------------
+    // Helper Functions
+    // -----------------------------------------------------------
+
+    // Check if the request is from an authenticated user
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the authenticated user owns the document / path
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Validate optional timestamp or ISO date string
+    function isValidTimestampOrString(val) {
+      return val is timestamp || (val is string && val.size() <= 40);
+    }
+
+    // -----------------------------------------------------------
+    // Domain Validators
+    // -----------------------------------------------------------
+
+    // Validator for user profile document
+    function isValidUserProfile(data) {
+      let requiredFields = [
+        'uid', 'username', 'username_lowercase', 'avatar_id',
+        'level', 'xp', 'total_xp', 'gold', 'streak_days',
+        'is_pro'
+      ];
+      let allowedFields = [
+        'uid', 'username', 'username_lowercase', 'avatar_id',
+        'level', 'xp', 'total_xp', 'gold', 'streak_days',
+        'last_completed_date', 'is_pro', 'interested_in_pro',
+        'created_at', 'updated_at'
+      ];
+
+      return data.keys().hasAll(requiredFields) &&
+        data.keys().hasOnly(allowedFields) &&
+        data.uid is string &&
+        data.uid.size() >= 1 &&
+        data.uid.size() <= 128 &&
+        data.username is string &&
+        data.username.size() >= 3 &&
+        data.username.size() <= 15 &&
+        data.username_lowercase is string &&
+        data.username_lowercase.size() >= 3 &&
+        data.username_lowercase.size() <= 15 &&
+        data.avatar_id is string &&
+        data.avatar_id.size() >= 1 &&
+        data.avatar_id.size() <= 50 &&
+        data.level is int &&
+        data.level >= 1 &&
+        data.xp is int &&
+        data.xp >= 0 &&
+        data.total_xp is int &&
+        data.total_xp >= 0 &&
+        data.gold is int &&
+        data.gold >= 0 &&
+        data.streak_days is int &&
+        data.streak_days >= 0 &&
+        data.is_pro is bool &&
+        (!('interested_in_pro' in data) || data.interested_in_pro is bool) &&
+        (!('last_completed_date' in data) || data.last_completed_date == null || (data.last_completed_date is string && data.last_completed_date.matches('^\\d{4}-\\d{2}-\\d{2}$'))) &&
+        (!('created_at' in data) || isValidTimestampOrString(data.created_at)) &&
+        (!('updated_at' in data) || isValidTimestampOrString(data.updated_at));
+    }
+
+    // Validator for habit (quest) document
+    function isValidHabit(data) {
+      let requiredFields = ['title', 'difficulty', 'icon', 'completed_dates', 'created_at'];
+      let allowedFields = ['id', 'title', 'difficulty', 'icon', 'completed_dates', 'created_at', 'updated_at'];
+
+      return data.keys().hasAll(requiredFields) &&
+        data.keys().hasOnly(allowedFields) &&
+        data.title is string &&
+        data.title.size() >= 1 &&
+        data.title.size() <= 100 &&
+        data.difficulty in ['easy', 'medium', 'hard'] &&
+        data.icon is string &&
+        data.icon.size() >= 1 &&
+        data.icon.size() <= 50 &&
+        data.completed_dates is list &&
+        data.completed_dates.size() <= 3660 &&
+        isValidTimestampOrString(data.created_at) &&
+        (!('id' in data) || (data.id is string && data.id.size() >= 1 && data.id.size() <= 128)) &&
+        (!('updated_at' in data) || isValidTimestampOrString(data.updated_at));
+    }
+
+    // -----------------------------------------------------------
+    // Root Fallback: Default Deny All
+    // -----------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // Users Collection
+    // -----------------------------------------------------------
+    match /users/{userId} {
+      // Authenticated read allowed for Global Leaderboard queries
+      // Note: User documents contain only public game stats, no PII (email/phone/secrets)
+      allow read: if isAuthenticated();
+
+      // Only the authenticated owner can create their user document
+      // Crucially: is_pro must be initialized to false to prevent privilege escalation
+      allow create: if isOwner(userId) &&
+        isValidUserProfile(request.resource.data) &&
+        request.resource.data.uid == userId &&
+        request.resource.data.is_pro == false;
+
+      // Only the authenticated owner can update their user document
+      // Crucially: uid is immutable, is_pro cannot be modified via client, created_at is immutable
+      allow update: if isOwner(userId) &&
+        isValidUserProfile(request.resource.data) &&
+        request.resource.data.uid == resource.data.uid &&
+        request.resource.data.is_pro == resource.data.is_pro &&
+        (!('created_at' in resource.data) || request.resource.data.created_at == resource.data.created_at);
+
+      // Account deletion disallowed directly from client (handled via Cloud Function / strict cascade)
+      allow delete: if false;
+
+      // ---------------------------------------------------------
+      // Habits Subcollection
+      // ---------------------------------------------------------
+      match /habits/{habitId} {
+        // Strict ownership: only the user can read their private habits
+        allow read: if isOwner(userId);
+
+        // Strict ownership and schema validation on habit creation
+        allow create: if isOwner(userId) &&
+          isValidHabit(request.resource.data);
+
+        // Strict ownership, schema validation, and immutable created_at on update
+        allow update: if isOwner(userId) &&
+          isValidHabit(request.resource.data) &&
+          (!('created_at' in resource.data) || request.resource.data.created_at == resource.data.created_at) &&
+          (!('id' in resource.data) || !('id' in request.resource.data) || request.resource.data.id == resource.data.id);
+
+        // Strict ownership on habit deletion
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}

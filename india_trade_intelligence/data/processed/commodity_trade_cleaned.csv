@@ -1,0 +1,2 @@
+financial_year,commodity_group,trade_flow,sector_category,value_usd_million,value_inr_crore,description_notes,data_source,source_url,fy_start_year,fy_end_year,value_usd_billion
+2023-24,Electronic Goods (incl. Smartphones),Export,Manufacturing,29120.0,241696.0,Smartphones,DGCI&S,https://tradestat.commerce.gov.in/eidb/,2023,2024,29.12

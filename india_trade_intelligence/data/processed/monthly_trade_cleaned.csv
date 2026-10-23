@@ -1,0 +1,2 @@
+period,year,month,merchandise_exports_usd_million,merchandise_imports_usd_million,merchandise_trade_balance_usd_million,oil_imports_usd_million,non_oil_imports_usd_million,non_oil_exports_usd_million,data_source,source_url,date,merchandise_exports_usd_billion,merchandise_imports_usd_billion,merchandise_trade_balance_usd_billion
+2024-04,2024,4,34990.0,54090.0,-19100.0,15000.0,39090.0,28690.0,RBI,https://data.rbi.org.in/,2024-04-01,34.99,54.09,-19.1
