@@ -976,3 +976,159 @@ def plot_multi_scenario_comparison_bar(
     return fig
 
 
+# =====================================================================
+# MODULE C: DATA REVISION OBSERVATORY VISUALIZATIONS
+# =====================================================================
+
+def plot_revision_distribution_donut(summary: Dict[str, Any]) -> go.Figure:
+    """Renders a donut chart illustrating added, removed, revised, and unchanged observations."""
+    labels = ["Unchanged", "Revised", "Newly Added", "Removed"]
+    values = [
+        summary.get("unchanged_count", 0),
+        summary.get("revised_count", 0),
+        summary.get("added_count", 0),
+        summary.get("removed_count", 0)
+    ]
+    colors = ["#334155", "#fbbf24", "#38bdf8", "#f87171"]
+
+    # Filter out zeros for cleaner visualization if empty
+    active_labels = [l for l, v in zip(labels, values) if v > 0]
+    active_values = [v for v in values if v > 0]
+    active_colors = [c for c, v in zip(colors, values) if v > 0]
+
+    if not active_values:
+        active_labels = ["No Data Compared"]
+        active_values = [1]
+        active_colors = ["#334155"]
+
+    fig = go.Figure(data=[go.Pie(
+        labels=active_labels,
+        values=active_values,
+        hole=0.62,
+        marker=dict(colors=active_colors),
+        textinfo="label+value+percent",
+        textfont=dict(color=TEXT_MAIN, size=11),
+        hovertemplate="<b>%{label}</b>: %{value} observations (%{percent})<extra></extra>"
+    )])
+
+    prev_v = summary.get("previous_version_id", "v-prev")
+    new_v = summary.get("new_version_id", "v-new")
+    layout = get_base_layout(f"Observation Delta Breakdown ({prev_v} → {new_v})", height=380)
+    layout["annotations"] = [dict(
+        text=f"<b>{summary.get('total_observations_compared', sum(values))}</b><br><span style='font-size:10px;color:#94a3b8;'>Compared</span>",
+        x=0.5, y=0.5, font_size=16, font_color=TEXT_MAIN, showarrow=False
+    )]
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_revision_diff_bars(df_revisions: pd.DataFrame, top_n: int = 8) -> go.Figure:
+    """Plots top absolute value revisions between versions with positive/negative color encoding."""
+    if df_revisions is None or df_revisions.empty:
+        return go.Figure()
+
+    # Filter for non-null absolute revisions and sort by magnitude
+    valid_revs = df_revisions[df_revisions["absolute_revision"].notna()].copy()
+    if valid_revs.empty:
+        return go.Figure()
+
+    valid_revs["abs_magnitude"] = valid_revs["absolute_revision"].abs()
+    top_df = valid_revs.sort_values(by="abs_magnitude", ascending=False).head(top_n).iloc[::-1]
+
+    colors = [COLOR_BALANCE if v >= 0 else COLOR_DEFICIT for v in top_df["absolute_revision"]]
+
+    labels = [
+        f"{row['indicator_id'].replace('_', ' ').title()[:24]} ({row['reporting_period']})"
+        for _, row in top_df.iterrows()
+    ]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=labels,
+        x=top_df["absolute_revision"],
+        orientation="h",
+        marker_color=colors,
+        text=[f" {v:+.2f} ({row['percentage_revision']:+.1f}%)" if pd.notna(row['percentage_revision']) else f" {v:+.2f}"
+              for v, row in zip(top_df["absolute_revision"], top_df.to_dict('records'))],
+        textposition="auto",
+        textfont=dict(color=TEXT_MAIN, size=11),
+        hovertemplate="<b>%{y}</b><br>Revision: %{x:+.4f}<br>Prev: %{customdata[0]} → New: %{customdata[1]}<extra></extra>",
+        customdata=list(zip(top_df["previous_value"], top_df["new_value"]))
+    ))
+
+    layout = get_base_layout(f"Top {len(top_df)} Value Revisions (Absolute Diff)", height=420)
+    layout["xaxis"]["title"] = "Revision Magnitude (New Value − Previous Value)"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_revision_classification_bar(df_revisions: pd.DataFrame) -> go.Figure:
+    """Visualizes breakdown of detected changes by taxonomy classification."""
+    if df_revisions is None or df_revisions.empty:
+        return go.Figure()
+
+    counts = df_revisions["revision_classification"].value_counts().reset_index()
+    counts.columns = ["Classification", "Count"]
+
+    color_map = {
+        "OFFICIAL_SOURCE_REVISION": "#38bdf8",
+        "NEW_OBSERVATION": "#4ade80",
+        "PIPELINE_TRANSFORMATION_CORRECTION": "#fbbf24",
+        "UNIT_NORMALIZATION_CHANGE": "#c084fc",
+        "METHODOLOGY_CHANGE": "#f97316",
+        "UNCLASSIFIED_VERSION_CHANGE": "#94a3b8"
+    }
+    colors = [color_map.get(c, "#64748b") for c in counts["Classification"]]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=counts["Classification"].str.replace("_", " "),
+        y=counts["Count"],
+        marker_color=colors,
+        text=counts["Count"],
+        textposition="outside",
+        textfont=dict(color=TEXT_MAIN, size=11),
+        hovertemplate="<b>%{x}</b>: %{y} records<extra></extra>"
+    ))
+
+    layout = get_base_layout("Revisions by Cause Classification", height=380)
+    layout["yaxis"]["title"] = "Number of Revised Observations"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_derived_metric_impact_waterfall(impacts: List[Dict[str, Any]]) -> go.Figure:
+    """Visualizes how data revisions propagate to derived headline metrics."""
+    if not impacts:
+        return go.Figure()
+
+    names = [item["metric_name"] for item in impacts]
+    prev_vals = [item["previous_value"] for item in impacts]
+    new_vals = [item["new_value"] for item in impacts]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=names,
+        y=prev_vals,
+        name="Previous Vintage",
+        marker_color="#475569",
+        text=[f"${v:.1f}B" for v in prev_vals],
+        textposition="auto"
+    ))
+    fig.add_trace(go.Bar(
+        x=names,
+        y=new_vals,
+        name="Revised Vintage",
+        marker_color=COLOR_EXPORTS,
+        text=[f"${v:.1f}B" for v in new_vals],
+        textposition="auto"
+    ))
+
+    layout = get_base_layout("Impact of Revisions on Headline Trade Aggregates ($B)", height=400)
+    layout["barmode"] = "group"
+    layout["yaxis"]["title"] = "USD Billion"
+    fig.update_layout(layout)
+    return fig
+
+
+

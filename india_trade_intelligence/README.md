@@ -82,12 +82,12 @@ The platform features an interactive real-economy simulator answering: **"What i
 
 The platform implements an automated continuous data maintenance architecture:
 - **Triggers**: Scheduled on **1 April** (FY close & Quick Estimates) and **1 October** (Mid-year DGCI&S revisions) at 00:00 UTC via GitHub Actions, with manual `workflow_dispatch` override.
-- **Pipeline Workflow**: Fetches new releases → validates schemas & continuity → standardizes currencies & units → persists indexed SQLite tables → executes full 78-test verification suite → commits and pushes verified data.
+- **Pipeline Workflow**: Fetches new releases → validates schemas & continuity → standardizes currencies & units → persists indexed SQLite tables → executes full 96-test verification suite → commits and pushes verified data.
 - **Fail-Safe Rollback Protocol**: If an external source format or schema breaks, the runner logs `CRITICAL_FAILURE`, notifies maintainers, and **retains the last-known-good dataset** without publishing corrupt or partial data.
 
 ---
 
-## ⚡ Economic Intelligence Core (Phase 1 Modules)
+## ⚡ Economic Intelligence Core (Phase 1 & Phase 2 Modules)
 
 ### 1. India Trade Dependency Map (`src/analysis/dependency.py`)
 - **Granular Commodity-Partner Trade Layer**: Ingests and processes 1,534 bilateral product-level records across 15 strategic commodities (Crude Petroleum, Refined Fuels, Smartphones, APIs, Formulations, Gold, Coking Coal, Fertilisers, Chemicals, Edible Oils, Steel, Industrial Machinery, Textiles, Rice) and 25 sovereign trading partners over 13 financial years (FY14–FY26).
@@ -112,31 +112,72 @@ The platform implements an automated continuous data maintenance architecture:
 - **Standard Presets**: Includes Baseline (0%), Moderate Energy Spike (+15% Oil, 3% Depr, -2% Exports), Severe Stagflation Crisis (+40% Oil, 10% Depr, -8% Exports), and Global Disinflation Windfall (-20% Oil, -2% Depr, +5% Exports).
 - **Export Capabilities**: Direct one-click JSON export of active scenario models and CSV export of the 2D sensitivity matrix.
 
-### 3. Shared Economic Data Contract (`src/analysis/contracts.py`)
-- **Reporting Period Isolation**: Rejects any attempt to mix Financial Year (FY April–March) and Calendar Year (CY January–December) observations.
-- **Currency Standardization**: Reversible conversion utilities between USD Million, USD Billion, and INR Crore.
-- **Safe Share Calculations**: Guardrails against silent zero division, returning explicit `DataLimitation` flags.
-- **Provenance Wrapper**: Attaches empirical source, period, methodology, and research disclaimers to every analysis payload.
+### 3. Data Revision Observatory (`src/analysis/revisions.py`)
+- **Versioned Data Snapshots**: Deterministic observation keys (`(dataset_id, reporting_period, indicator_id, partner, flow)`) persisted in SQLite table `data_snapshots` across pipeline runs. Repeated ingestion of identical releases deduplicates without creating spurious diffs.
+- **Revision Mathematics**: Computes absolute diff ($V_{\text{new}} - V_{\text{prev}}$) and percentage diff ($((V_{\text{new}} - V_{\text{prev}}) / |V_{\text{prev}}|) \times 100$) with safe undefined handling for zero denominators.
+- **Attribution Taxonomy**: Distinguishes `OFFICIAL_SOURCE_REVISION`, `PIPELINE_TRANSFORMATION_CORRECTION`, `UNIT_NORMALIZATION_CHANGE`, `NEW_OBSERVATION`, and `UNCLASSIFIED_VERSION_CHANGE`.
+- **Derived Indicator Propagation**: Recalculates how revisions in headline customs series affect Total Exports, Total Imports, Net Trade Deficit, YoY Growth, and HHI.
+- **Configurable Revision Alerts**: Emits deduplicated alerts for threshold breaches (absolute $> \$0.5\text{B}$, percentage $> 3\%$), dropped observations (`CRITICAL`), and status transitions (`PROVISIONAL` to `FINAL`).
+- **Empirical Vintage Principles**: Refuses to fabricate unrecorded retrospective releases; prospective snapshot retention guarantees forward-looking auditability.
+
+### 4. Trade Intelligence Brief Generator (`src/analysis/brief_generator.py`)
+- **Two-Stage Evidence-First Architecture**:
+  - **Stage 1 (Deterministic)**: `assemble_evidence_package()` gathers verified observations, precomputes external sector aggregates, and generates an auditable evidence package with claim IDs (`EVID_*`).
+  - **Stage 2 (Narrative)**: Generates scholarly, structured reports via live Gemini LLM (when configured) or the built-in deterministic fallback engine (100% offline, zero hallucination).
+- **Ten Standard Structured Sections**:
+  - Section A: Executive Summary
+  - Section B: India Trade Overview (Merchandise vs Services explicitly distinguished)
+  - Section C: Commodity Composition & Trade Drivers
+  - Section D: Trading Partner Concentration & HHI (integrated with Dependency Map)
+  - Section E: Macroeconomic & Terms-of-Trade Context
+  - Section F: Risk and Supply Chain Dependency Assessment
+  - Section G: Scenario Stress-Testing (integrated with Shock Simulator; explicitly labeled hypothetical)
+  - Section H: Data Revisions & Provenance Observatory (vintage tracking disclosures)
+  - Section I: Conclusion & Analytical Monitoring Priorities
+  - Section J: Sources, Provenance & Methodological Registry
+- **Audience & Length Configurations**: Supports General Reader, Business Decision-Maker, Economic Researcher, Policy Analyst, and Product Analyst profiles across Executive, Standard, and Dossier formats.
+- **Multi-Format Export Serializers**: Direct one-click export to Markdown (`.md`), standalone scholarly HTML (`.html`), and CSV Evidence Appendix (`.csv`).
+
+### 5. Central Source Registry (`src/analysis/source_registry.py`)
+- **Auditable Authority Metadata**: Standardized records for DGCI&S, RBI DBIE, PPAC, MoSPI, World Bank WDI, and DoC TradeStat with official URLs, frequencies, standard units, historical coverage, and known limitations.
 
 ---
 
-## 🧪 Comprehensive Automated Test Suite (78 Tests Passing)
+## 🧪 Comprehensive Automated Test Suite (96 Tests Passing)
 
-The repository includes 78 automated unit, econometric, and scenario tests executed via `pytest`:
-1. **Module A: Trade Dependency Map & Data Contract Tests (`test_dependency_map.py`)**:
+The repository includes 96 automated unit, econometric, scenario, and intelligence brief tests executed via `pytest`:
+1. **Module C: Data Revision Observatory Tests (`test_revision_observatory.py`)**:
+   - Deterministic observation key formatting and uniqueness.
+   - Zero revision detection on identical snapshot comparisons (deduplication).
+   - Added and removed observation identification across releases.
+   - Revision mathematics and safe percentage handling for zero previous values.
+   - Classification of official source revisions vs pipeline corrections vs unit normalizations.
+   - Configurable alert threshold triggers (absolute, percentage, status finalized, dropped observation).
+   - Recalculation of derived trade balance impacts under revised inputs.
+   - SQLite snapshot persistence and deduplication idempotence.
+2. **Module D: Trade Intelligence Brief Generator Tests (`test_brief_generator.py`)**:
+   - Central source registry coverage and metadata completeness.
+   - Deterministic evidence package assembly across macro, energy, and external indicators.
+   - Strict separation between merchandise trade (customs border) and services trade (BoP remittances).
+   - Claim-level evidence traceability (source URL, agency, calculation formula).
+   - Report length filtering (Executive Summary: 4 sections, Standard Brief: 7, Comprehensive Dossier: 10).
+   - Deterministic brief generation running 100% offline without live API keys.
+   - Hypothetical scenario labeling disclaimers.
+   - Export serializers: Markdown formatting, HTML doctype/table rendering, and CSV evidence appendix.
+3. **Module A: Trade Dependency Map & Data Contract Tests (`test_dependency_map.py`)**:
    - Strict period classification (FY vs CY vs Monthly) and ValueError on mixed datasets.
    - Safe share calculation with zero/negative denominator guardrails and NaN safety.
    - HHI textbook benchmark cases (Monopoly = 10,000, Duopoly = 5,000, Quadropoly = 2,500, 10-firm = 1,000).
    - Customs coverage warning triggering at $< 85\%$ threshold with $HHI_{\max}$ bound.
    - Cross-sectional dependency analysis and historical trend extraction.
-2. **Module B: Trade Shock Simulator Tests (`test_shock_simulator.py`)**:
+4. **Module B: Trade Shock Simulator Tests (`test_shock_simulator.py`)**:
    - Zero-shock baseline equivalence ($\Delta = 0.0$ identical match).
    - Directional correctness of crude oil price shocks (+25% vs -25%).
    - Quantity contraction dampening via crude demand elasticity parameter ($\epsilon_d = -0.10$).
    - Balance-of-payments accounting identity consistency: $\Delta \text{TB} = \Delta X - \Delta M$.
    - Monotonicity across 2D sensitivity matrix dimensions.
    - Preset scenario population and JSON/CSV export formatting.
-3. **8 Expanded Intelligence Tests (`test_expanded_intelligence.py`)**:
+5. **8 Expanded Intelligence Tests (`test_expanded_intelligence.py`)**:
    - Price vs Quantity log-additive decomposition identity ($\Delta \ln V = \Delta \ln P + \Delta \ln Q$).
    - Energy exposure, Indian basket crude discount, and net petroleum bill identities.
    - External sector macro indicators (FX reserves import cover, CAD % GDP).
@@ -145,15 +186,15 @@ The repository includes 78 automated unit, econometric, and scenario tests execu
    - Economic risk indicators (partner/commodity HHI and single-supplier dependencies).
    - AI assistant explicit abstention on unverified future years / out-of-scope queries.
    - Expanded provenance registry completeness.
-4. **11 Economic Audit & Epistemic Tests (`test_audit.py`)**:
+6. **11 Economic Audit & Epistemic Tests (`test_audit.py`)**:
    - Provenance metadata completeness, absolute ban on misleading "today", CPI calculation gap protection, purchasing power decay, commodity basket benchmarks, trade balance identity, trade openness formula, Rule of 70 halving, pre/post-COVID structural shift, and AI fallback protection.
-5. **18 Provisional Integrity & SEZ Reconciliation Tests (`test_provisional_integrity.py`)**:
+7. **18 Provisional Integrity & SEZ Reconciliation Tests (`test_provisional_integrity.py`)**:
    - 5-Tier duplicate transaction detection (`CONFIRMED_DUPLICATE`, `POTENTIAL_DUPLICATE`, `LEGITIMATE_REPEATED_TRANSACTION`, `UNRESOLVED`, `NOT_APPLICABLE_AGGREGATE_LEVEL`).
    - SEZ online vs ICEGATE customs reporting reconciliations.
    - Multi-scenario annualisation bounds (observed, linear, seasonal, ±6% confidence interval).
    - Status propagation rules for combined merchandise and services trade.
    - Source outage historical version retention.
-6. **24 Pipeline Transformation, Cleaning & Storage Tests**:
+8. **24 Pipeline Transformation, Cleaning & Storage Tests**:
    - Storage schema validation, OLS trend fitting, structural break detection, causality disclaimers, currency conversions, ISO-3 country mappings, commodity chapter cleaning, and monthly regex validation.
 
 ---
@@ -171,7 +212,7 @@ pip install -r requirements.txt
 # 3. Execute the full multi-domain data pipeline
 python india_trade_intelligence/run_pipeline.py
 
-# 4. Run the 78-test verification suite
+# 4. Run the 96-test verification suite
 python -m pytest india_trade_intelligence/tests/ -v
 
 # 5. Launch the interactive dashboard

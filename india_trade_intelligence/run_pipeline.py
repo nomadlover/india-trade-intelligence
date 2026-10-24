@@ -19,6 +19,7 @@ from india_trade_intelligence.src.pipeline.validator import TradeDataValidator
 from india_trade_intelligence.src.pipeline.cleaner import TradeDataCleaner
 from india_trade_intelligence.src.pipeline.transformer import TradeDataTransformer
 from india_trade_intelligence.src.pipeline.storage import TradeDataStorage
+from india_trade_intelligence.src.analysis.revisions import DataRevisionObservatory
 from india_trade_intelligence.src.pipeline.create_raw_data import (
     generate_bilateral_trade,
     generate_commodity_trade,
@@ -132,11 +133,16 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         storage.save_dataframe("trade_policy_events", df_clean_events)
         storage.save_dataframe("commodity_partner_trade", df_trans_cpt)
 
+        # 6. Historical Data Revision Observatory Tracking
+        logger.info("STEP 6: Capturing Versioned Data Snapshots & Evaluating Revision Diffs...")
+        observatory = DataRevisionObservatory(storage=storage)
+        observatory.initialize_baseline_vintages_if_empty()
+
         updated_tables = [
             "macro_annual", "bilateral_trade", "commodity_trade", "monthly_trade",
             "commodity_price_quantity", "energy_commodity_exposure", "external_sector_macro",
             "trading_partner_conditions", "trade_policy_events", "commodity_partner_trade",
-            "metadata_catalog"
+            "data_snapshots", "revision_records", "revision_alerts", "metadata_catalog"
         ]
 
         storage.log_pipeline_run(

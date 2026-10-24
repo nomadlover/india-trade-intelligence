@@ -61,6 +61,84 @@ class TradeDataStorage:
                 )
             """)
 
+            # Data snapshots table for historical revision tracking
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS data_snapshots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    snapshot_version_id TEXT NOT NULL,
+                    dataset_id TEXT NOT NULL,
+                    source_id TEXT NOT NULL,
+                    observation_key TEXT NOT NULL,
+                    indicator_id TEXT NOT NULL,
+                    partner_country TEXT,
+                    trade_flow TEXT,
+                    reporting_period TEXT NOT NULL,
+                    period_type TEXT NOT NULL,
+                    original_value REAL,
+                    normalised_value REAL,
+                    original_unit TEXT,
+                    normalised_unit TEXT,
+                    retrieval_timestamp TEXT NOT NULL,
+                    source_release_date TEXT,
+                    data_status TEXT NOT NULL,
+                    pipeline_version TEXT NOT NULL,
+                    validation_status TEXT NOT NULL,
+                    UNIQUE(snapshot_version_id, observation_key)
+                )
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_snap_ver ON data_snapshots(snapshot_version_id)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_snap_obs ON data_snapshots(observation_key)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_snap_period ON data_snapshots(reporting_period)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_snap_dataset ON data_snapshots(dataset_id)")
+
+            # Revision records table comparing successive snapshot versions
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS revision_records (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    revision_id TEXT UNIQUE NOT NULL,
+                    observation_key TEXT NOT NULL,
+                    dataset_id TEXT NOT NULL,
+                    indicator_id TEXT NOT NULL,
+                    reporting_period TEXT NOT NULL,
+                    previous_version_id TEXT NOT NULL,
+                    new_version_id TEXT NOT NULL,
+                    previous_value REAL,
+                    new_value REAL,
+                    absolute_revision REAL,
+                    percentage_revision REAL,
+                    previous_status TEXT,
+                    new_status TEXT,
+                    revision_classification TEXT NOT NULL,
+                    revision_reason TEXT,
+                    detected_at TEXT NOT NULL
+                )
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_rev_key ON revision_records(observation_key)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_rev_class ON revision_records(revision_classification)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_rev_versions ON revision_records(previous_version_id, new_version_id)")
+
+            # Revision and data-quality alerts table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS revision_alerts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    alert_id TEXT UNIQUE NOT NULL,
+                    revision_id TEXT,
+                    observation_key TEXT NOT NULL,
+                    dataset_id TEXT NOT NULL,
+                    indicator_id TEXT NOT NULL,
+                    reporting_period TEXT NOT NULL,
+                    alert_type TEXT NOT NULL,
+                    severity TEXT NOT NULL,
+                    threshold_value REAL,
+                    actual_change REAL,
+                    message TEXT NOT NULL,
+                    triggered_at TEXT NOT NULL,
+                    status TEXT NOT NULL
+                )
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_alert_sev ON revision_alerts(severity)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_alert_period ON revision_alerts(reporting_period)")
+
             conn.commit()
 
     def save_metadata_catalog(self, catalog_path: Optional[Path] = None):
@@ -276,3 +354,141 @@ class TradeDataStorage:
                 "datasets_updated": "None",
                 "notes": "No pipeline run recorded."
             }
+
+    # =====================================================================
+    # DATA REVISION OBSERVATORY STORAGE METHODS
+    # =====================================================================
+
+    def save_data_snapshots(self, snapshots: List[Dict[str, Any]]):
+        """Persists a list of versioned observation snapshots with deduplication."""
+        if not snapshots:
+            return
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.executemany("""
+                INSERT OR REPLACE INTO data_snapshots (
+                    snapshot_version_id, dataset_id, source_id, observation_key,
+                    indicator_id, partner_country, trade_flow, reporting_period,
+                    period_type, original_value, normalised_value, original_unit,
+                    normalised_unit, retrieval_timestamp, source_release_date,
+                    data_status, pipeline_version, validation_status
+                ) VALUES (
+                    :snapshot_version_id, :dataset_id, :source_id, :observation_key,
+                    :indicator_id, :partner_country, :trade_flow, :reporting_period,
+                    :period_type, :original_value, :normalised_value, :original_unit,
+                    :normalised_unit, :retrieval_timestamp, :source_release_date,
+                    :data_status, :pipeline_version, :validation_status
+                )
+            """, snapshots)
+            conn.commit()
+            logger.info(f"Persisted {len(snapshots)} observation snapshots to 'data_snapshots'.")
+
+    def get_snapshots(
+        self,
+        snapshot_version_id: Optional[str] = None,
+        dataset_id: Optional[str] = None,
+        indicator_id: Optional[str] = None
+    ) -> pd.DataFrame:
+        """Retrieves snapshots matching optional filters."""
+        query = "SELECT * FROM data_snapshots WHERE 1=1"
+        params = []
+        if snapshot_version_id:
+            query += " AND snapshot_version_id = ?"
+            params.append(snapshot_version_id)
+        if dataset_id:
+            query += " AND dataset_id = ?"
+            params.append(dataset_id)
+        if indicator_id:
+            query += " AND indicator_id = ?"
+            params.append(indicator_id)
+        query += " ORDER BY reporting_period ASC"
+
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def get_available_snapshot_versions(self) -> List[str]:
+        """Returns ordered list of distinct snapshot version identifiers."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT snapshot_version_id FROM data_snapshots ORDER BY id ASC")
+            rows = cursor.fetchall()
+            return [row[0] for row in rows]
+
+    def save_revision_records(self, revisions: List[Dict[str, Any]]):
+        """Persists detected revision records between successive snapshot versions."""
+        if not revisions:
+            return
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.executemany("""
+                INSERT OR REPLACE INTO revision_records (
+                    revision_id, observation_key, dataset_id, indicator_id,
+                    reporting_period, previous_version_id, new_version_id,
+                    previous_value, new_value, absolute_revision, percentage_revision,
+                    previous_status, new_status, revision_classification,
+                    revision_reason, detected_at
+                ) VALUES (
+                    :revision_id, :observation_key, :dataset_id, :indicator_id,
+                    :reporting_period, :previous_version_id, :new_version_id,
+                    :previous_value, :new_value, :absolute_revision, :percentage_revision,
+                    :previous_status, :new_status, :revision_classification,
+                    :revision_reason, :detected_at
+                )
+            """, revisions)
+            conn.commit()
+            logger.info(f"Persisted {len(revisions)} revision records to 'revision_records'.")
+
+    def get_revision_records(
+        self,
+        dataset_id: Optional[str] = None,
+        classification: Optional[str] = None
+    ) -> pd.DataFrame:
+        """Retrieves revision comparison records with optional filters."""
+        query = "SELECT * FROM revision_records WHERE 1=1"
+        params = []
+        if dataset_id:
+            query += " AND dataset_id = ?"
+            params.append(dataset_id)
+        if classification:
+            query += " AND revision_classification = ?"
+            params.append(classification)
+        query += " ORDER BY detected_at DESC"
+
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def save_revision_alerts(self, alerts: List[Dict[str, Any]]):
+        """Persists data quality and revision threshold alerts."""
+        if not alerts:
+            return
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.executemany("""
+                INSERT OR REPLACE INTO revision_alerts (
+                    alert_id, revision_id, observation_key, dataset_id,
+                    indicator_id, reporting_period, alert_type, severity,
+                    threshold_value, actual_change, message, triggered_at, status
+                ) VALUES (
+                    :alert_id, :revision_id, :observation_key, :dataset_id,
+                    :indicator_id, :reporting_period, :alert_type, :severity,
+                    :threshold_value, :actual_change, :message, :triggered_at, :status
+                )
+            """, alerts)
+            conn.commit()
+            logger.info(f"Persisted {len(alerts)} alerts to 'revision_alerts'.")
+
+    def get_revision_alerts(self, severity: Optional[str] = None) -> pd.DataFrame:
+        """Retrieves revision alerts with optional severity filter."""
+        query = "SELECT * FROM revision_alerts WHERE 1=1"
+        params = []
+        if severity:
+            query += " AND severity = ?"
+            params.append(severity)
+        query += " ORDER BY triggered_at DESC"
+
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
