@@ -251,3 +251,10 @@ class TradeDataFetcher:
         if not filepath.exists():
             raise FileNotFoundError(f"Missing raw trade policy events file at {filepath}")
         return pd.read_csv(filepath)
+
+    def load_raw_commodity_partner_trade(self) -> pd.DataFrame:
+        """Loads raw commodity-by-partner bilateral trade dataset from DGCI&S."""
+        filepath = self.raw_dir / "dgcis_commodity_partner_trade.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw DGCI&S commodity-partner file at {filepath}")
+        return pd.read_csv(filepath)

@@ -415,3 +415,28 @@ class TradeDataTransformer:
                 "not subjective or arbitrary risk predictions."
             )
         }
+
+    @classmethod
+    def transform_commodity_partner_trade(cls, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Enriches commodity partner bilateral trade with lag growth and share dynamics."""
+        df = df_raw.copy().sort_values(by=["commodity_group", "trade_flow", "partner_country", "fy_start_year"]).reset_index(drop=True)
+        
+        # Calculate lag value and share
+        df["value_prev"] = df.groupby(["commodity_group", "trade_flow", "partner_country"])["value_usd_million"].shift(1)
+        df["partner_share_prev"] = df.groupby(["commodity_group", "trade_flow", "partner_country"])["partner_share_pct"].shift(1)
+
+        # YoY value growth
+        df["partner_value_yoy_pct"] = np.where(
+            df["value_prev"] > 0,
+            ((df["value_usd_million"] - df["value_prev"]) / df["value_prev"] * 100.0).round(2),
+            np.nan
+        )
+
+        # YoY share change in percentage points
+        df["share_change_pp"] = np.where(
+            df["partner_share_prev"].notna(),
+            (df["partner_share_pct"] - df["partner_share_prev"]).round(2),
+            np.nan
+        )
+
+        return df

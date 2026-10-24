@@ -683,3 +683,296 @@ def plot_economic_risk_gauges(df_risk: pd.DataFrame) -> go.Figure:
     fig.update_layout(layout)
     return fig
 
+
+# =====================================================================
+# MODULE A: INDIA TRADE DEPENDENCY MAP VISUALIZATIONS
+# =====================================================================
+
+def plot_dependency_concentration_treemap(
+    df_partners: pd.DataFrame,
+    commodity_group: str,
+    trade_flow: str = "Import"
+) -> go.Figure:
+    """Generates a hierarchical treemap visualizing bilateral partner market shares for a commodity."""
+    if df_partners is None or df_partners.empty:
+        return go.Figure()
+
+    df = df_partners.copy()
+    labels = df["partner_country"].tolist()
+    parents = ["" for _ in range(len(df))]
+    values = df["value_usd_million"].tolist()
+    shares = df["partner_share_pct"].tolist()
+
+    hover_texts = [
+        f"<b>{c}</b><br>Value: ${v:,.1f}M (${v/1000.0:.2f}B)<br>Market Share: {s:.1f}%"
+        for c, v, s in zip(labels, values, shares)
+    ]
+
+    fig = go.Figure(go.Treemap(
+        labels=labels,
+        parents=parents,
+        values=values,
+        text=hover_texts,
+        textinfo="label+percent root",
+        hoverinfo="text",
+        marker=dict(
+            colors=shares,
+            colorscale=[[0.0, "#1e3a8a"], [0.5, "#0284c7"], [1.0, "#38bdf8"]],
+            showscale=True,
+            colorbar=dict(
+                title=dict(text="Share (%)", font=dict(color=TEXT_MAIN, size=11)),
+                tickfont=dict(color=TEXT_MUTED, size=10)
+            )
+        )
+    ))
+
+    layout = get_base_layout(f"{commodity_group} — Bilateral {trade_flow} Market Distribution", height=500)
+    layout["margin"] = dict(l=15, r=15, t=55, b=15)
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_top_suppliers_bar(
+    df_partners: pd.DataFrame,
+    top_n: int = 10,
+    trade_flow: str = "Import"
+) -> go.Figure:
+    """Plots ranked horizontal bar chart of top N partner countries with share percentages."""
+    if df_partners is None or df_partners.empty:
+        return go.Figure()
+
+    df_top = df_partners.head(top_n).iloc[::-1]  # Reverse for top-at-top
+    
+    # Dynamic coloring: highlight lead partner with accent
+    colors = [COLOR_EXPORTS if i < len(df_top) - 1 else COLOR_ACCENT for i in range(len(df_top))]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=df_top["partner_country"],
+        x=df_top["partner_share_pct"],
+        orientation="h",
+        marker_color=colors,
+        text=[f"  {s:.1f}% (${v:.2f}B)" for s, v in zip(df_top["partner_share_pct"], df_top["value_usd_billion"])],
+        textposition="outside",
+        textfont=dict(color=TEXT_MAIN, size=11),
+        hovertemplate="<b>%{y}</b><br>Share: %{x:.2f}%<br>Value: $%{customdata:.2f}B<extra></extra>",
+        customdata=df_top["value_usd_billion"]
+    ))
+
+    flow_label = "Suppliers" if "imp" in trade_flow.lower() else "Destinations"
+    layout = get_base_layout(f"Top {len(df_top)} {flow_label} by Market Share (%)", height=420)
+    layout["xaxis"]["title"] = "Share of India's Total Trade in Commodity (%)"
+    max_share = df_top["partner_share_pct"].max()
+    layout["xaxis"]["range"] = [0, max(max_share * 1.25, 20.0)]
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_historical_partner_share_trends(
+    df_trend: pd.DataFrame,
+    commodity_group: str,
+    trade_flow: str = "Import"
+) -> go.Figure:
+    """Plots multi-year share evolution for top international trading partners."""
+    if df_trend is None or df_trend.empty:
+        return go.Figure()
+
+    fig = go.Figure()
+    palette = [COLOR_EXPORTS, COLOR_ACCENT, COLOR_PURPLE, COLOR_TEAL, COLOR_BALANCE, COLOR_DEFICIT]
+
+    partners = df_trend["partner_country"].unique()
+    for idx, partner in enumerate(partners):
+        p_data = df_trend[df_trend["partner_country"] == partner].sort_values("financial_year")
+        color = palette[idx % len(palette)]
+        fig.add_trace(go.Scatter(
+            x=p_data["financial_year"],
+            y=p_data["partner_share_pct"],
+            name=partner,
+            mode="lines+markers",
+            line=dict(width=2.5, color=color),
+            marker=dict(size=6, color=color),
+            hovertemplate=f"<b>{partner}</b> (%{{x}})<br>Share: %{{y:.1f}}%<br>Value: $%{{customdata:.2f}}B<extra></extra>",
+            customdata=p_data["value_usd_billion"]
+        ))
+
+    layout = get_base_layout(f"{commodity_group} — Partner Market Share Evolution (FY14-FY26)", height=450)
+    layout["yaxis"]["title"] = "Bilateral Market Share (%)"
+    layout["xaxis"]["title"] = "Financial Year (April–March)"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_hhi_trend(
+    df_hhi: pd.DataFrame,
+    commodity_group: str,
+    trade_flow: str = "Import"
+) -> go.Figure:
+    """Plots HHI concentration index over time with international benchmark bands."""
+    if df_hhi is None or df_hhi.empty:
+        return go.Figure()
+
+    fig = go.Figure()
+
+    # Benchmark reference bands
+    fig.add_hrect(y0=0, y1=1500, fillcolor="#10b981", opacity=0.08, line_width=0,
+                  annotation_text="Diversified (< 1,500)", annotation_position="top left",
+                  annotation_font=dict(color="#34d399", size=10))
+    fig.add_hrect(y0=1500, y1=2500, fillcolor="#f59e0b", opacity=0.08, line_width=0,
+                  annotation_text="Moderate (1,500 - 2,500)", annotation_position="top left",
+                  annotation_font=dict(color="#fbbf24", size=10))
+    fig.add_hrect(y0=2500, y1=10000, fillcolor="#ef4444", opacity=0.08, line_width=0,
+                  annotation_text="High Concentration (>= 2,500)", annotation_position="top left",
+                  annotation_font=dict(color="#f87171", size=10))
+
+    # Benchmark lines
+    fig.add_hline(y=1500, line_dash="dash", line_color="#f59e0b", line_width=1.2)
+    fig.add_hline(y=2500, line_dash="dash", line_color="#ef4444", line_width=1.2)
+
+    # Observed HHI Line
+    fig.add_trace(go.Scatter(
+        x=df_hhi["financial_year"],
+        y=df_hhi["hhi_observed"],
+        name="Observed HHI",
+        mode="lines+markers",
+        line=dict(color=COLOR_EXPORTS, width=3.2),
+        marker=dict(size=7, color=COLOR_ACCENT),
+        hovertemplate="<b>FY %{x}</b><br>HHI: %{y:,.1f}<br>Lead: %{customdata[0]} (%{customdata[1]:.1f}%)<extra></extra>",
+        customdata=list(zip(df_hhi["top_1_partner"], df_hhi["top_1_share_pct"]))
+    ))
+
+    layout = get_base_layout(f"{commodity_group} ({trade_flow}) — Herfindahl-Hirschman Index Trajectory", height=450)
+    layout["yaxis"]["title"] = "HHI Concentration Index (0 - 10,000)"
+    layout["yaxis"]["range"] = [0, max(df_hhi["hhi_observed"].max() * 1.2, 3500)]
+    layout["xaxis"]["title"] = "Financial Year (April–March)"
+    fig.update_layout(layout)
+    return fig
+
+
+# =====================================================================
+# MODULE B: TRADE SHOCK SIMULATOR VISUALIZATIONS
+# =====================================================================
+
+def plot_shock_comparison_waterfall(
+    waterfall_data: List[Dict[str, Any]],
+    title: str = "Trade Deficit Impact Waterfall ($B)"
+) -> go.Figure:
+    """Plots waterfall chart decomposing baseline deficit, crude shock, export shock, and scenario deficit."""
+    if not waterfall_data:
+        return go.Figure()
+
+    x_labels = [item["step"] for item in waterfall_data]
+    y_vals = [item["value_usd_b"] for item in waterfall_data]
+    measures = ["absolute" if item["type"] in ("baseline", "total") else "relative" for item in waterfall_data]
+
+    fig = go.Figure(go.Waterfall(
+        name="Deficit Decomposition",
+        orientation="v",
+        measure=measures,
+        x=x_labels,
+        textposition="outside",
+        text=[f"${abs(v):.1f}B" if v < 0 else f"+${v:.1f}B" for v in y_vals],
+        textfont=dict(color=TEXT_MAIN, size=11),
+        y=y_vals,
+        connector=dict(line=dict(color="#475569", width=1.5)),
+        increasing=dict(marker=dict(color=COLOR_BALANCE)),
+        decreasing=dict(marker=dict(color=COLOR_DEFICIT)),
+        totals=dict(marker=dict(color="#3b82f6"))
+    ))
+
+    layout = get_base_layout(title, height=450)
+    layout["yaxis"]["title"] = "Net Merchandise Trade Balance (USD Billion)"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_scenario_sensitivity_heatmap(
+    sensitivity_df: pd.DataFrame,
+    title: str = "Net Trade Deficit Impact Matrix ($B)"
+) -> go.Figure:
+    """Plots 2D sensitivity matrix cross-tabulating Crude Oil Shocks vs INR Depreciation."""
+    if sensitivity_df is None or sensitivity_df.empty:
+        return go.Figure()
+
+    z_vals = sensitivity_df.values
+    x_cols = sensitivity_df.columns.tolist()
+    y_idx = sensitivity_df.index.tolist()
+
+    # Annotations text formatted as +$X.XB or -$X.XB
+    text_vals = [[f"{v:+.1f}B" for v in row] for row in z_vals]
+
+    fig = go.Figure(data=go.Heatmap(
+        z=z_vals,
+        x=x_cols,
+        y=y_idx,
+        text=text_vals,
+        texttemplate="%{text}",
+        textfont=dict(family="Inter, sans-serif", size=12, color=TEXT_MAIN),
+        colorscale=[
+            [0.0, "#ef4444"],    # Heavy deficit expansion (red)
+            [0.4, "#f97316"],    # Moderate deficit (orange)
+            [0.6, "#eab308"],    # Neutral/mild (amber)
+            [0.8, "#84cc16"],    # Minor surplus (light green)
+            [1.0, "#22c55e"]     # Large surplus / terms of trade windfall (green)
+        ],
+        colorbar=dict(
+            title=dict(text="Δ Deficit ($B)", font=dict(color=TEXT_MAIN, size=11)),
+            tickfont=dict(color=TEXT_MUTED, size=10)
+        ),
+        hovertemplate="<b>%{y}</b><br>%{x}<br>Deficit Impact: <b>%{z:+.2f} USD Billion</b><extra></extra>"
+    ))
+
+    layout = get_base_layout(title, height=480)
+    layout["xaxis"]["title"] = "INR/USD Exchange Rate Depreciation"
+    layout["yaxis"]["title"] = "Crude Oil Price Shock"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_multi_scenario_comparison_bar(
+    comparison_df: pd.DataFrame
+) -> go.Figure:
+    """Compares key trade aggregates across preset simulation scenarios."""
+    if comparison_df is None or comparison_df.empty:
+        return go.Figure()
+
+    fig = go.Figure()
+    scenarios = comparison_df["Scenario"].tolist()
+
+    # Crude Oil Bill
+    fig.add_trace(go.Bar(
+        x=scenarios,
+        y=comparison_df["Crude Oil Bill ($B)"],
+        name="Crude Oil Bill ($B)",
+        marker_color="#f97316",
+        text=[f"${v:.1f}B" for v in comparison_df["Crude Oil Bill ($B)"]],
+        textposition="auto"
+    ))
+
+    # Total Exports
+    fig.add_trace(go.Bar(
+        x=scenarios,
+        y=comparison_df["Total Exports ($B)"],
+        name="Total Exports ($B)",
+        marker_color=COLOR_EXPORTS,
+        text=[f"${v:.1f}B" for v in comparison_df["Total Exports ($B)"]],
+        textposition="auto"
+    ))
+
+    # Net Trade Deficit (Magnitude)
+    deficits = [abs(v) for v in comparison_df["Trade Balance ($B)"]]
+    fig.add_trace(go.Bar(
+        x=scenarios,
+        y=deficits,
+        name="Net Trade Deficit ($B)",
+        marker_color=COLOR_DEFICIT,
+        text=[f"${v:.1f}B" for v in deficits],
+        textposition="auto"
+    ))
+
+    layout = get_base_layout("Macroeconomic Comparison Across Scenario Presets ($B)", height=480)
+    layout["barmode"] = "group"
+    layout["yaxis"]["title"] = "USD Billion"
+    fig.update_layout(layout)
+    return fig
+
+

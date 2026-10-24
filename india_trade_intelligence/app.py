@@ -50,6 +50,9 @@ from india_trade_intelligence.src.pipeline.revisions import (
 )
 from india_trade_intelligence.src.analysis.econometrics import EconometricAnalyzer
 from india_trade_intelligence.src.analysis.rankings import TradeRankingsAnalyzer
+from india_trade_intelligence.src.analysis.contracts import EconomicDataContract, ReportingPeriodType, CurrencyUnit
+from india_trade_intelligence.src.analysis.dependency import TradeDependencyAnalyzer
+from india_trade_intelligence.src.analysis.shocks import TradeShockSimulator, ShockBaseline
 from india_trade_intelligence.src.ai.assistant import TradeAIAssistant, RESEARCH_QUESTIONS_CATALOG
 from india_trade_intelligence.src.visualization.charts import (
     plot_macro_overview,
@@ -67,6 +70,13 @@ from india_trade_intelligence.src.visualization.charts import (
     plot_external_sector_dashboard,
     plot_partner_macro_matrix,
     plot_economic_risk_gauges,
+    plot_dependency_concentration_treemap,
+    plot_top_suppliers_bar,
+    plot_historical_partner_share_trends,
+    plot_hhi_trend,
+    plot_shock_comparison_waterfall,
+    plot_scenario_sensitivity_heatmap,
+    plot_multi_scenario_comparison_bar,
     COLOR_EXPORTS,
     COLOR_IMPORTS,
     COLOR_BALANCE,
@@ -200,6 +210,7 @@ def load_all_data():
     df_ext = storage.get_external_sector_macro()
     df_partner = storage.get_trading_partner_conditions()
     df_policy = storage.get_trade_policy_events()
+    df_cpt = storage.get_commodity_partner_trade()
     catalog = storage.get_metadata_catalog()
     refresh_status = storage.get_latest_refresh_status()
 
@@ -210,13 +221,13 @@ def load_all_data():
     return (
         df_macro, df_bilateral, df_commodity, df_monthly,
         df_pq_trans, df_energy, df_ext, df_partner, df_policy,
-        df_risk, catalog, refresh_status
+        df_risk, df_cpt, catalog, refresh_status
     )
 
 (
     df_macro, df_bilateral, df_commodity, df_monthly,
     df_pq_trans, df_energy, df_ext, df_partner, df_policy,
-    df_risk, catalog, refresh_status
+    df_risk, df_cpt, catalog, refresh_status
 ) = load_all_data()
 
 # Shared reference row for complete calendar year observations
@@ -288,7 +299,9 @@ view_selection = st.sidebar.radio(
         "8. Inflation & Purchasing Power (Value of Money)",
         "9. Economic Risk Monitoring Engine",
         "10. AI-Powered Research Outcomes",
-        "11. Methodology, Provenance & Refresh Architecture"
+        "11. Methodology, Provenance & Refresh Architecture",
+        "12. India Trade Dependency Map",
+        "13. Trade Shock Simulator"
     ]
 )
 
@@ -1113,6 +1126,467 @@ elif view_selection == "11. Methodology, Provenance & Refresh Architecture":
     with storage.get_connection() as conn:
         logs_df = pd.read_sql_query("SELECT * FROM pipeline_execution_log ORDER BY id DESC LIMIT 10", conn)
         st.dataframe(logs_df, use_container_width=True)
+
+# ----------------------------------------------------
+# 12. INDIA TRADE DEPENDENCY MAP
+# ----------------------------------------------------
+elif view_selection == "12. India Trade Dependency Map":
+    st.header("India Trade Dependency & Partner Concentration Map")
+    st.markdown(
+        "A granular empirical analysis of India's bilateral partner concentration, single-source import dependencies, "
+        "and market concentration indices across strategic commodity categories."
+    )
+    render_data_status_component("DGCI&S Customs Bilateral Series & HHI Concentration Engine")
+    render_q1_caveat()
+
+    if df_cpt is None or df_cpt.empty:
+        st.error("Commodity-partner trade data is unavailable. Please verify the pipeline has run successfully.")
+    else:
+        # Filter Controls Row
+        f_col1, f_col2, f_col3 = st.columns([1.2, 2.2, 1.4])
+        
+        with f_col1:
+            flow_mode = st.radio(
+                "Trade Flow Mode",
+                ["Import Dependency", "Export Destination"],
+                horizontal=False,
+                key="cpt_flow_mode"
+            )
+            flow_clean = "Import" if "imp" in flow_mode.lower() else "Export"
+
+        with f_col2:
+            available_commodities = sorted(df_cpt[df_cpt["trade_flow"] == flow_clean]["commodity_group"].unique().tolist())
+            default_comm = "Crude Petroleum" if "Crude Petroleum" in available_commodities else (
+                "Refined Petroleum Products" if "Refined Petroleum Products" in available_commodities else available_commodities[0]
+            )
+            selected_commodity = st.selectbox(
+                "Commodity / Product Category",
+                available_commodities,
+                index=available_commodities.index(default_comm) if default_comm in available_commodities else 0,
+                key="cpt_commodity_select"
+            )
+
+        with f_col3:
+            available_years = sorted(
+                df_cpt[(df_cpt["trade_flow"] == flow_clean) & (df_cpt["commodity_group"] == selected_commodity)]["financial_year"].unique().tolist(),
+                reverse=True
+            )
+            default_year = "2023-24" if "2023-24" in available_years else (available_years[0] if available_years else "2023-24")
+            selected_fy = st.selectbox(
+                "Reporting Financial Year",
+                available_years,
+                index=available_years.index(default_year) if default_year in available_years else 0,
+                key="cpt_fy_select"
+            )
+
+        # Run Dependency Analysis Engine
+        try:
+            analysis = TradeDependencyAnalyzer.analyze_dependency(
+                df_cpt,
+                commodity_group=selected_commodity,
+                trade_flow=flow_clean,
+                financial_year=selected_fy
+            )
+
+            # Strategic Profile Pill
+            strat = analysis.get("strategic_profile", {})
+            st.markdown(f"""
+            <div style="background-color: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 10px 14px; margin-bottom: 16px;">
+                <span style="color: #38bdf8; font-weight: 700; font-size: 0.85rem;">COMMODITY CLASSIFICATION:</span>
+                <span style="color: #f8fafc; font-weight: 600; font-size: 0.85rem;"> {selected_commodity}</span>
+                <span style="color: #64748b;"> | </span>
+                <span style="color: #94a3b8; font-size: 0.82rem;">Strategic Role: <strong>{strat.get('label', 'Merchandise Trade')}</strong></span>
+                <span style="color: #64748b;"> | </span>
+                <span style="color: #fbbf24; font-size: 0.82rem;">Criticality Tag: <code>{strat.get('criticality', 'STANDARD')}</code></span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # KPI Summary Metrics Row
+            kpi_c1, kpi_c2, kpi_c3, kpi_c4, kpi_c5 = st.columns(5)
+            with kpi_c1:
+                st.markdown(render_kpi_card(
+                    metric_name=f"Lead { 'Supplier' if flow_clean == 'Import' else 'Market' }",
+                    value_str=f"{analysis['top_1_partner']}",
+                    period_str=f"FY {selected_fy}",
+                    unit_str=f"{analysis['top_1_share_pct']:.1f}% share",
+                    comparison_str=f"${analysis['top_1_value_usd_billion']:.2f}B trade",
+                    source_str="DGCI&S Customs",
+                    is_positive=True
+                ), unsafe_allow_html=True)
+
+            with kpi_c2:
+                st.markdown(render_kpi_card(
+                    metric_name="Top-5 Share (CR5)",
+                    value_str=f"{analysis['top_5_share_pct']:.1f}%",
+                    period_str=f"FY {selected_fy}",
+                    unit_str="of total category",
+                    comparison_str=f"Top 5 of {analysis['total_partners_recorded']} partners",
+                    source_str="Calculated Metric",
+                    is_positive=analysis['top_5_share_pct'] < 75.0
+                ), unsafe_allow_html=True)
+
+            with kpi_c3:
+                st.markdown(render_kpi_card(
+                    metric_name="Top-10 Share (CR10)",
+                    value_str=f"{analysis['top_10_share_pct']:.1f}%",
+                    period_str=f"FY {selected_fy}",
+                    unit_str="of total category",
+                    comparison_str="Cumulative concentration",
+                    source_str="Calculated Metric",
+                    is_positive=True
+                ), unsafe_allow_html=True)
+
+            with kpi_c4:
+                status_color = "#34d399" if analysis["concentration_status"] == "DIVERSIFIED" else (
+                    "#fbbf24" if analysis["concentration_status"] == "MODERATE" else "#f87171"
+                )
+                st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">HHI Concentration Index</div>
+                    <div class="metric-value" style="color: {status_color};">{analysis['hhi_score']:,.0f}</div>
+                    <div class="metric-subtitle">Scale: 0 – 10,000</div>
+                    <div class="metric-badge" style="color: {status_color}; border-color: {status_color};">{analysis['concentration_label']}</div>
+                    <div class="metric-source">US DOJ / FTC Standard</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with kpi_c5:
+                cov = analysis["coverage_pct"]
+                cov_color = "#34d399" if cov >= 85.0 else "#fbbf24"
+                st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Data Coverage</div>
+                    <div class="metric-value" style="color: {cov_color};">{cov:.1f}%</div>
+                    <div class="metric-subtitle">Total: ${analysis['total_value_usd_billion']:.2f}B</div>
+                    <div class="metric-badge" style="color: {cov_color}; border-color: {cov_color};">{analysis['total_partners_recorded']} Recorded Partners</div>
+                    <div class="metric-source">DGCI&S Coverage</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Coverage Warning Banner if applicable
+            if analysis.get("coverage_warning"):
+                st.warning(analysis["coverage_warning"])
+
+            st.markdown("---")
+
+            # Cross-Sectional Bilateral Visualizations Row
+            col_chart1, col_chart2 = st.columns([1.1, 1.3])
+            with col_chart1:
+                st.plotly_chart(
+                    plot_top_suppliers_bar(analysis["partners_data"], top_n=8, trade_flow=flow_clean),
+                    use_container_width=True
+                )
+            with col_chart2:
+                st.plotly_chart(
+                    plot_dependency_concentration_treemap(analysis["partners_data"], commodity_group=selected_commodity, trade_flow=flow_clean),
+                    use_container_width=True
+                )
+
+            # Historical Multi-Year Dependency Dynamics
+            st.subheader("Historical Dependency & Concentration Dynamics (FY14 – FY26)")
+            tab_shares, tab_hhi = st.tabs(["Partner Market Share Trajectory", "HHI Concentration Trajectory & Benchmark Bands"])
+
+            with tab_shares:
+                df_trend = TradeDependencyAnalyzer.get_historical_dependency_trends(
+                    df_cpt, commodity_group=selected_commodity, trade_flow=flow_clean, top_n_partners=5
+                )
+                if not df_trend.empty:
+                    st.plotly_chart(
+                        plot_historical_partner_share_trends(df_trend, commodity_group=selected_commodity, trade_flow=flow_clean),
+                        use_container_width=True
+                    )
+                else:
+                    st.info("Insufficient historical time-series data for this commodity.")
+
+            with tab_hhi:
+                df_hhi = TradeDependencyAnalyzer.get_hhi_trend_series(
+                    df_cpt, commodity_group=selected_commodity, trade_flow=flow_clean
+                )
+                if not df_hhi.empty:
+                    st.plotly_chart(
+                        plot_hhi_trend(df_hhi, commodity_group=selected_commodity, trade_flow=flow_clean),
+                        use_container_width=True
+                    )
+                else:
+                    st.info("Insufficient observations to generate HHI time series.")
+
+            # Rule-Based Economic Risk Assessment Callout
+            st.subheader("Rule-Based Economic Risk Interpretation")
+            risk_interp = analysis.get("risk_interpretation", {})
+            st.markdown(f"""
+            <div style="background-color: #1e293b; border-left: 4px solid #38bdf8; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 12px 0;">
+                <h4 style="color: #f8fafc; margin-top: 0; margin-bottom: 8px;">{risk_interp.get('headline', 'Empirical Risk Assessment')}</h4>
+                <div style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                    {risk_interp.get('detailed_assessment', 'Standard concentration analysis completed.').replace(chr(10)+chr(10), '<br><br>')}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Granular Customs Filings Table & Export
+            st.subheader(f"Detailed Bilateral Partner Customs Filings (FY {selected_fy})")
+            st.dataframe(
+                analysis["partners_data"].drop(columns=["iso3"], errors="ignore"),
+                use_container_width=True
+            )
+            
+            csv_export = analysis["partners_data"].to_csv(index=False)
+            st.download_button(
+                label=f"⬇️ Download {selected_commodity} FY {selected_fy} Bilateral Data (CSV)",
+                data=csv_export,
+                file_name=f"india_trade_{selected_commodity.lower().replace(' ', '_')}_{flow_clean.lower()}_{selected_fy}.csv",
+                mime="text/csv",
+                key="download_cpt_csv"
+            )
+
+        except Exception as e:
+            st.error(f"Error executing dependency analysis: {str(e)}")
+
+# ----------------------------------------------------
+# 13. TRADE SHOCK SIMULATOR
+# ----------------------------------------------------
+elif view_selection == "13. Trade Shock Simulator":
+    st.header("Macroeconomic Trade Shock Simulator")
+    st.markdown(
+        "A counterfactual macroeconomic simulation engine evaluating terms-of-trade shifts, crude oil price shocks, "
+        "rupee exchange rate volatility, and global export demand shocks on India's merchandise trade balance."
+    )
+    render_data_status_component("PPAC / MoPNG Crude Oil Baseline & Macroeconomic Accounting Engine")
+    
+    st.markdown("""
+    <div style="background-color: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; color: #94a3b8;">
+        ⚡ <strong>RESEARCH SIMULATION NOTICE:</strong> This module runs mechanical counterfactual scenario accounting 
+        utilizing empirical short-run trade elasticities and balance-of-payments identities. Outputs reflect scenario stress-tests, 
+        <strong>not official macroeconomic forecasts</strong>.
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Initialize Empirical Baseline
+    baseline = TradeShockSimulator.get_empirical_baseline(df_energy, df_macro, df_ext)
+
+    # Scenario Preset Selector Row
+    p_col1, p_col2 = st.columns([3, 1])
+    with p_col1:
+        preset_options = ["Custom Scenario"] + list(TradeShockSimulator.PRESETS.keys())
+        selected_preset = st.selectbox(
+            "Select Scenario Preset or Build Custom Shock",
+            preset_options,
+            index=0,
+            key="sim_preset_select"
+        )
+    with p_col2:
+        st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+        if st.button("🔄 Reset Baseline (0%)", use_container_width=True):
+            selected_preset = "Baseline (Zero Shock)"
+
+    # Determine default slider values based on preset
+    preset_defaults = TradeShockSimulator.PRESETS.get(selected_preset, {
+        "oil_price_shock_pct": 0.0,
+        "fx_depreciation_pct": 0.0,
+        "export_demand_shock_pct": 0.0,
+        "crude_demand_elasticity": 0.0
+    })
+
+    if selected_preset != "Custom Scenario":
+        st.info(f"**Preset Active:** {TradeShockSimulator.PRESETS[selected_preset]['description']}")
+
+    # Interactive Shock Input Sliders
+    st.subheader("1. Configure Shock Parameters")
+    s_col1, s_col2, s_col3 = st.columns(3)
+
+    with s_col1:
+        oil_shock = st.slider(
+            "Crude Oil Price Shock (%)",
+            min_value=-50.0,
+            max_value=100.0,
+            value=float(preset_defaults["oil_price_shock_pct"]),
+            step=5.0,
+            help="Simulates percentage change in Indian Basket crude oil import price ($/barrel).",
+            key="slider_oil_shock"
+        )
+        scenario_oil_price = baseline.crude_price_usd_per_bbl * (1.0 + oil_shock / 100.0)
+        st.caption(f"Price: **${baseline.crude_price_usd_per_bbl:.2f}** → **${scenario_oil_price:.2f}/bbl**")
+
+    with s_col2:
+        fx_depr = st.slider(
+            "INR/USD Exchange Rate Depreciation (%)",
+            min_value=-15.0,
+            max_value=30.0,
+            value=float(preset_defaults["fx_depreciation_pct"]),
+            step=1.0,
+            help="Positive (+) = Rupee depreciation. Negative (-) = Rupee appreciation.",
+            key="slider_fx_depr"
+        )
+        scenario_fx_rate = baseline.exchange_rate_inr_per_usd * (1.0 + fx_depr / 100.0)
+        st.caption(f"FX Rate: **₹{baseline.exchange_rate_inr_per_usd:.2f}** → **₹{scenario_fx_rate:.2f} / USD**")
+
+    with s_col3:
+        export_shock = st.slider(
+            "Global Export Demand Shock (%)",
+            min_value=-25.0,
+            max_value=25.0,
+            value=float(preset_defaults["export_demand_shock_pct"]),
+            step=1.0,
+            help="Percentage shift in global partner demand and merchandise export realizations.",
+            key="slider_export_shock"
+        )
+        scenario_exports = baseline.total_exports_usd_b * (1.0 + export_shock / 100.0)
+        st.caption(f"Exports: **${baseline.total_exports_usd_b:.1f}B** → **${scenario_exports:.1f}B**")
+
+    # Advanced Elasticity Toggle
+    with st.expander("⚙️ Advanced Elasticity & Transmission Settings", expanded=False):
+        use_elasticity = st.checkbox(
+            "Model Short-Run Crude Import Demand Elasticity (Non-zero Volume Contraction)",
+            value=(preset_defaults["crude_demand_elasticity"] != 0.0),
+            key="chk_use_elasticity"
+        )
+        if use_elasticity:
+            crude_elasticity = st.slider(
+                "Price Elasticity of Crude Oil Import Demand (ε_d)",
+                min_value=-0.25,
+                max_value=0.00,
+                value=float(preset_defaults["crude_demand_elasticity"]) if preset_defaults["crude_demand_elasticity"] != 0.0 else -0.05,
+                step=0.01,
+                help="Empirical short-run price elasticity for India crude oil demand (-0.05 to -0.10)."
+            )
+            st.caption("A value of -0.05 implies a 10% price increase reduces import volume by 0.5%.")
+        else:
+            crude_elasticity = 0.0
+            st.caption("Pure mechanical accounting: crude oil import volume held fixed at baseline level.")
+
+    # Execute Scenario Simulation
+    sim_result = TradeShockSimulator.simulate_combined_scenario(
+        baseline=baseline,
+        oil_price_shock_pct=oil_shock,
+        fx_depreciation_pct=fx_depr,
+        export_demand_shock_pct=export_shock,
+        crude_demand_elasticity=crude_elasticity,
+        scenario_name=selected_preset if selected_preset != "Custom Scenario" else "Custom Simulation"
+    )
+    res = sim_result["results"]
+
+    # 2. Simulation Results KPI Banner
+    st.subheader("2. Scenario Simulation Outcomes")
+    r_c1, r_c2, r_c3, r_c4, r_c5 = st.columns(5)
+
+    with r_c1:
+        st.markdown(render_kpi_card(
+            metric_name="Crude Oil Import Bill",
+            value_str=f"${res['scenario_crude_oil_bill_usd_b']:.1f}B",
+            period_str="Scenario",
+            unit_str=f"Δ ${res['delta_oil_bill_usd_b']:+.1f}B",
+            comparison_str=f"Baseline: ${baseline.crude_import_bill_usd_b:.1f}B",
+            source_str="PPAC Simulation",
+            is_positive=(res['delta_oil_bill_usd_b'] <= 0)
+        ), unsafe_allow_html=True)
+
+    with r_c2:
+        st.markdown(render_kpi_card(
+            metric_name="Total Merchandise Exports",
+            value_str=f"${res['scenario_total_exports_usd_b']:.1f}B",
+            period_str="Scenario",
+            unit_str=f"Δ ${res['delta_exports_usd_b']:+.1f}B",
+            comparison_str=f"Baseline: ${baseline.total_exports_usd_b:.1f}B",
+            source_str="Customs Simulation",
+            is_positive=(res['delta_exports_usd_b'] >= 0)
+        ), unsafe_allow_html=True)
+
+    with r_c3:
+        st.markdown(render_kpi_card(
+            metric_name="Total Merchandise Imports",
+            value_str=f"${res['scenario_total_imports_usd_b']:.1f}B",
+            period_str="Scenario",
+            unit_str=f"Δ ${res['delta_imports_usd_b']:+.1f}B",
+            comparison_str=f"Baseline: ${baseline.total_imports_usd_b:.1f}B",
+            source_str="Customs Simulation",
+            is_positive=(res['delta_imports_usd_b'] <= 0)
+        ), unsafe_allow_html=True)
+
+    with r_c4:
+        st.markdown(render_kpi_card(
+            metric_name="Net Trade Balance (USD)",
+            value_str=f"${res['scenario_trade_balance_usd_b']:+.1f}B",
+            period_str="Scenario",
+            unit_str=f"Δ ${res['delta_trade_balance_usd_b']:+.1f}B",
+            comparison_str=f"Baseline: ${baseline.trade_balance_usd_b:.1f}B",
+            source_str="Net BoP Impact",
+            is_positive=(res['delta_trade_balance_usd_b'] >= 0)
+        ), unsafe_allow_html=True)
+
+    with r_c5:
+        tb_inr_lakh_cr = res['scenario_trade_balance_inr_crore'] / 100000.0
+        delta_inr_cr = res['delta_trade_balance_inr_crore']
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-title">Trade Balance (INR)</div>
+            <div class="metric-value" style="color: {'#34d399' if delta_inr_cr >= 0 else '#f87171'};">₹{tb_inr_lakh_cr:+.2f}L Cr</div>
+            <div class="metric-subtitle">₹{res['scenario_trade_balance_inr_crore']:,.0f} Cr</div>
+            <div class="metric-badge" style="color: {'#34d399' if delta_inr_cr >= 0 else '#f87171'}; border-color: {'#34d399' if delta_inr_cr >= 0 else '#f87171'};">Δ ₹{delta_inr_cr:,.0f} Cr</div>
+            <div class="metric-source">At ₹{res['scenario_exchange_rate']:.2f}/USD</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # 3. Transmission Visualizations: Waterfall + Sensitivity Grid
+    st.subheader("3. Shock Transmission Decompositions")
+    w_col, h_col = st.columns([1.1, 1.2])
+
+    with w_col:
+        st.plotly_chart(
+            plot_shock_comparison_waterfall(sim_result["waterfall"], title="Trade Deficit Transmission Channels ($B)"),
+            use_container_width=True
+        )
+
+    with h_col:
+        grid_df = TradeShockSimulator.generate_sensitivity_grid(
+            baseline=baseline,
+            export_shock=export_shock,
+            crude_elasticity=crude_elasticity
+        )
+        st.plotly_chart(
+            plot_scenario_sensitivity_heatmap(grid_df, title="Net Trade Deficit Sensitivity Matrix ($B)"),
+            use_container_width=True
+        )
+
+    # 4. Preset Scenarios Side-by-Side Comparison
+    st.subheader("4. Standard Scenario Presets Comparison")
+    comp_df = TradeShockSimulator.compare_preset_scenarios(baseline)
+    
+    st.plotly_chart(plot_multi_scenario_comparison_bar(comp_df), use_container_width=True)
+    st.dataframe(comp_df, use_container_width=True)
+
+    # 5. Rule-Based Macroeconomic Assessment
+    st.subheader("5. Macroeconomic Transmission Assessment")
+    st.markdown(f"""
+    <div style="background-color: #1e293b; border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 12px 0;">
+        <h4 style="color: #f8fafc; margin-top: 0; margin-bottom: 8px;">Analytical Findings: {sim_result['scenario_name']}</h4>
+        <div style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+            {sim_result['economic_assessment'].replace(chr(10)+chr(10), '<br><br>')}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 6. Scenario Export Section
+    st.subheader("6. Scenario Data & Matrix Export")
+    exp_c1, exp_c2 = st.columns(2)
+    with exp_c1:
+        json_str = TradeShockSimulator.export_scenario_to_json(sim_result)
+        st.download_button(
+            label="⬇️ Export Active Scenario (JSON)",
+            data=json_str,
+            file_name=f"trade_shock_scenario_{selected_preset.lower().replace(' ', '_')}.json",
+            mime="application/json",
+            key="btn_export_scenario_json"
+        )
+    with exp_c2:
+        csv_grid = TradeShockSimulator.export_sensitivity_grid_to_csv(grid_df)
+        st.download_button(
+            label="⬇️ Export 2D Sensitivity Matrix (CSV)",
+            data=csv_grid,
+            file_name="trade_shock_sensitivity_matrix.csv",
+            mime="text/csv",
+            key="btn_export_matrix_csv"
+        )
 
 st.markdown("---")
 st.caption("INDIA TRADE INTELLIGENCE | Built for Economics Research & Policy Analysis | Powered by Python, Streamlit & Plotly")

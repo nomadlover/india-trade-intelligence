@@ -306,3 +306,35 @@ class TradeDataValidator:
             return report
         report.passed_checks.append("Schema check passed.")
         return report
+
+    @staticmethod
+    def validate_commodity_partner_trade(df: pd.DataFrame) -> ValidationReport:
+        """Validates commodity-by-partner bilateral trade data."""
+        report = ValidationReport(dataset_name="Commodity Partner Trade", total_records=len(df))
+        required = [
+            "financial_year", "commodity_group", "trade_flow",
+            "partner_country", "value_usd_million", "partner_share_pct"
+        ]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+
+        # Non-negativity check
+        if (df["value_usd_million"] < 0).any() or (df["partner_share_pct"] < 0).any():
+            report.is_valid = False
+            report.failed_checks.append("Negative values or shares detected in commodity partner trade.")
+        else:
+            report.passed_checks.append("Non-negativity verified.")
+
+        # Trade flow check
+        valid_flows = {"Export", "Import"}
+        if not set(df["trade_flow"].unique()).issubset(valid_flows):
+            report.is_valid = False
+            report.failed_checks.append("Invalid trade_flow values detected.")
+        else:
+            report.passed_checks.append("Trade flow values verified.")
+
+        return report

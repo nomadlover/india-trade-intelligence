@@ -82,32 +82,78 @@ The platform features an interactive real-economy simulator answering: **"What i
 
 The platform implements an automated continuous data maintenance architecture:
 - **Triggers**: Scheduled on **1 April** (FY close & Quick Estimates) and **1 October** (Mid-year DGCI&S revisions) at 00:00 UTC via GitHub Actions, with manual `workflow_dispatch` override.
-- **Pipeline Workflow**: Fetches new releases → validates schemas & continuity → standardizes currencies & units → persists indexed SQLite tables → executes full 61-test verification suite → commits and pushes verified data.
+- **Pipeline Workflow**: Fetches new releases → validates schemas & continuity → standardizes currencies & units → persists indexed SQLite tables → executes full 78-test verification suite → commits and pushes verified data.
 - **Fail-Safe Rollback Protocol**: If an external source format or schema breaks, the runner logs `CRITICAL_FAILURE`, notifies maintainers, and **retains the last-known-good dataset** without publishing corrupt or partial data.
 
 ---
 
-## 🧪 Comprehensive Automated Test Suite (61 Tests Passing)
+## ⚡ Economic Intelligence Core (Phase 1 Modules)
 
-The repository includes 61 automated unit and econometric audit tests executed via `pytest`:
-1. **8 Expanded Intelligence Tests (`test_expanded_intelligence.py`)**:
-   - Price vs Quantity log-additive decomposition identity ($\Delta \ln V = \Delta \ln P + \Delta \ln Q$)
-   - Energy exposure, Indian basket crude discount, and net petroleum bill identities
-   - External sector macro indicators (FX reserves import cover, CAD % GDP)
-   - Key trading partner conditions (US, China, UAE, EU GDP, and manufacturing PMI)
-   - Trade policy events catalog integrity (CEPA, TEPA, PLI, Red Sea)
-   - Economic risk indicators (partner/commodity HHI and single-supplier dependencies)
-   - AI assistant explicit abstention on unverified future years / out-of-scope queries
-   - Expanded provenance registry completeness
-2. **11 Economic Audit & Epistemic Tests (`test_audit.py`)**:
+### 1. India Trade Dependency Map (`src/analysis/dependency.py`)
+- **Granular Commodity-Partner Trade Layer**: Ingests and processes 1,534 bilateral product-level records across 15 strategic commodities (Crude Petroleum, Refined Fuels, Smartphones, APIs, Formulations, Gold, Coking Coal, Fertilisers, Chemicals, Edible Oils, Steel, Industrial Machinery, Textiles, Rice) and 25 sovereign trading partners over 13 financial years (FY14–FY26).
+- **Concentration Metrics**: Computes lead partner share ($s_1$), Top-5 Concentration Ratio ($CR_5 = \sum_{i=1}^5 s_i$), Top-10 Concentration Ratio ($CR_{10}$), and total bilateral trade values ($B).
+- **Herfindahl-Hirschman Index (HHI) with Coverage Bounds**:
+  $$HHI_{\text{observed}} = \sum_{i \in \text{observed}} s_i^2 \quad (0 \le HHI \le 10,000)$$
+  - Evaluated against international antitrust standards: **Diversified** ($< 1,500$), **Moderately Concentrated** ($1,500 - 2,500$), and **Highly Concentrated** ($\ge 2,500$).
+  - **Data Coverage Check**: When customs coverage $< 85\%$, emits an explicit warning and calculates worst-case unobserved concentration upper bound:
+    $$HHI_{\max} = HHI_{\text{observed}} + (100 - \text{Coverage})^2$$
+- **Historical Dynamics**: Tracks multi-year market share evolution and HHI trajectory across financial years with interactive Plotly treemaps and benchmarked line charts.
+- **Rule-Based Risk Interpretation**: Synthesizes market concentration, single-source chokepoint reliance, and strategic necessity into transparent, deterministic assessments.
+
+### 2. Trade Shock Simulator (`src/analysis/shocks.py`)
+- **Macroeconomic Shock Dimensions**:
+  1. **Crude Oil Price Shock**: Simulates shocks from -50% to +100% on the Indian Basket crude benchmark, with optional short-run price elasticity of demand ($\epsilon_d$):
+     $$V_{\text{scenario}} = V_{\text{baseline}} \times \left(1 + \epsilon_d \times \frac{\Delta P_{\text{crude}}\%}{100}\right)$$
+  2. **INR/USD Exchange Rate Shock**: Evaluates Rupee depreciation/appreciation pass-through and domestic currency valuation effects ($\text{Value}_{\text{INR}} = \text{Value}_{\text{USD}} \times e \times 100$ in Crore INR).
+  3. **Global Export Demand Shock**: Simulates world economic slowdowns and expansions on merchandise export realizations.
+- **Combined Multi-Shock Engine**: Strictly ordered accounting identities:
+  $$\text{Trade Balance}_{\text{scenario, USD}} = X_{\text{scenario}} - \left(M_{\text{non-oil}} + M_{\text{oil, scenario}}\right)$$
+- **2D Sensitivity Matrix**: Cross-tabulates Crude Oil Shocks (`[-30%, -15%, 0%, 15%, 30%, 50%]`) against INR Depreciation (`[-5%, 0%, 5%, 10%, 15%]`), rendered as an interactive high-contrast heatmap.
+- **Standard Presets**: Includes Baseline (0%), Moderate Energy Spike (+15% Oil, 3% Depr, -2% Exports), Severe Stagflation Crisis (+40% Oil, 10% Depr, -8% Exports), and Global Disinflation Windfall (-20% Oil, -2% Depr, +5% Exports).
+- **Export Capabilities**: Direct one-click JSON export of active scenario models and CSV export of the 2D sensitivity matrix.
+
+### 3. Shared Economic Data Contract (`src/analysis/contracts.py`)
+- **Reporting Period Isolation**: Rejects any attempt to mix Financial Year (FY April–March) and Calendar Year (CY January–December) observations.
+- **Currency Standardization**: Reversible conversion utilities between USD Million, USD Billion, and INR Crore.
+- **Safe Share Calculations**: Guardrails against silent zero division, returning explicit `DataLimitation` flags.
+- **Provenance Wrapper**: Attaches empirical source, period, methodology, and research disclaimers to every analysis payload.
+
+---
+
+## 🧪 Comprehensive Automated Test Suite (78 Tests Passing)
+
+The repository includes 78 automated unit, econometric, and scenario tests executed via `pytest`:
+1. **Module A: Trade Dependency Map & Data Contract Tests (`test_dependency_map.py`)**:
+   - Strict period classification (FY vs CY vs Monthly) and ValueError on mixed datasets.
+   - Safe share calculation with zero/negative denominator guardrails and NaN safety.
+   - HHI textbook benchmark cases (Monopoly = 10,000, Duopoly = 5,000, Quadropoly = 2,500, 10-firm = 1,000).
+   - Customs coverage warning triggering at $< 85\%$ threshold with $HHI_{\max}$ bound.
+   - Cross-sectional dependency analysis and historical trend extraction.
+2. **Module B: Trade Shock Simulator Tests (`test_shock_simulator.py`)**:
+   - Zero-shock baseline equivalence ($\Delta = 0.0$ identical match).
+   - Directional correctness of crude oil price shocks (+25% vs -25%).
+   - Quantity contraction dampening via crude demand elasticity parameter ($\epsilon_d = -0.10$).
+   - Balance-of-payments accounting identity consistency: $\Delta \text{TB} = \Delta X - \Delta M$.
+   - Monotonicity across 2D sensitivity matrix dimensions.
+   - Preset scenario population and JSON/CSV export formatting.
+3. **8 Expanded Intelligence Tests (`test_expanded_intelligence.py`)**:
+   - Price vs Quantity log-additive decomposition identity ($\Delta \ln V = \Delta \ln P + \Delta \ln Q$).
+   - Energy exposure, Indian basket crude discount, and net petroleum bill identities.
+   - External sector macro indicators (FX reserves import cover, CAD % GDP).
+   - Key trading partner conditions (US, China, UAE, EU GDP, and manufacturing PMI).
+   - Trade policy events catalog integrity (CEPA, TEPA, PLI, Red Sea).
+   - Economic risk indicators (partner/commodity HHI and single-supplier dependencies).
+   - AI assistant explicit abstention on unverified future years / out-of-scope queries.
+   - Expanded provenance registry completeness.
+4. **11 Economic Audit & Epistemic Tests (`test_audit.py`)**:
    - Provenance metadata completeness, absolute ban on misleading "today", CPI calculation gap protection, purchasing power decay, commodity basket benchmarks, trade balance identity, trade openness formula, Rule of 70 halving, pre/post-COVID structural shift, and AI fallback protection.
-3. **18 Provisional Integrity & SEZ Reconciliation Tests (`test_provisional_integrity.py`)**:
-   - 5-Tier duplicate transaction detection (`CONFIRMED_DUPLICATE`, `POTENTIAL_DUPLICATE`, `LEGITIMATE_REPEATED_TRANSACTION`, `UNRESOLVED`, `NOT_APPLICABLE_AGGREGATE_LEVEL`)
-   - SEZ online vs ICEGATE customs reporting reconciliations
-   - Multi-scenario annualisation bounds (observed, linear, seasonal, ±6% confidence interval)
-   - Status propagation rules for combined merchandise and services trade
-   - Source outage historical version retention
-4. **24 Pipeline Transformation, Cleaning & Storage Tests**:
+5. **18 Provisional Integrity & SEZ Reconciliation Tests (`test_provisional_integrity.py`)**:
+   - 5-Tier duplicate transaction detection (`CONFIRMED_DUPLICATE`, `POTENTIAL_DUPLICATE`, `LEGITIMATE_REPEATED_TRANSACTION`, `UNRESOLVED`, `NOT_APPLICABLE_AGGREGATE_LEVEL`).
+   - SEZ online vs ICEGATE customs reporting reconciliations.
+   - Multi-scenario annualisation bounds (observed, linear, seasonal, ±6% confidence interval).
+   - Status propagation rules for combined merchandise and services trade.
+   - Source outage historical version retention.
+6. **24 Pipeline Transformation, Cleaning & Storage Tests**:
    - Storage schema validation, OLS trend fitting, structural break detection, causality disclaimers, currency conversions, ISO-3 country mappings, commodity chapter cleaning, and monthly regex validation.
 
 ---
@@ -125,7 +171,7 @@ pip install -r requirements.txt
 # 3. Execute the full multi-domain data pipeline
 python india_trade_intelligence/run_pipeline.py
 
-# 4. Run the 61-test verification suite
+# 4. Run the 78-test verification suite
 python -m pytest india_trade_intelligence/tests/ -v
 
 # 5. Launch the interactive dashboard

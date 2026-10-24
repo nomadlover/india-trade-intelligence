@@ -126,6 +126,11 @@ class TradeDataStorage:
                 cursor.execute("CREATE INDEX IF NOT EXISTS idx_partner_name ON trading_partner_conditions(partner_name)")
             elif table_name == "trade_policy_events":
                 cursor.execute("CREATE INDEX IF NOT EXISTS idx_event_cat ON trade_policy_events(category)")
+            elif table_name == "commodity_partner_trade":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_cpt_fy ON commodity_partner_trade(financial_year)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_cpt_comm ON commodity_partner_trade(commodity_group)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_cpt_flow ON commodity_partner_trade(trade_flow)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_cpt_partner ON commodity_partner_trade(partner_country)")
 
             conn.commit()
             logger.info(f"Persisted {len(df)} rows to table '{table_name}' with indexes.")
@@ -232,6 +237,28 @@ class TradeDataStorage:
             query += " AND category = ?"
             params.append(category)
         query += " ORDER BY effective_date DESC"
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def get_commodity_partner_trade(
+        self,
+        financial_year: Optional[str] = None,
+        commodity_group: Optional[str] = None,
+        trade_flow: Optional[str] = None
+    ) -> pd.DataFrame:
+        """Retrieves commodity-by-partner bilateral trade data with optional filters."""
+        query = "SELECT * FROM commodity_partner_trade WHERE 1=1"
+        params = []
+        if financial_year:
+            query += " AND financial_year = ?"
+            params.append(financial_year)
+        if commodity_group:
+            query += " AND commodity_group = ?"
+            params.append(commodity_group)
+        if trade_flow:
+            query += " AND trade_flow = ?"
+            params.append(trade_flow)
+        query += " ORDER BY value_usd_million DESC"
         with self.get_connection() as conn:
             return pd.read_sql_query(query, conn, params=params)
 

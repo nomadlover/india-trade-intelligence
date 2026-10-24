@@ -216,3 +216,25 @@ class TradeDataCleaner:
         df.to_csv(output_path, index=False)
         logger.info(f"Saved cleaned trade policy events to {output_path}")
         return df
+
+    def clean_commodity_partner_trade(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans and standardizes commodity-by-partner bilateral trade data."""
+        df = df_raw.copy()
+        df["fy_start_year"] = df["financial_year"].apply(lambda x: int(x.split("-")[0]))
+        df["fy_end_year"] = df["fy_start_year"] + 1
+        df["value_usd_billion"] = (df["value_usd_million"] / 1000.0).round(4)
+        
+        # Rank partners within each commodity group, trade flow, and financial year
+        df["partner_rank"] = df.groupby(["financial_year", "commodity_group", "trade_flow"])["value_usd_million"].rank(
+            ascending=False, method="min"
+        ).astype(int)
+
+        df = df.sort_values(
+            by=["commodity_group", "trade_flow", "financial_year", "value_usd_million"],
+            ascending=[True, True, True, False]
+        ).reset_index(drop=True)
+
+        output_path = self.processed_dir / "commodity_partner_trade_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned commodity-partner trade to {output_path}")
+        return df

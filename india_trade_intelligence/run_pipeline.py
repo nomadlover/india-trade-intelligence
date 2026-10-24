@@ -27,7 +27,8 @@ from india_trade_intelligence.src.pipeline.create_raw_data import (
     generate_energy_commodity_exposure,
     generate_external_sector_macro,
     generate_trading_partner_conditions,
-    generate_trade_policy_events
+    generate_trade_policy_events,
+    generate_commodity_partner_trade
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -42,7 +43,7 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
     storage = TradeDataStorage()
 
     try:
-        # 0. Ensure raw baseline files exist across all 8 domains
+        # 0. Ensure raw baseline files exist across all 9 domains
         logger.info("STEP 0: Verifying Raw Government of India, RBI, PPAC, and MoSPI Datasets...")
         generate_bilateral_trade()
         generate_commodity_trade()
@@ -52,6 +53,7 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         generate_external_sector_macro()
         generate_trading_partner_conditions()
         generate_trade_policy_events()
+        generate_commodity_partner_trade()
 
         # 1. Ingestion
         logger.info("STEP 1: Fetching Official Datasets (World Bank API + GoI Archives)...")
@@ -65,6 +67,7 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         df_raw_ext = fetcher.load_raw_external_sector_macro()
         df_raw_partner = fetcher.load_raw_trading_partner_conditions()
         df_raw_events = fetcher.load_raw_trade_policy_events()
+        df_raw_cpt = fetcher.load_raw_commodity_partner_trade()
 
         # 2. Validation
         logger.info("STEP 2: Executing Econometric and Schema Validation Suite across All Datasets...")
@@ -77,8 +80,9 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         val_ext = TradeDataValidator.validate_external_sector_macro(df_raw_ext)
         val_partner = TradeDataValidator.validate_trading_partner_conditions(df_raw_partner)
         val_events = TradeDataValidator.validate_trade_policy_events(df_raw_events)
+        val_cpt = TradeDataValidator.validate_commodity_partner_trade(df_raw_cpt)
 
-        all_validations = [val_wb, val_bilat, val_comm, val_month, val_pq, val_energy, val_ext, val_partner, val_events]
+        all_validations = [val_wb, val_bilat, val_comm, val_month, val_pq, val_energy, val_ext, val_partner, val_events, val_cpt]
         for v in all_validations:
             logger.info(v.summary())
 
@@ -101,6 +105,7 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         df_clean_ext = cleaner.clean_external_sector_macro(df_raw_ext)
         df_clean_partner = cleaner.clean_trading_partner_conditions(df_raw_partner)
         df_clean_events = cleaner.clean_trade_policy_events(df_raw_events)
+        df_clean_cpt = cleaner.clean_commodity_partner_trade(df_raw_cpt)
 
         # 4. Analytical Transformations & Econometrics
         logger.info("STEP 4: Computing Econometric Indices, Decompositions & Risk Scores...")
@@ -111,6 +116,7 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         df_trans_pq = TradeDataTransformer.transform_commodity_price_quantity(df_clean_pq)
         df_trans_energy = TradeDataTransformer.transform_energy_commodity_exposure(df_clean_energy)
         df_trans_ext = TradeDataTransformer.transform_external_sector_macro(df_clean_ext)
+        df_trans_cpt = TradeDataTransformer.transform_commodity_partner_trade(df_clean_cpt)
 
         # 5. SQLite Persistence & Indexing
         logger.info("STEP 5: Persisting to Relational Database (SQLite) with Indexes...")
@@ -124,11 +130,13 @@ def run_full_pipeline(force_wb_refresh: bool = False) -> bool:
         storage.save_dataframe("external_sector_macro", df_trans_ext)
         storage.save_dataframe("trading_partner_conditions", df_clean_partner)
         storage.save_dataframe("trade_policy_events", df_clean_events)
+        storage.save_dataframe("commodity_partner_trade", df_trans_cpt)
 
         updated_tables = [
             "macro_annual", "bilateral_trade", "commodity_trade", "monthly_trade",
             "commodity_price_quantity", "energy_commodity_exposure", "external_sector_macro",
-            "trading_partner_conditions", "trade_policy_events", "metadata_catalog"
+            "trading_partner_conditions", "trade_policy_events", "commodity_partner_trade",
+            "metadata_catalog"
         ]
 
         storage.log_pipeline_run(
