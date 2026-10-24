@@ -34,6 +34,20 @@ from india_trade_intelligence.src.pipeline.provenance import (
     get_provenance,
     render_data_status_badge
 )
+from india_trade_intelligence.src.pipeline.quality_engine import (
+    ObservationPublicationStatus,
+    DataQualityClassification,
+    DataQualityStatusEngine
+)
+from india_trade_intelligence.src.pipeline.reconciliation import (
+    DuplicateClassification,
+    ReconciliationStatus,
+    TradeReconciliationEngine
+)
+from india_trade_intelligence.src.pipeline.revisions import (
+    TradeRevisionTracker,
+    TradeAnnualisationEngine
+)
 from india_trade_intelligence.src.analysis.econometrics import EconometricAnalyzer
 from india_trade_intelligence.src.analysis.rankings import TradeRankingsAnalyzer
 from india_trade_intelligence.src.ai.assistant import TradeAIAssistant, RESEARCH_QUESTIONS_CATALOG
@@ -365,6 +379,10 @@ if view_selection == "1. Overview":
         st.markdown("---")
 
         # Main Trajectory Chart
+        warn_comb = DataQualityStatusEngine.generate_chart_warning("COMBINED_TOTALS")
+        if warn_comb:
+            st.caption(f"ℹ️ **Methodology Notice:** {warn_comb}")
+
         col_chart, col_stats = st.columns([2.5, 1.2])
         with col_chart:
             fig_overview = plot_macro_overview(df_macro)
@@ -385,6 +403,15 @@ if view_selection == "1. Overview":
                 "💡 **Key Structural Insight:** Post-2020, India's exports broke through previous stagnation to cross $800B annually, "
                 "driven by electronics assembly integration, refined petroleum re-routing, and resilient services exports."
             )
+
+        # Component Breakdown Expander (Merchandise vs Services)
+        with st.expander("🔍 Component Breakdown: Merchandise (Customs Basis) vs Services (BoP Basis)", expanded=False):
+            st.markdown("""
+            **Empirical Separation of Goods and Services Accounts:**
+            - **Merchandise Trade (Customs Basis, DGCI&S):** Reflects physical border movements across sea, air, and land customs ports. Recorded FOB for exports and CIF for imports. In FY 2023-24, merchandise exports stood at **$437.1B** against imports of **$677.2B**, generating a goods deficit of **-$240.1B**. Provisional Q1 FY 2024-25 exports stand at **$144.1B**.
+            - **Services Trade (Balance of Payments Basis, RBI):** Reflects cross-border transactions in invisibles (software receipts, Global Capability Centers, business management, travel, finance). In FY 2023-24, services exports were **$339.6B** against imports of **$177.6B**, yielding a services surplus of **+$162.0B**. Monthly services data are preliminary banking estimates compiled from FETERS; final figures are reconciled quarterly.
+            - **Status Propagation Accounting Rule:** When combined into national aggregate trade, the composite metric inherits the lowest publication status among components. If merchandise is `PROVISIONAL` or services is `ESTIMATED`, the aggregate is strictly classified as `PROVISIONAL_COMPOSITE` and is **never** presented as final reconciled data.
+            """)
 
         # OLS Secular Trend Analysis
         ols_exp = EconometricAnalyzer.calculate_ols_trend(df_macro["exports_usd_billion"])
@@ -459,6 +486,10 @@ elif view_selection == "2. Trade Trends":
 
     with trend_tab2:
         if not df_monthly.empty:
+            warn_merch = DataQualityStatusEngine.generate_chart_warning("PROVISIONAL_MERCHANDISE")
+            if warn_merch:
+                st.info(f"⚡ **Observation Status:** {warn_merch}")
+
             st.plotly_chart(plot_monthly_timeseries(df_monthly), use_container_width=True)
 
             m_col1, m_col2 = st.columns(2)
@@ -490,6 +521,46 @@ elif view_selection == "2. Trade Trends":
                 fig_vol.update_layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_BG)
                 st.plotly_chart(fig_vol, use_container_width=True)
                 st.caption("Rolling sample standard deviation of monthly merchandise trade deficits.")
+
+            # Annualisation Scenarios & Safeguards
+            with st.expander("📊 Annualisation Scenarios & Projection Safeguards (FY 2024-25 Q1)", expanded=False):
+                st.markdown("""
+                **Provisional Extrapolation Safeguards Protocol:**  
+                Extrapolating full fiscal year totals from partial-year data carries high estimation risks due to seasonality 
+                and revision lags. The engine enforces the following multi-scenario analysis:
+                """)
+                
+                # 4 months of observed FY25 exports: Apr ($34.99B), May ($38.13B), Jun ($35.20B), Jul ($34.71B)
+                observed_q1_vals = [34.99, 38.13, 35.20, 34.71]
+                ann_bounds = TradeAnnualisationEngine.calculate_annualisation_bounds(observed_q1_vals)
+
+                a1, a2, a3, a4 = st.columns(4)
+                with a1:
+                    st.metric(
+                        label="Observed to Date (4 Months)",
+                        value=f"${ann_bounds['observed_to_date_total']:.1f} B",
+                        help="Sum of April–July 2024 verified provisional exports"
+                    )
+                with a2:
+                    st.metric(
+                        label="Simple Linear Extrapolation",
+                        value=f"${ann_bounds['simple_linear_projection']:.1f} B",
+                        help="(Observed / 4) * 12 months"
+                    )
+                with a3:
+                    st.metric(
+                        label="Seasonal Baseline Projection",
+                        value=f"${ann_bounds['seasonal_baseline_projection']:.1f} B",
+                        help="Adjusted for historical festive rush (Q3-Q4 weight = ~68.4%)"
+                    )
+                with a4:
+                    st.metric(
+                        label="Uncertainty Range (±6%)",
+                        value=f"${ann_bounds['scenario_lower_bound']:.0f}B – ${ann_bounds['scenario_upper_bound']:.0f}B",
+                        help="Confidence interval accounting for revision magnitude and terms-of-trade volatility"
+                    )
+
+                st.warning(f"⚠️ **Methodology Guardrail:** {ann_bounds['methodology_disclaimer']}")
 
 # ----------------------------------------------------
 # 3. TRADE PARTNERS VIEW
@@ -1078,6 +1149,54 @@ INTERACTIVE RESEARCH DASHBOARD & EPISTEMIC AI OUTCOMES LAYER
     6. **Rule of 70 Currency Purchasing Power Halving:**
        $$T_{\text{half}} \approx \frac{70}{\bar{\pi}}$$
     """)
+
+    st.subheader("Data Integrity, SEZ Reconciliation & Revision Safeguards")
+    
+    with st.expander("🛡️ SEZ–ICEGATE Customs Reconciliation Audit & 5-Tier Duplicate Detection", expanded=False):
+        st.markdown("""
+        **1. SEZ Online & ICEGATE Customs Reporting Architecture:**
+        - **Aggregate Inclusion:** Official DGCI&S national merchandise trade aggregates **INCLUDE** physical exports and imports executed by Special Economic Zone (SEZ) units. Physical goods crossing international borders from SEZs are foreign exports; foreign goods landing in SEZs are foreign imports.
+        - **DTA Clearance Accounting:** Domestic Tariff Area (DTA) clearances (when an SEZ unit sells goods into domestic India) generate customs duty assessments on ICEGATE bills of entry. However, in national balance-of-payments and trade totals, DTA sales represent domestic inter-zone movements and are **NOT** counted as international trade.
+        - **Migration Risk Mitigation:** During the migration of SEZ declarations to ICEGATE EDI, temporary duplicate records can emerge if filings are recorded concurrently across systems. The platform monitors and reconciles aggregates against published Ministry reference totals.
+
+        **2. 5-Tier Duplicate Detection Taxonomy:**
+        - `CONFIRMED_DUPLICATE`: Identical primary transaction identifier (shipping bill or bill of entry number) with duplicate filing.
+        - `POTENTIAL_DUPLICATE`: Matching composite key (period, partner, commodity chapter, value) without unique ID to disambiguate. Flagged for review; **never silently dropped**.
+        - `LEGITIMATE_REPEATED_TRANSACTION`: Identical values, partners, and commodity chapters verified as distinct shipments via distinct declaration numbers or timestamps.
+        - `UNRESOLVED`: Ambiguous records during migration transitions.
+        - `NOT_APPLICABLE_AGGREGATE_LEVEL`: High-level aggregated tables (national totals or 2-digit HS chapters) where transaction-level deduplication is mathematically unsupported. The system explicitly discloses this data limitation.
+
+        **3. Discrepancy Reconciliation Protocol:**
+        - The engine compares derived micro/sectoral totals against official reference totals within strict statistical tolerance (±0.5% to ±1.0%).
+        - Unreconciled differences are quantified and reported transparently. The system **strictly forbids** artificial balancing plugs or unexplained adjustments.
+        - Outliers detected via statistical thresholds are classified as **review signals requiring investigation**, never as proof of data corruption.
+
+        **4. Bilateral Mirror Trade & Valuation Differences:**
+        - Bilateral trade comparisons between India's reported exports and partner-country reported imports account for:
+          - **Valuation Differences:** India reports exports FOB (Free On Board at domestic port); importing partners report CIF (Cost, Insurance, and Freight at destination port, ~8–12% higher).
+          - **Transit Lags:** Ocean freight introduces 2 to 6 weeks of transit delay, shifting calendar recording between consecutive months.
+        """)
+
+    with st.expander("📊 Revision Tracking & Annualisation Guardrails", expanded=False):
+        st.markdown("""
+        **1. Observation Publication Lifecycle:**
+        - Observation publication statuses track the official release hierarchy:  
+          `PRELIMINARY` → `QUICK_ESTIMATE` → `PROVISIONAL` → `REVISED_PROVISIONAL` → `FINAL_RECONCILED`.
+        - Series lacking an explicit publication status are assigned `UNKNOWN_STATUS` and classified as `UNKNOWN_OR_INSUFFICIENTLY_DOCUMENTED`.
+
+        **2. Full Historical Version Preservation:**
+        - When an updated trade figure is published, earlier versions are preserved in a chronological revision log recording release dates, version numbers, revision magnitudes, and percentage changes.
+        - The engine analyzes empirical revision directionality without assuming systematic upward or downward bias.
+
+        **3. Annualisation & Projection Guardrails:**
+        - **Insufficient Data Guardrail:** Projections are **refused** when fewer than 3 months of observations are available.
+        - **Multi-Scenario Modeling:** When annualised estimates are generated (e.g. for FY 2024-25 Q1), the engine provides:
+          - *Observed Volume to Date:* Exact verified empirical total.
+          - *Simple Linear Extrapolation:* Baseline uniform monthly assumption.
+          - *Seasonal Baseline Projection:* Incorporates historical empirical monthly weights (reflecting post-monsoon Q3-Q4 festive surge).
+          - *Uncertainty Bounds:* Empirical confidence interval (±6%) reflecting terms-of-trade volatility.
+        - **Mandatory Disclaimer:** All annualised estimates are accompanied by explicit disclaimers identifying them as illustrative scenarios, not official government forecasts.
+        """)
 
     st.subheader("Pipeline Execution Audit Logs")
     with storage.get_connection() as conn:

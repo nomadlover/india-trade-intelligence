@@ -186,6 +186,71 @@ PROVENANCE_REGISTRY: Dict[str, MetricProvenance] = {
             "Representative historical retail benchmarks documented for consumer purchasing-power simulation; "
             "these series are illustrative physical proxies and are NOT the official MoSPI headline CPI index."
         )
+    ),
+    "merchandise_exports_customs": MetricProvenance(
+        metric_id="merchandise_exports_customs",
+        name="Merchandise Exports (Customs Basis)",
+        source="Directorate General of Commercial Intelligence and Statistics (DGCI&S)",
+        source_agency="DGCI&S [Customs EDI / ICEGATE Declarations]",
+        observation_period="FY 2013-14 to FY 2023-24 (Final); FY 2024-25 Q1 (Provisional)",
+        frequency="Financial Year & Monthly",
+        unit="Current US$ Billion & INR Crore",
+        definition="Physical merchandise outflows cleared through Indian customs ports of entry and exit (FOB valuation). Excludes services and invisibles.",
+        calculation="Sum of physical customs shipping bills cleared through ICEGATE and SEZ ports.",
+        data_status="Official Final (FY14–FY24); Provisional Q1 (FY25)",
+        notes="Customs basis (FOB). Does not include software services, travel receipts, or overseas remittances."
+    ),
+    "merchandise_imports_customs": MetricProvenance(
+        metric_id="merchandise_imports_customs",
+        name="Merchandise Imports (Customs Basis)",
+        source="Directorate General of Commercial Intelligence and Statistics (DGCI&S)",
+        source_agency="DGCI&S [Customs EDI / ICEGATE Declarations]",
+        observation_period="FY 2013-14 to FY 2023-24 (Final); FY 2024-25 Q1 (Provisional)",
+        frequency="Financial Year & Monthly",
+        unit="Current US$ Billion & INR Crore",
+        definition="Physical merchandise inflows cleared through Indian customs ports (CIF valuation). Excludes services and financial debits.",
+        calculation="Sum of physical customs bills of entry filed across national border posts.",
+        data_status="Official Final (FY14–FY24); Provisional Q1 (FY25)",
+        notes="Customs basis (CIF). Includes crude petroleum, gold, electronic parts, and capital equipment."
+    ),
+    "services_exports_bop": MetricProvenance(
+        metric_id="services_exports_bop",
+        name="Services Exports (Invisibles Receipts, BoP Basis)",
+        source="Reserve Bank of India (RBI)",
+        source_agency="RBI External Sector / Balance of Payments Division",
+        observation_period="FY 2013-14 to FY 2023-24 (Final); FY 2024-25 Q1 (Provisional Estimate)",
+        frequency="Monthly Quick Estimates & Quarterly BoP",
+        unit="Current US$ Billion",
+        definition="Cross-border receipts for commercial services, software development, Global Capability Centers (GCCs), travel, and financial services.",
+        calculation="Monthly releases are preliminary survey estimates based on banking FETERS returns, subsequently reconciled in quarterly BoP releases.",
+        data_status="Official Estimate (Monthly); Final Reconciled (Quarterly BoP)",
+        notes="Monthly figures are estimated proxies; final reconciled data is published quarterly by the RBI."
+    ),
+    "services_imports_bop": MetricProvenance(
+        metric_id="services_imports_bop",
+        name="Services Imports (Invisibles Payments, BoP Basis)",
+        source="Reserve Bank of India (RBI)",
+        source_agency="RBI External Sector / Balance of Payments Division",
+        observation_period="FY 2013-14 to FY 2023-24 (Final); FY 2024-25 Q1 (Provisional Estimate)",
+        frequency="Monthly Quick Estimates & Quarterly BoP",
+        unit="Current US$ Billion",
+        definition="Cross-border payments for overseas travel, international transportation freight, intellectual property royalties, and business consulting.",
+        calculation="Compiled from authorized foreign exchange dealer transactions and preliminary monthly trade releases.",
+        data_status="Official Estimate (Monthly); Final Reconciled (Quarterly BoP)",
+        notes="Subject to quarterly revision when full banking balance-of-payments accounts settle."
+    ),
+    "combined_goods_services_trade": MetricProvenance(
+        metric_id="combined_goods_services_trade",
+        name="Total Combined Trade (Goods & Services)",
+        source="Ministry of Commerce & Industry / World Bank WDI",
+        source_agency="Joint compilation of DGCI&S customs merchandise and RBI services data",
+        observation_period="1995–2024 (Annual) / FY 2024-25 Q1 (Provisional)",
+        frequency="Monthly / Financial Year / Calendar Year",
+        unit="Current US$ Billion",
+        definition="Comprehensive aggregate trade combining physical customs merchandise and balance-of-payments invisibles services.",
+        calculation="Total Exports = Merchandise Exports + Services Exports; Total Imports = Merchandise Imports + Services Imports; Balance = Exports - Imports.",
+        data_status="Derived Composite Status (Inherits Lowest Component Status)",
+        notes="Status propagation rule: If merchandise is provisional or services is estimated, the combined total is NOT final."
     )
 }
 

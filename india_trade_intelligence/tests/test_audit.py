@@ -54,7 +54,10 @@ def test_provenance_metadata_completeness():
             "Official Monthly Series",
             "Derived Accounting Identity",
             "Derived Econometric Metric",
-            "Benchmark Proxy (Not Official Headline CPI)"
+            "Benchmark Proxy (Not Official Headline CPI)",
+            "Official Estimate (Monthly); Final Reconciled (Quarterly BoP)",
+            "Derived Composite Series (Provisional / Estimated Components)",
+            "Derived Composite Status (Inherits Lowest Component Status)"
         ]
 
 # 2. Absolute ban on misleading 'Today' / 'today'

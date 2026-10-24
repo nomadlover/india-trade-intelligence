@@ -157,3 +157,110 @@ class TradeDataTransformer:
         df["imports_yoy_pct"] = (df["merchandise_imports_usd_million"].pct_change(periods=12) * 100.0).round(2)
 
         return df
+
+    @classmethod
+    def combine_merchandise_and_services(
+        cls,
+        df_merchandise: pd.DataFrame,
+        df_services: pd.DataFrame,
+        period_col: str = "period"
+    ) -> pd.DataFrame:
+        """Transparently combines merchandise and services series into aggregate trade flows.
+        
+        Strictly enforces:
+        1. Accounting Identities:
+           Total Exports = Merchandise Exports + Services Exports
+           Total Imports = Merchandise Imports + Services Imports
+           Total Trade Balance = Total Exports - Total Imports
+        2. Status Propagation:
+           Inherits the lowest data status among components. If merchandise is PROVISIONAL
+           or services is ESTIMATED, the combined total is marked as PROVISIONAL_AND_ESTIMATED.
+        """
+        if df_merchandise.empty or df_services.empty:
+            return pd.DataFrame()
+
+        m_df = df_merchandise.copy()
+        s_df = df_services.copy()
+
+        # Support flexible column aliases
+        for target, aliases in [
+            ("merchandise_exports_usd_billion", ["merchandise_exports_usd_billion", "merchandise_exports", "exports_usd_billion", "exports"]),
+            ("merchandise_imports_usd_billion", ["merchandise_imports_usd_billion", "merchandise_imports", "imports_usd_billion", "imports"]),
+            ("merchandise_status", ["merchandise_status", "publication_status", "status"])
+        ]:
+            if target not in m_df.columns:
+                for a in aliases:
+                    if a in m_df.columns:
+                        m_df[target] = m_df[a]
+                        break
+
+        for target, aliases in [
+            ("services_exports_usd_billion", ["services_exports_usd_billion", "services_exports", "exports_usd_billion", "exports"]),
+            ("services_imports_usd_billion", ["services_imports_usd_billion", "services_imports", "imports_usd_billion", "imports"]),
+            ("services_status", ["services_status", "publication_status", "status"])
+        ]:
+            if target not in s_df.columns:
+                for a in aliases:
+                    if a in s_df.columns:
+                        s_df[target] = s_df[a]
+                        break
+
+        merged = pd.merge(m_df, s_df, on=period_col, how="outer", suffixes=("_merch_orig", "_serv_orig"))
+        if merged.empty:
+            return pd.DataFrame()
+
+        if "merchandise_exports_usd_billion" in merged.columns and "services_exports_usd_billion" in merged.columns:
+            has_both_exp = merged["merchandise_exports_usd_billion"].notna() & merged["services_exports_usd_billion"].notna()
+            merged["total_exports_usd_billion"] = np.where(
+                has_both_exp,
+                np.round(merged["merchandise_exports_usd_billion"] + merged["services_exports_usd_billion"], 2),
+                np.nan
+            )
+        else:
+            merged["total_exports_usd_billion"] = np.nan
+
+        if "merchandise_imports_usd_billion" in merged.columns and "services_imports_usd_billion" in merged.columns:
+            has_both_imp = merged["merchandise_imports_usd_billion"].notna() & merged["services_imports_usd_billion"].notna()
+            merged["total_imports_usd_billion"] = np.where(
+                has_both_imp,
+                np.round(merged["merchandise_imports_usd_billion"] + merged["services_imports_usd_billion"], 2),
+                np.nan
+            )
+        else:
+            merged["total_imports_usd_billion"] = np.nan
+
+        merged["total_trade_balance_usd_billion"] = np.where(
+            merged["total_exports_usd_billion"].notna() & merged["total_imports_usd_billion"].notna(),
+            (merged["total_exports_usd_billion"] - merged["total_imports_usd_billion"]).round(2),
+            np.nan
+        )
+
+        if "merchandise_exports_usd_billion" in merged.columns:
+            merged["merchandise_share_of_exports_pct"] = np.where(
+                merged["total_exports_usd_billion"].notna() & (merged["total_exports_usd_billion"] > 0),
+                ((merged["merchandise_exports_usd_billion"] / merged["total_exports_usd_billion"]) * 100.0).round(2),
+                np.nan
+            )
+        if "services_exports_usd_billion" in merged.columns:
+            merged["services_share_of_exports_pct"] = np.where(
+                merged["total_exports_usd_billion"].notna() & (merged["total_exports_usd_billion"] > 0),
+                ((merged["services_exports_usd_billion"] / merged["total_exports_usd_billion"]) * 100.0).round(2),
+                np.nan
+            )
+
+        # Propagate status
+        def get_composite_status(row):
+            m_val = row.get("merchandise_exports_usd_billion")
+            s_val = row.get("services_exports_usd_billion")
+            if pd.isna(m_val) or pd.isna(s_val):
+                return "PERIOD_MISMATCH_OR_UNKNOWN"
+            m_stat = row.get("merchandise_status", "FINAL")
+            s_stat = row.get("services_status", "FINAL")
+            if "PROVISIONAL" in str(m_stat) or "PROVISIONAL" in str(s_stat):
+                return "PROVISIONAL_COMPOSITE"
+            if "ESTIMATED" in str(m_stat) or "ESTIMATED" in str(s_stat):
+                return "ESTIMATED_COMPOSITE"
+            return "FINAL_RECONCILED"
+
+        merged["composite_data_status"] = merged.apply(get_composite_status, axis=1)
+        return merged

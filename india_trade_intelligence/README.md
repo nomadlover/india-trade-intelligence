@@ -102,6 +102,82 @@ flowchart TD
 | `commodity_merchandise_trade` | DGCI&S, Ministry of Commerce | FY14–FY24 (Final) / FY25 Q1 (Prov) | Financial Year | US$ Million / INR Cr | 17 Principal sectors (ITC-HS) | Official Final / Prov |
 | `monthly_merchandise_trade` | Reserve Bank of India (DBIE) | 2018–2025 | Monthly | US$ Million | Monthly customs merchandise | Official Monthly |
 | `commodity_basket_benchmark` | Documented Retail Market Proxies | 1995–2025 Milestones | Quinquennial | INR per unit | Representative physical basket | Benchmark Proxy |
+| `merchandise_exports_customs` | DGCI&S, Ministry of Commerce | FY14–FY24 (Final) / FY25 Q1 (Prov) | Monthly / Financial Year | Current US$ Billion | Physical border movement via customs ports | Official Final / Prov |
+| `merchandise_imports_customs` | DGCI&S, Ministry of Commerce | FY14–FY24 (Final) / FY25 Q1 (Prov) | Monthly / Financial Year | Current US$ Billion | Physical inward movement via customs ports | Official Final / Prov |
+| `services_exports_bop` | Reserve Bank of India (DBIE) | FY14–FY24 (Final) / FY25 Q1 (Prov) | Monthly / Quarterly BoP | Current US$ Billion | Cross-border invisibles receipts (FETERS) | Official Estimate / Reconciled |
+| `services_imports_bop` | Reserve Bank of India (DBIE) | FY14–FY24 (Final) / FY25 Q1 (Prov) | Monthly / Quarterly BoP | Current US$ Billion | Cross-border invisibles payments (FETERS) | Official Estimate / Reconciled |
+| `combined_goods_services_trade`| Ministry of Commerce / World Bank WDI | 1995–2024 / FY25 Q1 (Prov) | Annual / Financial Year | Current US$ Billion | Comprehensive goods + invisibles trade | Derived Composite Status |
+
+---
+
+## 🛡️ Provisional Data Integrity, SEZ Reconciliation & Revision Safeguards
+
+To address the specific structural and statistical characteristics of Indian trade statistics, the platform implements dedicated integrity engines:
+
+### 1. SEZ–ICEGATE Customs Reconciliation & 5-Tier Duplicate Detection (`TradeReconciliationEngine`)
+* **SEZ Inclusion in Official Aggregates**: In official DGCI&S trade statistics, transactions of Special Economic Zone (SEZ) units are **included** in foreign trade aggregates. Physical goods exported from SEZs to foreign nations are national exports; foreign shipments landing in SEZs are national imports.
+* **DTA Clearances Treatment**: Domestic Tariff Area (DTA) clearances (when an SEZ unit sells goods into domestic India) trigger customs duty payments on ICEGATE bills of entry. However, in national balance-of-payments accounts, DTA sales represent domestic inter-zone movements and are **excluded** from foreign trade totals.
+* **5-Tier Duplicate Detection Taxonomy**:
+  1. `CONFIRMED_DUPLICATE`: Identical primary transaction identifier (shipping bill or bill of entry number) with duplicate filing.
+  2. `POTENTIAL_DUPLICATE`: Matching composite key (period, partner, commodity chapter, value) without unique ID to disambiguate. Flagged for review; **never silently dropped**.
+  3. `LEGITIMATE_REPEATED_TRANSACTION`: Identical values, partners, and commodity chapters verified as distinct shipments via distinct declaration numbers or timestamps.
+  4. `UNRESOLVED`: Ambiguous records during migration transitions.
+  5. `NOT_APPLICABLE_AGGREGATE_LEVEL`: High-level aggregated tables (national totals or 2-digit HS chapters) where transaction-level deduplication is mathematically unsupported. The system explicitly discloses this data limitation.
+* **Reconciliation Without Artificial Balancing**: Discrepancies between derived component sums and published reference totals are quantified and reported. The system strictly forbids artificial balancing plugs or unexplained adjustments.
+* **Statistical Anomaly Review Signals**: Outliers detected via standard score or growth thresholds are flagged strictly as review signals requiring investigation, never as proof of data corruption.
+
+### 2. Provisional Quick Estimates & Revision Tracking (`TradeRevisionTracker`)
+* **Observation Lifecycle Tracking**: Follows official release statuses:  
+  `PRELIMINARY` → `QUICK_ESTIMATE` → `PROVISIONAL` → `REVISED_PROVISIONAL` → `FINAL_RECONCILED`.
+* **Full Version History Retention**: When updated figures are ingested, earlier versions are preserved in a chronological revision log recording release dates, version numbers, revision magnitudes, and percentage shifts.
+* **Empirical Directionality**: Revisions are tracked bidirectionally without assuming systematic upward or downward bias.
+
+### 3. Annualisation Safeguards & Uncertainty Bounds (`TradeAnnualisationEngine`)
+* **Insufficient Data Guardrail**: Full-year extrapolations are **strictly refused** when fewer than 3 months of observations are available.
+* **Multi-Scenario Modeling**: When annualised projections are generated (e.g., for FY 2024-25 Q1):
+  - *Observed Volume to Date:* Exact verified empirical total ($144.1B for Apr–Jul exports).
+  - *Simple Linear Extrapolation:* Baseline uniform monthly assumption ($432.3B).
+  - *Seasonal Baseline Projection:* Incorporates historical empirical monthly weights (reflecting post-monsoon Q3-Q4 festive surge, ~$456.0B).
+  - *Uncertainty Bounds:* Empirical confidence interval (±6%) reflecting terms-of-trade volatility ($428.6B – $483.4B).
+* **Mandatory Research Disclaimer**: All annualised estimates are accompanied by explicit disclaimers identifying them as illustrative scenarios, not official government forecasts.
+
+### 4. Separate Merchandise vs Services Trade Accounts & Status Propagation
+* **Merchandise Trade (Customs Basis, DGCI&S)**: Physical cross-border commodity trade recorded FOB for exports and CIF for imports.
+* **Services Trade (BoP Basis, RBI)**: Intangibles, software receipts, GCCs, and travel compiled via preliminary banking returns (FETERS) and finalized quarterly.
+* **Status Propagation Rule**: When combined into aggregate trade, the composite metric inherits the lowest publication status among components. If merchandise is `PROVISIONAL` or services is `ESTIMATED`, the aggregate is strictly classified as `PROVISIONAL_COMPOSITE` and is **never** presented as final reconciled data.
+
+### 5. Bilateral Mirror Trade & Transit Lag Semantics
+* **Valuation Basis**: Exporter statistics are recorded FOB (port of exit); importer statistics are recorded CIF (port of arrival, ~8–12% higher due to freight and insurance).
+* **Transit Lags**: Ocean shipping introduces 2 to 6 weeks of transit delay, naturally shifting recording across consecutive months between trading partners.
+
+---
+
+## 🧪 Comprehensive Automated Test Suite (53 Tests Passing)
+
+The repository includes 53 automated unit and econometric audit tests executed via `pytest`:
+1. **11 Economic Audit & Epistemic Tests (`test_audit.py`)**: Provenance metadata completeness, absolute ban on misleading "today", CPI calculation gap protection, purchasing power decay, commodity basket benchmarks, trade balance identity, trade openness formula, Rule of 70 halving, pre/post-COVID structural shift, and AI fallback protection.
+2. **18 Provisional Integrity & SEZ Reconciliation Tests (`test_provisional_integrity.py`)**:
+   - Duplicate transaction identifiers (`CONFIRMED_DUPLICATE`)
+   - Legitimate repeated transactions with similar values (`LEGITIMATE_REPEATED_TRANSACTION`)
+   - Candidate duplicates without transaction IDs (flagged for review, not dropped)
+   - Unreconciled data compared with official aggregates (no artificial balancing)
+   - Source totals differing due to reporting definitions (`STRUCTURAL_DEFINITION_DIFFERENCE`)
+   - Preliminary observation subsequently revised (magnitude and direction tracked)
+   - Preservation of historical versions (version trail preserved)
+   - Partial-year compared with complete year (comparability warnings)
+   - Annualisation of insufficient monthly data (refused if $N < 3$; linear vs seasonal bounds)
+   - Merchandise combined with estimated services (composite status propagation)
+   - Different reporting periods across components (mismatches detected)
+   - Missing source publication status (assigned `UNKNOWN_STATUS`)
+   - Documented data-quality warning (conditional generation)
+   - Clean dataset displaying no unsupported warnings (no false alarms)
+   - Bilateral reporting lags (transit delay + CIF/FOB markup)
+   - Suspected anomaly as a review signal, not proof of error
+   - AI-generated analysis acknowledging provisional/estimated data
+   - Source outage preserving validated historical data
+3. **24 Pipeline Transformation, Cleaning & Validation Tests**: Storage schema, OLS trend fitting, structural break detection, causality disclaimers, currency conversions, ISO-3 country mappings, commodity chapter cleaning, and monthly regex validation.
+
+---
 
 ---
 

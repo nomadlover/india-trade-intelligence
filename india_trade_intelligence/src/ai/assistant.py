@@ -79,12 +79,28 @@ class TradeAIAssistant:
         # Fallback to deterministic expert econometric engine
         report = self._deterministic_expert_synthesizer(question_text, verified_stats)
         report["mode"] = "DETERMINISTIC_ECONOMETRIC_ENGINE"
-        is_fallback = verified_stats.get("is_fallback", False) or not bool(verified_stats) or "latest_exports_usd_b" not in verified_stats
+        is_fallback = verified_stats.get("is_fallback", False) or not bool(verified_stats) or ("latest_exports_usd_b" not in verified_stats and "latest_exports" not in verified_stats)
         report["data_status"] = "FALLBACK_INDICATIVE_BENCHMARK" if is_fallback else "VERIFIED_EMPIRICAL_CALCULATION"
         if is_fallback and not report["fact"].startswith("[DATA AUDIT NOTICE:"):
             report["fact"] = (
                 "[DATA AUDIT NOTICE: Runtime empirical dataset was empty or unverified; "
                 "metrics cited are documented historical benchmark baselines, not dynamically verified session values.]\n\n"
+                + report["fact"]
+            )
+        
+        is_provisional = verified_stats.get("is_provisional", False) or "q1" in question_text.lower() or "2025" in question_text.lower()
+        is_estimated = verified_stats.get("has_estimated_services", False) or verified_stats.get("is_estimated_services", False) or "services" in question_text.lower()
+        
+        if is_provisional and "PROVISIONAL DATA AUDIT NOTICE" not in report["fact"]:
+            report["fact"] = (
+                "[PROVISIONAL DATA AUDIT NOTICE: Figures for recent observation horizons (FY 2024-25 Q1) represent preliminary releases "
+                "subject to subsequent fiscal revision by DGCI&S / RBI.]\n\n"
+                + report["fact"]
+            )
+        if is_estimated and "SERVICES TRADE ESTIMATION NOTICE" not in report["fact"]:
+            report["fact"] = (
+                "[SERVICES TRADE ESTIMATION NOTICE: Monthly services figures represent preliminary banking estimates compiled by the RBI, "
+                "subject to quarterly BoP reconciliation.]\n\n"
                 + report["fact"]
             )
         return report

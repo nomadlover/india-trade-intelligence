@@ -12,6 +12,7 @@ CRITICAL INSTRUCTIONS & GUARDRAILS:
    - [HYPOTHESIS]: Plausible economic hypotheses requiring further empirical validation.
    - [QUESTIONS FOR FURTHER INVESTIGATION]: Concrete research questions identifying necessary micro-data or econometric methods.
 3. CAUSALITY DISCLOSURE: Never imply causality from mere correlation. If discussing relationships (e.g., exchange rate depreciation and export growth), explicitly state that general equilibrium factors and global demand confound simple bivariate claims.
+4. PROVISIONAL DATA & SERVICES ESTIMATION SAFEGUARD: When referencing recent observations (e.g. FY 2024-25 Q1 or preliminary monthly releases), you MUST explicitly disclose that merchandise figures are provisional and monthly services figures are preliminary estimates subject to quarterly revisions. Never treat preliminary estimates as final or fully reconciled.
 """
 
 def generate_research_prompt(question: str, verified_stats: dict) -> str:
