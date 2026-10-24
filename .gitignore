@@ -52,4 +52,4 @@ htmlcov/
 env/
 venv/
 ENV/
-
+.firebase/

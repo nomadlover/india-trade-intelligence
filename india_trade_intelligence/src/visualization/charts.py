@@ -388,7 +388,7 @@ def plot_purchasing_power_decay(pp_df: pd.DataFrame, start_year: int, amount: fl
         fig.add_annotation(
             x=latest["year"],
             y=latest["real_purchasing_power_inr"],
-            text=f"Today's Real Value:<br><b>₹{latest['real_purchasing_power_inr']:,.2f}</b> ({latest['purchasing_power_retention_pct']:.1f}%)",
+            text=f"Benchmark Year ({int(latest['year'])}) Value:<br><b>₹{latest['real_purchasing_power_inr']:,.2f}</b> ({latest['purchasing_power_retention_pct']:.1f}%)",
             showarrow=True,
             arrowhead=2,
             arrowcolor=COLOR_ACCENT,
@@ -413,7 +413,7 @@ def plot_commodity_basket_comparison(basket_start: Dict[str, Any], basket_curren
     fig.add_trace(go.Bar(
         y=items,
         x=qty_start,
-        name=f"In Year {year_start}",
+        name=f"In Base Year {year_start}",
         orientation="h",
         marker_color=COLOR_TEAL,
         text=[f"{q} {u}" for q, u in zip(qty_start, units)],
@@ -424,7 +424,7 @@ def plot_commodity_basket_comparison(basket_start: Dict[str, Any], basket_curren
     fig.add_trace(go.Bar(
         y=items,
         x=qty_current,
-        name=f"In Year {year_current} (Today)",
+        name=f"In Benchmark Year {year_current}",
         orientation="h",
         marker_color=COLOR_DEFICIT,
         text=[f"{q} {u}" for q, u in zip(qty_current, units)],
@@ -432,7 +432,7 @@ def plot_commodity_basket_comparison(basket_start: Dict[str, Any], basket_curren
         hovertemplate=f"<b>%{{y}}</b> ({year_current}): %{{x}} units<extra></extra>"
     ))
 
-    layout = get_base_layout(f"What Your Money Could Buy: {year_start} vs {year_current}")
+    layout = get_base_layout(f"What Your Money Could Buy: Base Year {year_start} vs Benchmark Year {year_current}")
     layout["barmode"] = "group"
     layout["xaxis"]["title"] = "Quantity Purchasable"
     layout["height"] = 420

@@ -36,7 +36,8 @@ import {
   BellOff,
   ExternalLink,
   FileText,
-  Pencil
+  Pencil,
+  Clock
 } from 'lucide-react';
 import {
   playQuestCompleteSound,
@@ -63,6 +64,7 @@ import {
   MAX_FREE_HABITS,
   calculateLevel,
   getTodayKey,
+  getTodayDateString,
   getYesterdayKey
 } from './utils/firebase';
 import {
@@ -100,7 +102,7 @@ import {
 type Difficulty = 'easy' | 'medium' | 'hard';
 type MainTab = 'quests' | 'leaderboard' | 'shop' | 'profile';
 type AppScreen = 'loading' | 'auth' | 'character_setup' | 'main';
-type LeaderboardTab = 'all_time' | 'streaks';
+type LeaderboardTab = 'all_time' | 'daily' | 'streaks';
 
 interface Habit {
   id: string;
@@ -121,6 +123,8 @@ interface PlayerStats {
   level: number;
   currentXP: number;
   totalXP: number;
+  dailyXP: number;
+  dailyXPDate: string | null;
   gold: number;
   streakDays: number;
   lastCompletedDate: string | null;
@@ -169,6 +173,14 @@ const AVATAR_OPTIONS = [
   { icon: '🧘', title: 'Monk', role: 'Zen Master', desc: 'Calm Mind & Spiritual Flow' },
   { icon: '🏹', title: 'Archer', role: 'Star Hunter', desc: 'Precision Goals & Targets' }
 ];
+
+const getAvatarIcon = (avatarId?: string): string => {
+  if (!avatarId) return '⚔️';
+  const found = AVATAR_OPTIONS.find(
+    (a) => a.icon === avatarId || a.title.toLowerCase() === avatarId.toLowerCase()
+  );
+  return found ? found.icon : avatarId;
+};
 
 const EMOJI_BANK = ['⚡', '💧', '🏃', '📚', '🧘', '🥗', '💻', '💤', '✍️', '🏋️', '🎯', '🥑', '🔥', '🛡️', '🧠', '☕'];
 
@@ -230,6 +242,19 @@ const DEFAULT_REWARDS: RewardItem[] = [
   { id: 'r-4', name: '30m Restful Power Nap', icon: '😴', cost: 60, claimedCount: 0, category: 'treat' }
 ];
 
+const getSecondsUntilMidnight = (): number => {
+  const now = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+  return Math.max(0, Math.floor((midnight.getTime() - now.getTime()) / 1000));
+};
+
+const formatTimeUntilMidnight = (totalSeconds: number): string => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
 export default function LevelUpApp() {
   const [isClient, setIsClient] = useState(false);
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('loading');
@@ -250,17 +275,20 @@ export default function LevelUpApp() {
   const [setupError, setSetupError] = useState<string | null>(null);
   const [setupLoading, setSetupLoading] = useState(false);
 
-  // Quota-Safe Leaderboard State (5-minute cache to protect Firestore Spark limits)
-  const LEADERBOARD_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+  // Live Real-Time Leaderboard State
   const [leaderboardTab, setLeaderboardTab] = useState<LeaderboardTab>('all_time');
   const [leaderboardData, setLeaderboardData] = useState<UserProfile[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [userRank, setUserRank] = useState<number | null>(null);
   const [lastRefreshedAt, setLastRefreshedAt] = useState<number>(Date.now());
-  const leaderboardCacheRef = useRef<{
-    all_time?: { data: UserProfile[]; timestamp: number };
-    streaks?: { data: UserProfile[]; timestamp: number };
-  }>({});
+  const [secondsUntilMidnight, setSecondsUntilMidnight] = useState<number>(getSecondsUntilMidnight);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsUntilMidnight(getSecondsUntilMidnight());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Player Profile State (Populated strictly from Firestore users/{uid})
   const [player, setPlayer] = useState<PlayerStats>({
@@ -271,6 +299,8 @@ export default function LevelUpApp() {
     level: 1,
     currentXP: 0,
     totalXP: 0,
+    dailyXP: 0,
+    dailyXPDate: null,
     gold: 0,
     streakDays: 0,
     lastCompletedDate: null,
@@ -282,6 +312,7 @@ export default function LevelUpApp() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [rewards, setRewards] = useState<RewardItem[]>(DEFAULT_REWARDS);
   const [weekOffset, setWeekOffset] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Modals & Notifications
   const [isAddQuestModal, setIsAddQuestModal] = useState(false);
@@ -361,50 +392,295 @@ export default function LevelUpApp() {
   };
 
   // ----------------------------------------------------
-  // Verify User Profile in Firestore
+  // Dual-Layer Persistence: Auto-Save Profile, Habits, & Rewards
+  // CRITICAL HYDRATION GUARD: isLoaded prevents initial default state from overwriting storage
   // ----------------------------------------------------
-  const verifyUserProfile = useCallback(async (userId: string) => {
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem('levelup_profile', JSON.stringify(player));
+      localStorage.setItem('levelup_player', JSON.stringify(player));
+    } catch (e) {
+      console.warn('LocalStorage profile write failed:', e);
+    }
+
+    if (currentUserId && currentUserId !== 'user_init' && player.name && player.name.trim().length >= 3) {
+      const profileData: Partial<UserProfile> = {
+        uid: currentUserId,
+        username: player.name,
+        username_lowercase: player.name.toLowerCase(),
+        avatar_id: player.avatar,
+        level: player.level,
+        xp: player.currentXP,
+        total_xp: player.totalXP,
+        daily_xp: player.dailyXPDate === todayKey ? player.dailyXP : 0,
+        daily_xp_date: player.dailyXPDate,
+        gold: player.gold,
+        streak_days: player.streakDays,
+        last_completed_date: player.lastCompletedDate,
+        is_pro: player.isPro,
+        interested_in_pro: player.interestedInPro
+      };
+      setDoc(doc(db, 'users', currentUserId), profileData, { merge: true }).catch((err) => {
+        console.warn('Background profile cloud sync error:', err);
+      });
+    }
+  }, [player, isLoaded, currentUserId]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem('levelup_habits', JSON.stringify(habits));
+    } catch (e) {
+      console.warn('LocalStorage habits write failed:', e);
+    }
+  }, [habits, isLoaded]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem('levelup_rewards', JSON.stringify(rewards));
+    } catch (e) {
+      console.warn('LocalStorage rewards write failed:', e);
+    }
+  }, [rewards, isLoaded]);
+
+  // ----------------------------------------------------
+  // Sync User Data & Habits on Auth Resolution (Offline to Online Push)
+  // Auto-Heal: If user doc missing, auto-initialize from Firebase Auth displayName
+  // ----------------------------------------------------
+  const syncUserDataOnAuth = useCallback(async (userId: string) => {
     try {
       const userDocRef = doc(db, 'users', userId);
       const userSnap = await getDoc(userDocRef);
 
+      // Latest local profile
+      let localPlayer: PlayerStats | null = null;
+      try {
+        const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+        if (raw) localPlayer = JSON.parse(raw);
+      } catch {}
+
       if (userSnap.exists()) {
-        const data = userSnap.data() as UserProfile;
-        if (data.username && data.username.trim().length >= 3) {
-          const classOption = AVATAR_OPTIONS.find((a) => a.icon === data.avatar_id) || AVATAR_OPTIONS[0];
-          const loadedPlayer: PlayerStats = {
+        const remoteData = userSnap.data() as UserProfile;
+        const remoteTotalXP = remoteData.total_xp || 0;
+        const localTotalXP = localPlayer?.totalXP || 0;
+
+        // If user earned XP or progressed offline, push offline changes to Firestore
+        if (localPlayer && localPlayer.name && localTotalXP > remoteTotalXP) {
+          const offlineProfileData: Partial<UserProfile> = {
+            uid: userId,
+            username: localPlayer.name,
+            username_lowercase: localPlayer.name.toLowerCase(),
+            avatar_id: localPlayer.avatar || remoteData.avatar_id || '⚔️',
+            level: localPlayer.level,
+            xp: localPlayer.currentXP,
+            total_xp: localPlayer.totalXP,
+            gold: Math.max(localPlayer.gold, remoteData.gold || 0),
+            streak_days: Math.max(localPlayer.streakDays, remoteData.streak_days || 0),
+            last_completed_date: localPlayer.lastCompletedDate || remoteData.last_completed_date || null,
+            is_pro: !!remoteData.is_pro,
+            interested_in_pro: !!remoteData.interested_in_pro || !!localPlayer.interestedInPro
+          };
+          await setDoc(userDocRef, offlineProfileData, { merge: true });
+          const merged: PlayerStats = { ...localPlayer, id: userId };
+          setPlayer(merged);
+          localStorage.setItem('levelup_profile', JSON.stringify(merged));
+          localStorage.setItem('levelup_player', JSON.stringify(merged));
+        } else if (remoteData.username && remoteData.username.trim().length >= 3) {
+          // Firestore is newer/equal: hydrate local state with remote data
+          const avatarIcon = getAvatarIcon(remoteData.avatar_id);
+          const classOption = AVATAR_OPTIONS.find((a) => a.icon === avatarIcon) || AVATAR_OPTIONS[0];
+          const calculatedLvl = calculateLevel(remoteData.total_xp || 0);
+          const isRemoteToday = remoteData.daily_xp_date === todayKey;
+          const remoteDailyXP = isRemoteToday ? (remoteData.daily_xp || 0) : 0;
+          const mergedPlayer: PlayerStats = {
             id: userId,
-            name: data.username,
-            avatar: data.avatar_id || '⚔️',
-            classTitle: getPlayerTitle(data.level || 1, classOption.title),
-            level: data.level || 1,
-            currentXP: data.xp || 0,
-            totalXP: data.total_xp || 0,
-            gold: data.gold || 0,
-            streakDays: data.streak_days || 0,
-            lastCompletedDate: data.last_completed_date || null,
-            isPro: !!data.is_pro,
-            interestedInPro: !!data.interested_in_pro,
+            name: remoteData.username,
+            avatar: avatarIcon,
+            classTitle: getPlayerTitle(calculatedLvl, classOption.title),
+            level: calculatedLvl,
+            currentXP: remoteData.xp || 0,
+            totalXP: remoteData.total_xp || 0,
+            dailyXP: remoteDailyXP,
+            dailyXPDate: todayKey,
+            gold: remoteData.gold || 0,
+            streakDays: remoteData.streak_days || 0,
+            lastCompletedDate: remoteData.last_completed_date || null,
+            isPro: !!remoteData.is_pro,
+            interestedInPro: !!remoteData.interested_in_pro,
+            unlockedBadgeIds: ['first_blood']
+          };
+          setPlayer(mergedPlayer);
+          localStorage.setItem('levelup_profile', JSON.stringify(mergedPlayer));
+          localStorage.setItem('levelup_player', JSON.stringify(mergedPlayer));
+
+          // If player opens app after midnight, reset daily_xp in Firestore for the new day
+          if (!isRemoteToday && (remoteData.daily_xp || 0) > 0) {
+            setDoc(userDocRef, { daily_xp: 0, daily_xp_date: todayKey }, { merge: true }).catch(() => {});
+          }
+        } else {
+          // Document exists but username is empty/short — route to character setup
+          setCurrentScreen('character_setup');
+          return;
+        }
+
+        setCurrentScreen('main');
+      } else {
+        // Document does NOT exist in Firestore yet — AUTO-HEAL for existing Firebase Auth users
+        if (localPlayer && localPlayer.name && localPlayer.name.trim().length >= 3) {
+          // Has valid local profile: push it to Firestore
+          const newDoc: UserProfile = {
+            uid: userId,
+            username: localPlayer.name,
+            username_lowercase: localPlayer.name.toLowerCase(),
+            avatar_id: localPlayer.avatar || '⚔️',
+            level: localPlayer.level || 1,
+            xp: localPlayer.currentXP || 0,
+            total_xp: localPlayer.totalXP || 0,
+            gold: localPlayer.gold || 0,
+            streak_days: localPlayer.streakDays || 0,
+            last_completed_date: localPlayer.lastCompletedDate || null,
+            is_pro: false,
+            interested_in_pro: !!localPlayer.interestedInPro,
+            created_at: new Date().toISOString()
+          };
+          await setDoc(userDocRef, newDoc, { merge: true });
+          setCurrentScreen('main');
+        } else {
+          // Auto-heal: Generate a default username from Firebase Auth displayName or uid
+          const firebaseUser = auth.currentUser;
+          const autoName = firebaseUser?.displayName
+            ? firebaseUser.displayName.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 15) || ('Hunter_' + userId.slice(0, 4))
+            : ('Hunter_' + userId.slice(0, 4));
+
+          const autoDoc: UserProfile = {
+            uid: userId,
+            username: autoName,
+            username_lowercase: autoName.toLowerCase(),
+            avatar_id: 'warrior',
+            level: 1,
+            xp: 0,
+            total_xp: 0,
+            daily_xp: 0,
+            daily_xp_date: todayKey,
+            gold: 0,
+            streak_days: 0,
+            last_completed_date: null,
+            is_pro: false,
+            interested_in_pro: false,
+            created_at: new Date().toISOString()
+          };
+
+          try {
+            await setDoc(userDocRef, autoDoc, { merge: true });
+          } catch (autoHealErr) {
+            console.warn('Auto-heal Firestore write failed:', autoHealErr);
+          }
+
+          const autoPlayer: PlayerStats = {
+            id: userId,
+            name: autoName,
+            avatar: getAvatarIcon('warrior'),
+            classTitle: getPlayerTitle(1, 'Warrior'),
+            level: 1,
+            currentXP: 0,
+            totalXP: 0,
+            dailyXP: 0,
+            dailyXPDate: todayKey,
+            gold: 0,
+            streakDays: 0,
+            lastCompletedDate: null,
+            isPro: false,
+            interestedInPro: false,
             unlockedBadgeIds: ['first_blood']
           };
 
-          setPlayer(loadedPlayer);
-          localStorage.setItem('levelup_player', JSON.stringify(loadedPlayer));
+          setPlayer(autoPlayer);
+          localStorage.setItem('levelup_profile', JSON.stringify(autoPlayer));
+          localStorage.setItem('levelup_player', JSON.stringify(autoPlayer));
           setCurrentScreen('main');
           return;
         }
       }
-      // If document missing or username empty, route to character creation
-      setCurrentScreen('character_setup');
-    } catch (err) {
-      console.warn('Profile verification exception:', err);
-      // Check local cache for offline resiliency
-      const cachedPlayer = localStorage.getItem('levelup_player');
-      if (cachedPlayer) {
+
+      // Sync habits bidirectionally (Push offline-created habits & merge completed dates)
+      try {
+        const habitsCol = collection(db, 'users', userId, 'habits');
+        const habitsSnap = await getDocs(habitsCol);
+
+        const remoteHabits: Habit[] = habitsSnap.docs.map((docSnap) => {
+          const data = docSnap.data() as HabitDocument;
+          const diffKey = (data.difficulty || 'medium') as Difficulty;
+          const reward = DIFFICULTY_REWARDS[diffKey] || DIFFICULTY_REWARDS.medium;
+          return {
+            id: docSnap.id,
+            name: data.title,
+            icon: data.icon || '⚡',
+            difficulty: diffKey,
+            xpReward: reward.xp,
+            goldReward: reward.gold,
+            completedDates: Array.isArray(data.completed_dates) ? data.completed_dates : [],
+            createdAt: data.created_at
+          };
+        });
+
+        let localHabits: Habit[] = [];
         try {
-          const parsed = JSON.parse(cachedPlayer);
-          if (parsed.name) {
-            setPlayer(parsed);
+          const raw = localStorage.getItem('levelup_habits');
+          if (raw) localHabits = JSON.parse(raw);
+        } catch {}
+
+        const remoteIdMap = new Map(remoteHabits.map((h) => [h.id, h]));
+        const mergedList: Habit[] = [...remoteHabits];
+
+        for (const localH of localHabits) {
+          if (!remoteIdMap.has(localH.id)) {
+            try {
+              const newDocRef = await addDoc(habitsCol, {
+                title: localH.name,
+                difficulty: localH.difficulty,
+                icon: localH.icon,
+                completed_dates: localH.completedDates || [],
+                created_at: localH.createdAt || new Date().toISOString()
+              });
+              mergedList.push({ ...localH, id: newDocRef.id });
+            } catch (upErr) {
+              console.warn('Error pushing offline habit to Firestore:', upErr);
+              mergedList.push(localH);
+            }
+          } else {
+            const remoteH = remoteIdMap.get(localH.id)!;
+            const combinedDates = Array.from(new Set([...(remoteH.completedDates || []), ...(localH.completedDates || [])]));
+            if (combinedDates.length > remoteH.completedDates.length) {
+              setDoc(
+                doc(db, 'users', userId, 'habits', localH.id),
+                { completed_dates: combinedDates },
+                { merge: true }
+              ).catch((e) => console.warn('Offline completed_dates sync error:', e));
+              const idx = mergedList.findIndex((h) => h.id === localH.id);
+              if (idx !== -1) {
+                mergedList[idx] = { ...mergedList[idx], completedDates: combinedDates };
+              }
+            }
+          }
+        }
+
+        if (mergedList.length > 0) {
+          setHabits(mergedList);
+          localStorage.setItem('levelup_habits', JSON.stringify(mergedList));
+        }
+      } catch (habitsErr) {
+        console.warn('Bidirectional habits sync error:', habitsErr);
+      }
+
+    } catch (err: any) {
+      console.warn('User auth sync exception (safe fallback):', err);
+      const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.name && parsed.name.trim().length >= 3) {
             setCurrentScreen('main');
             return;
           }
@@ -413,6 +689,8 @@ export default function LevelUpApp() {
       setCurrentScreen('character_setup');
     }
   }, []);
+
+  const verifyUserProfile = syncUserDataOnAuth;
 
   // ----------------------------------------------------
   // Real-time Habit (Quest) Sync via Firestore Subcollection
@@ -428,6 +706,7 @@ export default function LevelUpApp() {
       const unsubscribe = onSnapshot(
         q,
         (snapshot) => {
+          if (snapshot.empty) return;
           const loadedHabits: Habit[] = snapshot.docs.map((docSnap) => {
             const data = docSnap.data() as HabitDocument;
             const diffKey = (data.difficulty || 'medium') as Difficulty;
@@ -443,8 +722,15 @@ export default function LevelUpApp() {
               createdAt: data.created_at
             };
           });
-          setHabits(loadedHabits);
-          localStorage.setItem('levelup_habits', JSON.stringify(loadedHabits));
+          setHabits((prev) => {
+            const serverIds = new Set(loadedHabits.map((h) => h.id));
+            const offlineHabits = prev.filter((h) => !serverIds.has(h.id) && h.id.startsWith('quest-'));
+            const combined = [...loadedHabits, ...offlineHabits];
+            try {
+              localStorage.setItem('levelup_habits', JSON.stringify(combined));
+            } catch {}
+            return combined;
+          });
         },
         (error) => {
           console.warn('Habits snapshot error:', error);
@@ -477,9 +763,13 @@ export default function LevelUpApp() {
           if (!docSnap.exists()) return;
           const data = docSnap.data() as UserProfile;
           setPlayer((prev) => {
+            // Guard: Never downgrade higher XP/level earned locally/offline
+            if (prev.totalXP > (data.total_xp || 0)) {
+              return prev;
+            }
             const calculatedLvl = calculateLevel(data.total_xp || 0);
             const classOption = AVATAR_OPTIONS.find((a) => a.icon === data.avatar_id) || AVATAR_OPTIONS[0];
-            return {
+            const updated = {
               ...prev,
               name: data.username || prev.name,
               avatar: data.avatar_id || prev.avatar,
@@ -493,6 +783,11 @@ export default function LevelUpApp() {
               isPro: !!data.is_pro,
               interestedInPro: !!data.interested_in_pro
             };
+            try {
+              localStorage.setItem('levelup_profile', JSON.stringify(updated));
+              localStorage.setItem('levelup_player', JSON.stringify(updated));
+            } catch {}
+            return updated;
           });
         },
         (err) => console.warn('User listener error:', err)
@@ -505,99 +800,88 @@ export default function LevelUpApp() {
   }, [currentUserId, currentScreen]);
 
   // ----------------------------------------------------
-  // Quota-Safe Leaderboard Fetch & Ranking Logic (getDocs + 5m Cache)
+  // Live Real-Time Leaderboard Feed via Firestore onSnapshot (limit(30))
   // ----------------------------------------------------
-  const fetchLiveLeaderboard = useCallback(async (forceRefresh = false) => {
-    const now = Date.now();
-    const cached = leaderboardCacheRef.current[leaderboardTab];
-
-    // Check if valid cache exists (< 5 minutes old) and forceRefresh is false
-    if (!forceRefresh && cached && (now - cached.timestamp < LEADERBOARD_CACHE_TTL)) {
-      setLeaderboardData(cached.data);
-      const userIndex = cached.data.findIndex(
-        (p) => p.uid === currentUserId || (player.name && p.username?.toLowerCase() === player.name?.toLowerCase())
-      );
-      setUserRank(userIndex !== -1 ? userIndex + 1 : (cached.data.length >= 20 ? 21 : cached.data.length + 1));
-      return;
-    }
+  useEffect(() => {
+    if (activeTab !== 'leaderboard') return;
 
     setLeaderboardLoading(true);
 
     try {
       const usersCol = collection(db, 'users');
-      let q;
+      const q = query(usersCol, limit(30));
 
-      // Single-field orderBy queries: safe for Firestore Spark free plan (requires no composite indexes)
-      if (leaderboardTab === 'all_time') {
-        q = query(usersCol, orderBy('total_xp', 'desc'), limit(20));
-      } else {
-        q = query(usersCol, orderBy('streak_days', 'desc'), limit(20));
-      }
+      const unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const rawUsers: UserProfile[] = snapshot.docs.map((d) => ({
+            ...(d.data() as UserProfile),
+            uid: d.id
+          }));
 
-      // One-time fetch (DO NOT use continuous onSnapshot to avoid burning reads)
-      const snap = await getDocs(q);
-      const data: UserProfile[] = snap.docs.map((d) => d.data() as UserProfile);
+          // Sort dynamically based on active leaderboardTab
+          const sorted = [...rawUsers].sort((a, b) => {
+            if (leaderboardTab === 'all_time') {
+              return (b.total_xp || 0) - (a.total_xp || 0);
+            } else if (leaderboardTab === 'daily') {
+              const aDaily = a.daily_xp_date === todayKey ? (a.daily_xp || 0) : 0;
+              const bDaily = b.daily_xp_date === todayKey ? (b.daily_xp || 0) : 0;
+              if (bDaily !== aDaily) return bDaily - aDaily;
+              return (b.total_xp || 0) - (a.total_xp || 0);
+            } else {
+              return (b.streak_days || 0) - (a.streak_days || 0);
+            }
+          });
 
-      // Save to 5-minute cache
-      leaderboardCacheRef.current[leaderboardTab] = {
-        data,
-        timestamp: now
-      };
-      setLastRefreshedAt(now);
+          if (sorted.length > 0) {
+            setLeaderboardData(sorted);
+            const userIndex = sorted.findIndex(
+              (p) => p.uid === currentUserId || (player.name && p.username?.toLowerCase() === player.name?.toLowerCase())
+            );
+            setUserRank(userIndex !== -1 ? userIndex + 1 : (sorted.length >= 30 ? 31 : sorted.length + 1));
+          } else if (player.name) {
+            const selfRow: UserProfile = {
+              uid: player.id,
+              username: player.name,
+              username_lowercase: player.name.toLowerCase(),
+              avatar_id: player.avatar,
+              level: player.level,
+              xp: player.currentXP,
+              total_xp: player.totalXP,
+              daily_xp: player.dailyXPDate === todayKey ? player.dailyXP : 0,
+              daily_xp_date: player.dailyXPDate,
+              gold: player.gold,
+              streak_days: player.streakDays,
+              last_completed_date: player.lastCompletedDate,
+              is_pro: player.isPro,
+              interested_in_pro: player.interestedInPro
+            };
+            setLeaderboardData([selfRow]);
+            setUserRank(1);
+          }
 
-      if (data.length > 0) {
-        setLeaderboardData(data);
-
-        // Find user rank in top 20
-        const userIndex = data.findIndex(
-          (p) => p.uid === currentUserId || (player.name && p.username?.toLowerCase() === player.name?.toLowerCase())
-        );
-
-        if (userIndex !== -1) {
-          setUserRank(userIndex + 1);
-        } else {
-          setUserRank(data.length >= 20 ? 21 : data.length + 1);
+          setLeaderboardLoading(false);
+          setLastRefreshedAt(Date.now());
+        },
+        (error) => {
+          console.warn('Leaderboard onSnapshot error:', error);
+          setLeaderboardLoading(false);
         }
-      } else {
-        // Fallback: If database is new/empty, display the player's own profile as the sole row
-        if (player.name) {
-          const selfRow: UserProfile = {
-            uid: player.id,
-            username: player.name,
-            username_lowercase: player.name.toLowerCase(),
-            avatar_id: player.avatar,
-            level: player.level,
-            xp: player.currentXP,
-            total_xp: player.totalXP,
-            gold: player.gold,
-            streak_days: player.streakDays,
-            last_completed_date: player.lastCompletedDate,
-            is_pro: player.isPro,
-            interested_in_pro: player.interestedInPro
-          };
-          setLeaderboardData([selfRow]);
-          setUserRank(1);
-        }
-      }
+      );
+
+      return () => unsubscribe();
     } catch (e) {
-      console.warn('Leaderboard fetch exception:', e);
-      if (cached) {
-        setLeaderboardData(cached.data);
-      }
-    } finally {
+      console.warn('Leaderboard subscription error:', e);
       setLeaderboardLoading(false);
     }
-  }, [leaderboardTab, currentUserId, player.id, player.name, player.level, player.totalXP, player.avatar, player.gold, player.streakDays, player.lastCompletedDate, player.isPro, player.interestedInPro, LEADERBOARD_CACHE_TTL]);
+  }, [activeTab, leaderboardTab, currentUserId, player.name, player.id, player.avatar, player.level, player.currentXP, player.totalXP, player.dailyXP, player.dailyXPDate, player.gold, player.streakDays, player.lastCompletedDate, player.isPro, player.interestedInPro, todayKey]);
 
-  // Fetch or serve from 5m cache on tab switch
-  useEffect(() => {
-    if (activeTab === 'leaderboard') {
-      fetchLiveLeaderboard(false);
-    }
-  }, [activeTab, leaderboardTab, fetchLiveLeaderboard]);
+  const fetchLiveLeaderboard = useCallback((_force = false) => {
+    setLastRefreshedAt(Date.now());
+  }, []);
 
   // ----------------------------------------------------
-  // Auth Check On Launch
+  // Startup Data Loading (0ms Instant Hydration) & Auth State Subscription
   // ----------------------------------------------------
   useEffect(() => {
     setIsClient(true);
@@ -617,39 +901,113 @@ export default function LevelUpApp() {
     // Schedule 9:00 PM daily streak protection reminder if active
     scheduleStreakProtectionReminder(isReminderOn);
 
-    // Check cached player first for instantaneous offline launch
-    const cachedPlayer = localStorage.getItem('levelup_player');
-    if (cachedPlayer) {
+    // 1. Instant 0ms Local Hydration: Player Profile
+    const cachedProfileRaw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+    let hasValidCachedProfile = false;
+    if (cachedProfileRaw) {
       try {
-        const parsed = JSON.parse(cachedPlayer);
-        if (parsed.name && parsed.name.trim()) {
+        const parsed = JSON.parse(cachedProfileRaw);
+        if (parsed && parsed.name && parsed.name.trim().length >= 3) {
+          // Automatic 12:00 AM Midnight reset for daily XP
+          const todayDate = getTodayDateString();
+          if (parsed.dailyXPDate !== todayDate) {
+            parsed.dailyXP = 0;
+            parsed.dailyXPDate = todayDate;
+          }
           setPlayer(parsed);
-          setCurrentUserId(parsed.id);
+          if (parsed.id && parsed.id !== 'user_init') {
+            setCurrentUserId(parsed.id);
+          }
+          setCurrentScreen('main');
+          hasValidCachedProfile = true;
         }
-      } catch {}
+      } catch (err) {
+        console.warn('Error hydrating cached profile:', err);
+      }
     }
+
+    // 2. Instant 0ms Local Hydration: Habits (Quests)
+    const cachedHabitsRaw = localStorage.getItem('levelup_habits');
+    if (cachedHabitsRaw) {
+      try {
+        const parsedHabits = JSON.parse(cachedHabitsRaw);
+        if (Array.isArray(parsedHabits) && parsedHabits.length > 0) {
+          setHabits(parsedHabits);
+        }
+      } catch (err) {
+        console.warn('Error hydrating cached habits:', err);
+      }
+    }
+
+    // 3. Instant 0ms Local Hydration: Rewards
+    const cachedRewardsRaw = localStorage.getItem('levelup_rewards');
+    if (cachedRewardsRaw) {
+      try {
+        const parsedRewards = JSON.parse(cachedRewardsRaw);
+        if (Array.isArray(parsedRewards) && parsedRewards.length > 0) {
+          setRewards(parsedRewards);
+        }
+      } catch (err) {
+        console.warn('Error hydrating cached rewards:', err);
+      }
+    }
+
+    // Unblock dual-layer auto-save effects
+    setIsLoaded(true);
+
+    // Safety watchdog: Guarantee transition off 'loading' screen within 2.5 seconds
+    const watchdogTimer = setTimeout(() => {
+      setCurrentScreen((prev) => {
+        if (prev === 'loading') {
+          return hasValidCachedProfile ? 'main' : 'auth';
+        }
+        return prev;
+      });
+    }, 2500);
 
     // Subscribe to Firebase Auth state
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      clearTimeout(watchdogTimer);
       if (user) {
         setCurrentUser(user);
         setCurrentUserId(user.uid);
-        await verifyUserProfile(user.uid);
+
+        const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+        let hasProfile = false;
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (parsed?.name && parsed.name.trim().length >= 3) {
+              hasProfile = true;
+            }
+          } catch {}
+        }
+
+        // Always advance off 'loading' and 'auth' screens instantaneously
+        setCurrentScreen((prev) => {
+          if (prev === 'loading' || prev === 'auth') {
+            return hasProfile ? 'main' : 'character_setup';
+          }
+          return prev;
+        });
+
+        // Run sync asynchronously in background
+        syncUserDataOnAuth(user.uid).catch((err) => {
+          console.warn('Background sync on auth state change:', err);
+        });
       } else {
         setCurrentUser(null);
         setCurrentUserId(null);
-        // If not logged in and no cached user, go to auth screen
-        if (!cachedPlayer) {
-          setCurrentScreen('auth');
-        } else {
-          // Allow viewing cached quests while offline
-          setCurrentScreen('main');
-        }
+        // If user has no active Firebase session, present the Awakening / Auth screen
+        setCurrentScreen('auth');
       }
     });
 
-    return () => unsubscribe();
-  }, [verifyUserProfile]);
+    return () => {
+      clearTimeout(watchdogTimer);
+      unsubscribe();
+    };
+  }, [syncUserDataOnAuth]);
 
   // ----------------------------------------------------
   // Auth Handlers (Email/Password & Google Sign-In)
@@ -671,9 +1029,20 @@ export default function LevelUpApp() {
       } else {
         const cred = await signInWithEmailAndPassword(auth, authEmail.trim(), authPassword);
         if (cred.user) {
+          const uid = cred.user.uid;
           setCurrentUser(cred.user);
-          setCurrentUserId(cred.user.uid);
-          await verifyUserProfile(cred.user.uid);
+          setCurrentUserId(uid);
+
+          const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+          let hasProfile = false;
+          if (raw) {
+            try {
+              const parsed = JSON.parse(raw);
+              if (parsed?.name && parsed.name.trim().length >= 3) hasProfile = true;
+            } catch {}
+          }
+          setCurrentScreen(hasProfile ? 'main' : 'character_setup');
+          verifyUserProfile(uid).catch(() => {});
         }
       }
     } catch (err: any) {
@@ -706,13 +1075,34 @@ export default function LevelUpApp() {
           const credential = GoogleAuthProvider.credential(idToken);
           const userCred = await signInWithCredential(auth, credential);
           if (userCred.user) {
+            const uid = userCred.user.uid;
             setCurrentUser(userCred.user);
-            setCurrentUserId(userCred.user.uid);
-            await verifyUserProfile(userCred.user.uid);
+            setCurrentUserId(uid);
+
+            const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+            let hasProfile = false;
+            if (raw) {
+              try {
+                const parsed = JSON.parse(raw);
+                if (parsed?.name && parsed.name.trim().length >= 3) hasProfile = true;
+              } catch {}
+            }
+            setCurrentScreen(hasProfile ? 'main' : 'character_setup');
+            verifyUserProfile(uid).catch(() => {});
           }
         } else if (result.user?.uid) {
-          setCurrentUserId(result.user.uid);
-          await verifyUserProfile(result.user.uid);
+          const uid = result.user.uid;
+          setCurrentUserId(uid);
+          const raw = localStorage.getItem('levelup_profile') || localStorage.getItem('levelup_player');
+          let hasProfile = false;
+          if (raw) {
+            try {
+              const parsed = JSON.parse(raw);
+              if (parsed?.name && parsed.name.trim().length >= 3) hasProfile = true;
+            } catch {}
+          }
+          setCurrentScreen(hasProfile ? 'main' : 'character_setup');
+          verifyUserProfile(uid).catch(() => {});
         } else {
           throw new Error('No ID token returned from native Google Sign-In.');
         }
@@ -792,6 +1182,8 @@ export default function LevelUpApp() {
         level: 1,
         xp: 0,
         total_xp: 0,
+        daily_xp: 0,
+        daily_xp_date: todayKey,
         gold: 0,
         streak_days: 0,
         last_completed_date: null,
@@ -811,6 +1203,8 @@ export default function LevelUpApp() {
         level: 1,
         currentXP: 0,
         totalXP: 0,
+        dailyXP: 0,
+        dailyXPDate: todayKey,
         gold: 0,
         streakDays: 0,
         lastCompletedDate: null,
@@ -820,6 +1214,7 @@ export default function LevelUpApp() {
       };
 
       setPlayer(initializedPlayer);
+      localStorage.setItem('levelup_profile', JSON.stringify(initializedPlayer));
       localStorage.setItem('levelup_player', JSON.stringify(initializedPlayer));
 
       playLevelUpSound(false);
@@ -840,6 +1235,8 @@ export default function LevelUpApp() {
         level: 1,
         currentXP: 0,
         totalXP: 0,
+        dailyXP: 0,
+        dailyXPDate: todayKey,
         gold: 0,
         streakDays: 0,
         lastCompletedDate: null,
@@ -848,6 +1245,7 @@ export default function LevelUpApp() {
         unlockedBadgeIds: ['first_blood']
       };
       setPlayer(fallbackPlayer);
+      localStorage.setItem('levelup_profile', JSON.stringify(fallbackPlayer));
       localStorage.setItem('levelup_player', JSON.stringify(fallbackPlayer));
       setCurrentScreen('main');
     } finally {
@@ -859,8 +1257,10 @@ export default function LevelUpApp() {
     try {
       await signOut(auth);
     } catch {}
+    localStorage.removeItem('levelup_profile');
     localStorage.removeItem('levelup_player');
     localStorage.removeItem('levelup_habits');
+    localStorage.removeItem('levelup_rewards');
     setCurrentUserId(null);
     setCurrentUser(null);
     setIsSettingsModal(false);
@@ -1000,8 +1400,10 @@ export default function LevelUpApp() {
       }
 
       // 5. Purge local storage and reset state
+      localStorage.removeItem('levelup_profile');
       localStorage.removeItem('levelup_player');
       localStorage.removeItem('levelup_habits');
+      localStorage.removeItem('levelup_rewards');
       localStorage.removeItem('levelup_sound');
       localStorage.removeItem('levelup_reminder');
 
@@ -1060,6 +1462,11 @@ export default function LevelUpApp() {
         }
       }
 
+      // Midnight check for Daily XP
+      const isNewDay = player.dailyXPDate !== todayKey;
+      const baseDaily = isNewDay ? 0 : (player.dailyXP || 0);
+      const newDailyXP = baseDaily + targetHabit.xpReward;
+
       const newTotalXP = player.totalXP + targetHabit.xpReward;
       const newLevel = calculateLevel(newTotalXP);
       const newGold = player.gold + targetHabit.goldReward;
@@ -1080,6 +1487,8 @@ export default function LevelUpApp() {
         level: newLevel,
         currentXP: prev.currentXP + targetHabit.xpReward,
         totalXP: newTotalXP,
+        dailyXP: newDailyXP,
+        dailyXPDate: todayKey,
         gold: newGold,
         streakDays: newStreak,
         lastCompletedDate: dateKey === todayKey ? todayKey : prev.lastCompletedDate
@@ -1092,20 +1501,28 @@ export default function LevelUpApp() {
         try {
           // 1. Update habit document
           const habitDocRef = doc(db, 'users', currentUserId, 'habits', habitId);
-          await updateDoc(habitDocRef, {
+          await setDoc(habitDocRef, {
             completed_dates: arrayUnion(dateKey)
-          });
+          }, { merge: true });
 
           // 2. Increment user XP, total_xp, and gold
           const userDocRef = doc(db, 'users', currentUserId);
-          await updateDoc(userDocRef, {
-            xp: increment(targetHabit.xpReward),
-            total_xp: increment(targetHabit.xpReward),
-            gold: increment(targetHabit.goldReward),
+          await setDoc(userDocRef, {
+            uid: currentUserId,
+            username: player.name,
+            username_lowercase: player.name.toLowerCase(),
+            avatar_id: player.avatar,
             level: newLevel,
+            xp: player.currentXP + targetHabit.xpReward,
+            total_xp: newTotalXP,
+            daily_xp: newDailyXP,
+            daily_xp_date: todayKey,
+            gold: newGold,
             streak_days: newStreak,
-            last_completed_date: dateKey === todayKey ? todayKey : (player.lastCompletedDate || todayKey)
-          });
+            last_completed_date: dateKey === todayKey ? todayKey : (player.lastCompletedDate || todayKey),
+            is_pro: player.isPro,
+            interested_in_pro: player.interestedInPro
+          }, { merge: true });
         } catch (err) {
           console.warn('Firestore habit completion sync exception:', err);
         }
@@ -1118,12 +1535,15 @@ export default function LevelUpApp() {
       const newTotalXP = Math.max(0, player.totalXP - penaltyXP);
       const newLevel = calculateLevel(newTotalXP);
       const newGold = Math.max(0, player.gold - penaltyGold);
+      const newDailyXP = Math.max(0, (player.dailyXP || 0) - penaltyXP);
 
       setPlayer((prev) => ({
         ...prev,
         level: newLevel,
         currentXP: Math.max(0, prev.currentXP - penaltyXP),
         totalXP: newTotalXP,
+        dailyXP: newDailyXP,
+        dailyXPDate: todayKey,
         gold: newGold
       }));
 
@@ -1133,18 +1553,28 @@ export default function LevelUpApp() {
         try {
           // 1. Remove from habit completed_dates
           const habitDocRef = doc(db, 'users', currentUserId, 'habits', habitId);
-          await updateDoc(habitDocRef, {
+          await setDoc(habitDocRef, {
             completed_dates: arrayRemove(dateKey)
-          });
+          }, { merge: true });
 
           // 2. Decrement user XP, total_xp, and gold atomically and clamped to >= 0
           const userDocRef = doc(db, 'users', currentUserId);
-          await updateDoc(userDocRef, {
+          await setDoc(userDocRef, {
+            uid: currentUserId,
+            username: player.name,
+            username_lowercase: player.name.toLowerCase(),
+            avatar_id: player.avatar,
+            level: newLevel,
             xp: Math.max(0, player.currentXP - penaltyXP),
             total_xp: newTotalXP,
+            daily_xp: newDailyXP,
+            daily_xp_date: todayKey,
             gold: newGold,
-            level: newLevel
-          });
+            streak_days: player.streakDays,
+            last_completed_date: player.lastCompletedDate,
+            is_pro: player.isPro,
+            interested_in_pro: player.interestedInPro
+          }, { merge: true });
         } catch (err) {
           console.warn('Firestore habit uncheck sync exception:', err);
         }
@@ -1190,11 +1620,17 @@ export default function LevelUpApp() {
     const newLevel = calculateLevel(newTotalXP);
     const newGold = player.gold + addedGold;
 
+    const isNewDay = player.dailyXPDate !== todayKey;
+    const baseDaily = isNewDay ? 0 : (player.dailyXP || 0);
+    const newDailyXP = baseDaily + addedXP;
+
     setPlayer((prev) => ({
       ...prev,
       level: newLevel,
       currentXP: prev.currentXP + addedXP,
       totalXP: newTotalXP,
+      dailyXP: newDailyXP,
+      dailyXPDate: todayKey,
       gold: newGold,
       streakDays: newStreak,
       lastCompletedDate: todayKey
@@ -1206,17 +1642,25 @@ export default function LevelUpApp() {
       try {
         for (const h of uncompletedHabits) {
           const habitDocRef = doc(db, 'users', currentUserId, 'habits', h.id);
-          updateDoc(habitDocRef, { completed_dates: arrayUnion(todayKey) }).catch(() => {});
+          setDoc(habitDocRef, { completed_dates: arrayUnion(todayKey) }, { merge: true }).catch(() => {});
         }
         const userDocRef = doc(db, 'users', currentUserId);
-        await updateDoc(userDocRef, {
-          xp: increment(addedXP),
-          total_xp: increment(addedXP),
-          gold: increment(addedGold),
+        await setDoc(userDocRef, {
+          uid: currentUserId,
+          username: player.name,
+          username_lowercase: player.name.toLowerCase(),
+          avatar_id: player.avatar,
           level: newLevel,
+          xp: player.currentXP + addedXP,
+          total_xp: newTotalXP,
+          daily_xp: newDailyXP,
+          daily_xp_date: todayKey,
+          gold: newGold,
           streak_days: newStreak,
-          last_completed_date: todayKey
-        });
+          last_completed_date: todayKey,
+          is_pro: player.isPro,
+          interested_in_pro: player.interestedInPro
+        }, { merge: true });
       } catch (err) {
         console.warn('Batch mark all exception:', err);
       }
@@ -1367,7 +1811,7 @@ export default function LevelUpApp() {
     setPlayer((prev) => ({ ...prev, gold: nextGold }));
 
     if (currentUserId && currentUserId !== 'user_init') {
-      updateDoc(doc(db, 'users', currentUserId), { gold: increment(-reward.cost) }).catch(() => {});
+      setDoc(doc(db, 'users', currentUserId), { gold: nextGold }, { merge: true }).catch(() => {});
     }
 
     setRewards((prev) =>
@@ -1406,7 +1850,7 @@ export default function LevelUpApp() {
     setPlayer((prev) => ({ ...prev, interestedInPro: true }));
     if (currentUserId && currentUserId !== 'user_init') {
       try {
-        await updateDoc(doc(db, 'users', currentUserId), { interested_in_pro: true });
+        await setDoc(doc(db, 'users', currentUserId), { interested_in_pro: true }, { merge: true });
       } catch (err) {
         console.warn('Update interested_in_pro error:', err);
       }
@@ -2026,24 +2470,27 @@ export default function LevelUpApp() {
           {/* -------------------------------------------------------- */}
           {/* TAB 2: LIVE FIRESTORE REAL-TIME LEADERBOARD              */}
           {/* -------------------------------------------------------- */}
+          {/* TAB 2: GLOBAL LEADERBOARD (ARENA)                        */}
+          {/* -------------------------------------------------------- */}
           {activeTab === 'leaderboard' && (
             <div className="space-y-3.5">
-              {/* Leaderboard Header with Refresh Button & Quota Cache Indicator */}
+              {/* Leaderboard Header with Refresh Button & Live Indicator */}
               <div className="flex items-center justify-between px-1">
                 <div className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 text-[#F5B041]" />
                   <h2 className="text-sm font-black uppercase tracking-wider text-slate-100">
-                    Global Leaderboard
+                    Live Arena Feed
                   </h2>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#121722] text-[#F5B041] border border-[#1E2638]" title="Cached for 5 minutes to prevent burning Firestore Spark quota">
-                    5m Cache
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#121722] text-[#F5B041] border border-[#1E2638] flex items-center gap-1" title="Real-time live Firestore feed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Live Feed
                   </span>
                   <button
                     onClick={() => {
                       fetchLiveLeaderboard(true);
-                      showToast('Leaderboard refreshed from Cloud Firestore.');
+                      showToast('Live leaderboard synced.');
                     }}
                     disabled={leaderboardLoading}
                     className="p-1.5 rounded-lg bg-[#121722] border border-[#1E2638] text-slate-400 hover:text-white transition active:scale-95 disabled:opacity-50"
@@ -2054,33 +2501,58 @@ export default function LevelUpApp() {
                 </div>
               </div>
 
-              {/* Clean Sorting Toggle: All-Time Rank vs Top Streaks */}
-              <div className="grid grid-cols-2 gap-1 p-1 rounded-xl bg-[#121722] border border-[#1E2638]">
+              {/* 3-Tab Filter: All-Time Rank vs Today's Daily vs Top Streaks */}
+              <div className="grid grid-cols-3 gap-1 p-1 rounded-xl bg-[#121722] border border-[#1E2638]">
                 <button
                   type="button"
                   onClick={() => setLeaderboardTab('all_time')}
-                  className={`py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                  className={`py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1 ${
                     leaderboardTab === 'all_time'
                       ? 'bg-[#F5B041] text-[#0A0D14] shadow-sm'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  <Trophy className="w-3.5 h-3.5" />
-                  <span>All-Time Rank</span>
+                  <Trophy className="w-3 h-3" />
+                  <span>All-Time</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLeaderboardTab('daily')}
+                  className={`py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1 ${
+                    leaderboardTab === 'daily'
+                      ? 'bg-[#F5B041] text-[#0A0D14] shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Zap className="w-3 h-3" />
+                  <span>Today's Daily</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setLeaderboardTab('streaks')}
-                  className={`py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                  className={`py-1.5 rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1 ${
                     leaderboardTab === 'streaks'
                       ? 'bg-[#F5B041] text-[#0A0D14] shadow-sm'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  <Flame className="w-3.5 h-3.5 fill-current" />
+                  <Flame className="w-3 h-3 fill-current" />
                   <span>Top Streaks</span>
                 </button>
               </div>
+
+              {/* Live Countdown Banner for Today's Reset (12:00 AM Midnight) */}
+              {leaderboardTab === 'daily' && (
+                <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500/10 via-[#121722] to-[#121722] border border-[#F5B041]/30 text-xs">
+                  <div className="flex items-center gap-2 text-slate-300 font-semibold">
+                    <Clock className="w-3.5 h-3.5 text-[#F5B041] animate-pulse" />
+                    <span className="text-[11px]">Today's Reset (12:00 AM Midnight):</span>
+                  </div>
+                  <span className="font-mono font-black text-[#F5B041] tracking-wider text-xs">
+                    {formatTimeUntilMidnight(secondsUntilMidnight)}
+                  </span>
+                </div>
+              )}
 
               {/* Pinned User Rank Card (Always pinned using already-loaded profile data: 0 extra reads) */}
               <div className="p-3 rounded-2xl bg-gradient-to-r from-[#121722] via-[#121722] to-[#121722] border-2 border-[#F5B041] flex items-center justify-between shadow-md shadow-[#F5B041]/10">
@@ -2101,13 +2573,23 @@ export default function LevelUpApp() {
                       {player.isPro && <Crown className="w-3.5 h-3.5 text-[#F5B041] shrink-0" />}
                     </div>
                     <div className="text-[10px] text-slate-400 font-medium">
-                      Lv.{player.level} • {leaderboardTab === 'all_time' ? `${player.totalXP.toLocaleString()} XP` : `${player.streakDays}d streak`}
+                      Lv.{player.level} • {
+                        leaderboardTab === 'all_time'
+                          ? `${player.totalXP.toLocaleString()} XP`
+                          : leaderboardTab === 'daily'
+                          ? `${(player.dailyXPDate === todayKey ? player.dailyXP : 0).toLocaleString()} XP today`
+                          : `${player.streakDays}d streak`
+                      }
                     </div>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
                   <span className="text-xs font-black text-[#F5B041]">
-                    {leaderboardTab === 'all_time' ? `${player.totalXP.toLocaleString()} XP` : `🔥 ${player.streakDays}d`}
+                    {leaderboardTab === 'all_time'
+                      ? `${player.totalXP.toLocaleString()} XP`
+                      : leaderboardTab === 'daily'
+                      ? `⚡ ${(player.dailyXPDate === todayKey ? player.dailyXP : 0).toLocaleString()} XP`
+                      : `🔥 ${player.streakDays}d`}
                   </span>
                 </div>
               </div>
@@ -2191,6 +2673,8 @@ export default function LevelUpApp() {
                       );
                     }
 
+                    const operativeDailyXP = operative.daily_xp_date === todayKey ? (operative.daily_xp || 0) : 0;
+
                     return (
                       <div
                         key={operative.uid || idx}
@@ -2199,7 +2683,7 @@ export default function LevelUpApp() {
                         <div className="flex items-center gap-3 min-w-0">
                           {rankBadge}
                           <div className="w-9 h-9 rounded-xl bg-[#0A0D14] flex items-center justify-center text-lg border border-[#1E2638] shrink-0">
-                            {operative.avatar_id || '⚔️'}
+                            {getAvatarIcon(operative.avatar_id)}
                           </div>
                           <div className="min-w-0">
                             <div className="text-xs font-bold text-slate-100 flex items-center gap-1.5">
@@ -2223,6 +2707,8 @@ export default function LevelUpApp() {
                           <span className={`text-xs font-black ${isRank1 ? 'text-[#F5B041]' : isRank2 ? 'text-slate-300' : isRank3 ? 'text-amber-500' : 'text-slate-300'}`}>
                             {leaderboardTab === 'all_time'
                               ? `${(operative.total_xp || 0).toLocaleString()} XP`
+                              : leaderboardTab === 'daily'
+                              ? `⚡ ${operativeDailyXP.toLocaleString()} XP`
                               : `🔥 ${operative.streak_days || 0}d`}
                           </span>
                         </div>
@@ -2358,7 +2844,7 @@ export default function LevelUpApp() {
                           classTitle: getPlayerTitle(prev.level, av.title)
                         }));
                         if (currentUserId && currentUserId !== 'user_init') {
-                          updateDoc(doc(db, 'users', currentUserId), { avatar_id: av.icon }).catch(() => {});
+                          setDoc(doc(db, 'users', currentUserId), { avatar_id: av.icon }, { merge: true }).catch(() => {});
                         }
                         triggerHaptic('light');
                         playCoinSound(!soundEnabled);

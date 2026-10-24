@@ -79,6 +79,14 @@ class TradeAIAssistant:
         # Fallback to deterministic expert econometric engine
         report = self._deterministic_expert_synthesizer(question_text, verified_stats)
         report["mode"] = "DETERMINISTIC_ECONOMETRIC_ENGINE"
+        is_fallback = verified_stats.get("is_fallback", False) or not bool(verified_stats) or "latest_exports_usd_b" not in verified_stats
+        report["data_status"] = "FALLBACK_INDICATIVE_BENCHMARK" if is_fallback else "VERIFIED_EMPIRICAL_CALCULATION"
+        if is_fallback and not report["fact"].startswith("[DATA AUDIT NOTICE:"):
+            report["fact"] = (
+                "[DATA AUDIT NOTICE: Runtime empirical dataset was empty or unverified; "
+                "metrics cited are documented historical benchmark baselines, not dynamically verified session values.]\n\n"
+                + report["fact"]
+            )
         return report
 
     def _parse_llm_response(self, text: str) -> Dict[str, str]:
@@ -124,6 +132,14 @@ class TradeAIAssistant:
     def _deterministic_expert_synthesizer(self, question: str, stats: Dict[str, Any]) -> Dict[str, str]:
         """Produces verified, zero-hallucination economic explanations based on domain taxonomy."""
         q_lower = question.lower()
+
+        # Audit check: verify if stats were provided or if falling back to benchmarks
+        is_fallback = stats.get("is_fallback", False) or not bool(stats) or "latest_exports_usd_b" not in stats
+        fallback_notice = (
+            "[DATA AUDIT NOTICE: Runtime empirical dataset was empty or unverified; "
+            "metrics cited are documented historical benchmark baselines, not dynamically verified session values.]\n\n"
+            if is_fallback else ""
+        )
 
         # Extract verified metrics
         latest_year = stats.get("latest_year", 2024)
@@ -219,7 +235,7 @@ class TradeAIAssistant:
         # 8. Purchasing Power Erosion & Real Exchange Rate
         else:
             return {
-                "plain_summary": f"Persistent domestic CPI inflation has steadily eroded the domestic purchasing power of the Rupee (reducing ₹1,000 in 2000 to ~₹235 in real goods today), while nominal export gains must be deflated to isolate real volume growth.",
+                "plain_summary": f"Persistent domestic CPI inflation has steadily eroded the domestic purchasing power of the Rupee (reducing ₹1,000 in 2000 to ~₹235 in constant-basket goods by 2024), while nominal export gains must be deflated to isolate real volume growth.",
                 "fact": f"India's CPI inflation has averaged ~5.5-6.5% annually over 1995-2024. Nominal exports rose from $38B (1995) to ${latest_exports:.1f}B (2024), while domestic prices rose more than five-fold.",
                 "calculation": f"According to the Rule of 70, at 6.0% annual inflation, the purchasing power of the Rupee halves every 11.6 years. In real terms, ₹100 in the year 2000 buys approximately ₹23.50 worth of constant-basket goods in 2024.",
                 "interpretation": "While nominal trade statistics exhibit exponential expansion, calculating the Real Terms of Trade reveals that periodic global commodity price spikes (crude oil, fertilizers) transfer domestic purchasing power to foreign resource exporters.",

@@ -1,21 +1,27 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, Auth } from 'firebase/auth';
+import {
+  getAuth,
+  initializeAuth,
+  indexedDBLocalPersistence,
+  browserLocalPersistence,
+  GoogleAuthProvider,
+  Auth
+} from 'firebase/auth';
 import {
   initializeFirestore,
   persistentLocalCache,
-  persistentMultipleTabManager,
+  persistentSingleTabManager,
   getFirestore,
   Firestore
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyAANuOZe_vTM9Uk2rG8TF87r3vP_msKbzE',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyBefMOtzB9AfEhUXvRGVcPvUxTZOWvP8FQ',
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'level-up-3f79a.firebaseapp.com',
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'level-up-3f79a',
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'level-up-3f79a.firebasestorage.app',
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '303219866607',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:303219866607:web:8343148a01f2670d4fd41a',
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-VS28H5CE6C'
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:303219866607:android:2153d117d146c7174fd41a'
 };
 
 export const isFirebaseConfigured = (): boolean => {
@@ -31,8 +37,29 @@ export const app: FirebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
   : getApp();
 
-// Initialize Auth
-export const auth: Auth = getAuth(app);
+// Initialize Auth with multi-layer persistence (IndexedDB + localStorage) for Android WebView resilience
+let firebaseAuth: Auth;
+if (typeof window !== 'undefined') {
+  try {
+    firebaseAuth = initializeAuth(app, {
+      persistence: [indexedDBLocalPersistence, browserLocalPersistence]
+    });
+  } catch (_e) {
+    try {
+      firebaseAuth = getAuth(app);
+    } catch {
+      firebaseAuth = {} as Auth;
+    }
+  }
+} else {
+  try {
+    firebaseAuth = getAuth(app);
+  } catch {
+    firebaseAuth = {} as Auth;
+  }
+}
+
+export const auth: Auth = firebaseAuth;
 export const googleProvider = new GoogleAuthProvider();
 
 // Initialize Firestore with offline persistence safely (lazy for SSR)
@@ -44,7 +71,7 @@ export const getFirestoreDb = (): Firestore => {
     try {
       firestoreDb = initializeFirestore(app, {
         localCache: persistentLocalCache({
-          tabManager: persistentMultipleTabManager()
+          tabManager: persistentSingleTabManager({ forceOwnership: true })
         })
       });
     } catch {
@@ -79,6 +106,8 @@ export interface UserProfile {
   level: number;
   xp: number;
   total_xp: number;
+  daily_xp?: number;
+  daily_xp_date?: string | null;
   gold: number;
   streak_days: number;
   last_completed_date: string | null;
@@ -116,6 +145,8 @@ export const getTodayKey = (): string => {
   const day = String(d.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+export const getTodayDateString = getTodayKey;
 
 export const getYesterdayKey = (): string => {
   const d = new Date();
