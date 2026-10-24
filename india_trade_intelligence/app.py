@@ -375,23 +375,25 @@ if view_selection == "1. Executive Overview":
 
         k1, k2, k3, k4 = st.columns(4)
         with k1:
+            exp_yoy = latest_row.get("exports_yoy_pct", latest_row.get("export_growth_pct", 0.0))
             st.markdown(render_kpi_card(
                 metric_name="Total Exports (Goods & Services)",
                 value_str=f"${latest_row['exports_usd_billion']:.1f} B",
                 period_str=f"CY {int(latest_row['year'])}",
                 unit_str="US$ Billion",
-                comparison_str=f"+{latest_row['export_growth_pct']:.1f}% YoY | 10Y CAGR: +{cagr_10yr:.1f}%" if cagr_10yr else f"+{latest_row['export_growth_pct']:.1f}% YoY",
+                comparison_str=f"+{exp_yoy:.1f}% YoY | 10Y CAGR: +{cagr_10yr:.1f}%" if cagr_10yr else f"+{exp_yoy:.1f}% YoY",
                 source_str="World Bank WDI [Series: NE.EXP.GNFS.CD]",
                 is_positive=True
             ), unsafe_allow_html=True)
 
         with k2:
+            imp_yoy = latest_row.get("imports_yoy_pct", latest_row.get("import_growth_pct", 0.0))
             st.markdown(render_kpi_card(
                 metric_name="Total Imports (Goods & Services)",
                 value_str=f"${latest_row['imports_usd_billion']:.1f} B",
                 period_str=f"CY {int(latest_row['year'])}",
                 unit_str="US$ Billion",
-                comparison_str=f"+{latest_row['import_growth_pct']:.1f}% YoY",
+                comparison_str=f"+{imp_yoy:.1f}% YoY",
                 source_str="World Bank WDI [Series: NE.IMP.GNFS.CD]",
                 is_positive=False
             ), unsafe_allow_html=True)
