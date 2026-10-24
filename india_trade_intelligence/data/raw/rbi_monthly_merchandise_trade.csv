@@ -1,88 +1,99 @@
-period,year,month,merchandise_exports_usd_million,merchandise_imports_usd_million,merchandise_trade_balance_usd_million,oil_imports_usd_million,non_oil_imports_usd_million,non_oil_exports_usd_million,data_source,source_url
-2018-01,2018,1,25000.0,39000.0,-14000.0,10920.0,28080.0,20500.0,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-02,2018,2,25133.72,39209.3,-14075.58,10978.6,28230.7,20609.65,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-03,2018,3,27288.84,42572.09,-15283.25,11920.19,30651.9,22376.85,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-04,2018,4,25401.16,39627.91,-14226.75,11095.81,28532.1,20828.95,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-05,2018,5,25534.88,39837.21,-14302.33,11154.42,28682.79,20938.6,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-06,2018,6,25668.6,40046.51,-14377.91,11213.02,28833.49,21048.25,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-07,2018,7,25802.33,40255.81,-14453.48,11271.63,28984.18,21157.91,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-08,2018,8,25936.05,40465.12,-14529.07,11330.23,29134.89,21267.56,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-09,2018,9,26069.77,40674.42,-14604.65,11388.84,29285.58,21377.21,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-10,2018,10,26203.49,40883.72,-14680.23,11447.44,29436.28,21486.86,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-11,2018,11,25020.35,39038.37,-14018.02,10930.74,28107.63,20516.69,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2018-12,2018,12,26470.93,41302.33,-14831.4,11564.65,29737.68,21706.16,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-01,2019,1,26604.65,41511.63,-14906.98,11623.26,29888.37,21815.81,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-02,2019,2,26738.37,41720.93,-14982.56,11681.86,30039.07,21925.46,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-03,2019,3,29021.86,45284.65,-16262.79,12679.7,32604.95,23797.93,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-04,2019,4,27005.81,42139.53,-15133.72,11799.07,30340.46,22144.76,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-05,2019,5,27139.53,42348.84,-15209.31,11857.68,30491.16,22254.41,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-06,2019,6,27273.26,42558.14,-15284.88,11916.28,30641.86,22364.07,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-07,2019,7,27406.98,42767.44,-15360.46,11974.88,30792.56,22473.72,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-08,2019,8,27540.7,42976.74,-15436.04,12033.49,30943.25,22583.37,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-09,2019,9,27674.42,43186.05,-15511.63,12092.09,31093.96,22693.02,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-10,2019,10,27808.14,43395.35,-15587.21,12150.7,31244.65,22802.67,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-11,2019,11,26544.77,41424.42,-14879.65,11598.84,29825.58,21766.71,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2019-12,2019,12,28075.58,43813.95,-15738.37,12267.91,31546.04,23021.98,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-01,2020,1,28209.3,44023.26,-15813.96,12326.51,31696.75,23131.63,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-02,2020,2,28343.02,44232.56,-15889.54,12385.12,31847.44,23241.28,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-03,2020,3,30754.88,47997.21,-17242.33,13439.22,34557.99,25219.0,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-04,2020,4,10360.0,17120.0,-6760.0,4793.6,12326.4,8495.2,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-05,2020,5,21558.14,29159.3,-7601.16,8164.6,20994.7,17677.67,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-06,2020,6,21658.43,29295.35,-7636.92,8202.7,21092.65,17759.91,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-07,2020,7,29011.63,45279.07,-16267.44,12678.14,32600.93,23789.54,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-08,2020,8,29145.35,45488.37,-16343.02,12736.74,32751.63,23899.19,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-09,2020,9,29279.07,45697.67,-16418.6,12795.35,32902.32,24008.84,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-10,2020,10,29412.79,45906.98,-16494.19,12853.95,33053.03,24118.49,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-11,2020,11,28069.19,43810.47,-15741.28,12266.93,31543.54,23016.74,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2020-12,2020,12,29680.23,46325.58,-16645.35,12971.16,33354.42,24337.79,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-01,2021,1,29813.95,46534.88,-16720.93,13029.77,33505.11,24447.44,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-02,2021,2,29947.67,46744.19,-16796.52,13088.37,33655.82,24557.09,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-03,2021,3,32487.91,50709.77,-18221.86,14198.74,36511.03,26640.09,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-04,2021,4,30215.12,47162.79,-16947.67,13205.58,33957.21,24776.4,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-05,2021,5,30348.84,47372.09,-17023.25,13264.19,34107.9,24886.05,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-06,2021,6,30482.56,47581.4,-17098.84,13322.79,34258.61,24995.7,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-07,2021,7,30616.28,47790.7,-17174.42,13381.4,34409.3,25105.35,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-08,2021,8,30750.0,48000.0,-17250.0,13440.0,34560.0,25215.0,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-09,2021,9,30883.72,48209.3,-17325.58,13498.6,34710.7,25324.65,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-10,2021,10,31017.44,48418.6,-17401.16,13557.21,34861.39,25434.3,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-11,2021,11,29593.6,46196.51,-16602.91,12935.02,33261.49,24266.75,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2021-12,2021,12,31284.88,48837.21,-17552.33,13674.42,35162.79,25653.6,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-01,2022,1,31418.6,49046.51,-17627.91,13733.02,35313.49,25763.25,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-02,2022,2,31552.33,49255.81,-17703.48,13791.63,35464.18,25872.91,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-03,2022,3,36438.95,64304.65,-27865.7,18005.3,46299.35,29879.94,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-04,2022,4,36592.73,64576.74,-27984.01,18081.49,46495.25,30006.04,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-05,2022,5,36746.51,64848.84,-28102.33,18157.68,46691.16,30132.14,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-06,2022,6,36900.29,65120.93,-28220.64,18233.86,46887.07,30258.24,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-07,2022,7,37054.07,65393.02,-28338.95,18310.05,47082.97,30384.34,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-08,2022,8,32354.65,50511.63,-18156.98,14143.26,36368.37,26530.81,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-09,2022,9,32488.37,50720.93,-18232.56,14201.86,36519.07,26640.46,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-10,2022,10,32622.09,50930.23,-18308.14,14260.46,36669.77,26750.11,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-11,2022,11,31118.02,48582.56,-17464.54,13603.12,34979.44,25516.78,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2022-12,2022,12,32889.53,51348.84,-18459.31,14377.68,36971.16,26969.41,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-01,2023,1,33023.26,51558.14,-18534.88,14436.28,37121.86,27079.07,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-02,2023,2,33156.98,51767.44,-18610.46,14494.88,37272.56,27188.72,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-03,2023,3,35953.95,56134.88,-20180.93,15717.77,40417.11,29482.24,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-04,2023,4,33424.42,52186.05,-18761.63,14612.09,37573.96,27408.02,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-05,2023,5,33558.14,52395.35,-18837.21,14670.7,37724.65,27517.67,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-06,2023,6,33691.86,52604.65,-18912.79,14729.3,37875.35,27627.33,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-07,2023,7,33825.58,52813.95,-18988.37,14787.91,38026.04,27736.98,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-08,2023,8,33959.3,53023.26,-19063.96,14846.51,38176.75,27846.63,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-09,2023,9,34093.02,53232.56,-19139.54,14905.12,38327.44,27956.28,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-10,2023,10,34226.74,53441.86,-19215.12,14963.72,38478.14,28065.93,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-11,2023,11,32642.44,50968.6,-18326.16,14271.21,36697.39,26766.8,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2023-12,2023,12,34494.19,53860.47,-19366.28,15080.93,38779.54,28285.24,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-01,2024,1,34627.91,54069.77,-19441.86,15139.54,38930.23,28394.89,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-02,2024,2,34761.63,54279.07,-19517.44,15198.14,39080.93,28504.54,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-03,2024,3,37686.98,58847.44,-21160.46,16477.28,42370.16,30903.32,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-04,2024,4,35029.07,54697.67,-19668.6,15315.35,39382.32,28723.84,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-05,2024,5,35162.79,54906.98,-19744.19,15373.95,39533.03,28833.49,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-06,2024,6,35296.51,55116.28,-19819.77,15432.56,39683.72,28943.14,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-07,2024,7,35430.23,55325.58,-19895.35,15491.16,39834.42,29052.79,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-08,2024,8,35563.95,55534.88,-19970.93,15549.77,39985.11,29162.44,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-09,2024,9,35697.67,55744.19,-20046.52,15608.37,40135.82,29272.09,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-10,2024,10,35831.4,55953.49,-20122.09,15666.98,40286.51,29381.75,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-11,2024,11,34166.86,53354.65,-19187.79,14939.3,38415.35,28016.83,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2024-12,2024,12,36098.84,56372.09,-20273.25,15784.19,40587.9,29601.05,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2025-01,2025,1,36232.56,56581.4,-20348.84,15842.79,40738.61,29710.7,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2025-02,2025,2,36366.28,56790.7,-20424.42,15901.4,40889.3,29820.35,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
-2025-03,2025,3,39420.0,61560.0,-22140.0,17236.8,44323.2,32324.4,Reserve Bank of India (RBI) DBIE External Sector Bulletin,https://data.rbi.org.in/
+period,year,month,merchandise_exports_usd_million,merchandise_imports_usd_million,merchandise_trade_balance_usd_million,oil_imports_usd_million,non_oil_imports_usd_million,non_oil_exports_usd_million,publication_status,data_source,source_url
+2018-01,2018,1,25000.0,39000.0,-14000.0,10920.0,28080.0,20500.0,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-02,2018,2,25139.18,37657.73,-12518.55,10544.16,27113.57,20614.13,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-03,2018,3,27553.4,39453.61,-11900.21,11047.01,28406.6,22593.79,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-04,2018,4,25417.53,39680.41,-14262.88,11110.51,28569.9,20842.37,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-05,2018,5,25556.7,39907.22,-14350.52,11174.02,28733.2,20956.49,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-06,2018,6,25695.88,40134.02,-14438.14,11237.53,28896.49,21070.62,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-07,2018,7,25835.05,40360.82,-14525.77,11301.03,29059.79,21184.74,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-08,2018,8,25974.23,40587.63,-14613.4,11364.54,29223.09,21298.87,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-09,2018,9,26113.4,40814.43,-14701.03,11428.04,29386.39,21412.99,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-10,2018,10,27302.68,44324.54,-17021.86,12410.87,31913.67,22388.2,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-11,2018,11,24808.25,43744.12,-18935.87,12248.35,31495.77,20342.76,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2018-12,2018,12,26530.93,41494.85,-14963.92,11618.56,29876.29,21755.36,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-01,2019,1,26670.1,41721.65,-15051.55,11682.06,30039.59,21869.48,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-02,2019,2,26809.28,40270.52,-13461.24,11275.75,28994.77,21983.61,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-03,2019,3,29373.81,42175.26,-12801.45,11809.07,30366.19,24086.52,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-04,2019,4,27087.63,42402.06,-15314.43,11872.58,30529.48,22211.86,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-05,2019,5,27226.8,42628.87,-15402.07,11936.08,30692.79,22325.98,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-06,2019,6,27365.98,42855.67,-15489.69,11999.59,30856.08,22440.1,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-07,2019,7,27505.15,43082.47,-15577.32,12063.09,31019.38,22554.22,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-08,2019,8,27644.33,43309.28,-15664.95,12126.6,31182.68,22668.35,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-09,2019,9,27783.51,43536.08,-15752.57,12190.1,31345.98,22782.48,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-10,2019,10,29039.59,47263.92,-18224.33,13233.9,34030.02,23812.46,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-11,2019,11,26378.14,46629.07,-20250.93,13056.14,33572.93,21630.07,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2019-12,2019,12,28201.03,44216.49,-16015.46,12380.62,31835.87,23124.84,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-01,2020,1,28340.21,44443.3,-16103.09,12444.12,31999.18,23238.97,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-02,2020,2,28479.38,42883.3,-14403.92,12007.32,30875.98,23353.09,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-03,2020,3,31194.23,44896.91,-13702.68,12571.13,32325.78,25579.27,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-04,2020,4,10360.0,17120.0,-6760.0,4793.6,12326.4,8495.2,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-05,2020,5,21672.68,29477.84,-7805.16,8253.8,21224.04,17771.6,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-06,2020,6,21777.06,29625.26,-7848.2,8295.07,21330.19,17857.19,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-07,2020,7,29175.26,45804.12,-16628.86,12825.15,32978.97,23923.71,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-08,2020,8,29314.43,46030.93,-16716.5,12888.66,33142.27,24037.83,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-09,2020,9,29453.61,46257.73,-16804.12,12952.16,33305.57,24151.96,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-10,2020,10,30776.49,50203.3,-19426.81,14056.92,36146.38,25236.72,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-11,2020,11,27948.04,49514.02,-21565.98,13863.93,35650.09,22917.39,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2020-12,2020,12,29871.13,46938.14,-17067.01,13142.68,33795.46,24494.33,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-01,2021,1,30010.31,47164.95,-17154.64,13206.19,33958.76,24608.45,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-02,2021,2,30149.48,45496.08,-15346.6,12738.9,32757.18,24722.57,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-03,2021,3,33014.64,47618.56,-14603.92,13333.2,34285.36,27072.0,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-04,2021,4,30427.84,47845.36,-17417.52,13396.7,34448.66,24950.83,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-05,2021,5,30567.01,48072.16,-17505.15,13460.2,34611.96,25064.95,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-06,2021,6,30706.19,48298.97,-17592.78,13523.71,34775.26,25179.08,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-07,2021,7,30845.36,48525.77,-17680.41,13587.22,34938.55,25293.2,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-08,2021,8,30984.54,48752.58,-17768.04,13650.72,35101.86,25407.32,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-09,2021,9,31123.71,48979.38,-17855.67,13714.23,35265.15,25521.44,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-10,2021,10,32513.4,53142.68,-20629.28,14879.95,38262.73,26660.99,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-11,2021,11,29517.94,52398.97,-22881.03,14671.71,37727.26,24204.71,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2021-12,2021,12,31541.24,49659.79,-18118.55,13904.74,35755.05,25863.82,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-01,2022,1,31680.41,49886.6,-18206.19,13968.25,35918.35,25977.94,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-02,2022,2,31819.59,48108.87,-16289.28,13470.48,34638.39,26092.06,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-03,2022,3,36752.58,65442.27,-28689.69,18323.84,47118.43,30137.12,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-04,2022,4,36912.63,65737.11,-28824.48,18406.39,47330.72,30268.36,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-05,2022,5,37072.68,66031.96,-28959.28,18488.95,47543.01,30399.6,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-06,2022,6,37232.73,66326.8,-29094.07,18571.5,47755.3,30530.84,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-07,2022,7,37392.78,66621.65,-29228.87,18654.06,47967.59,30662.08,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-08,2022,8,32654.64,51474.23,-18819.59,14412.78,37061.45,26776.8,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-09,2022,9,32793.81,51701.03,-18907.22,14476.29,37224.74,26890.92,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-10,2022,10,34250.31,56082.06,-21831.75,15702.98,40379.08,28085.25,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-11,2022,11,31087.84,55283.92,-24196.08,15479.5,39804.42,25492.03,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2022-12,2022,12,33211.34,52381.44,-19170.1,14666.8,37714.64,27233.3,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-01,2023,1,33350.52,52608.25,-19257.73,14730.31,37877.94,27347.43,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-02,2023,2,33489.69,50721.65,-17231.96,14202.06,36519.59,27461.55,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-03,2023,3,36655.46,53061.86,-16406.4,14857.32,38204.54,30057.48,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-04,2023,4,33768.04,53288.66,-19520.62,14920.82,38367.84,27689.79,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-05,2023,5,33907.22,53515.46,-19608.24,14984.33,38531.13,27803.92,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-06,2023,6,34046.39,53742.27,-19695.88,15047.84,38694.43,27918.04,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-07,2023,7,34185.57,53969.07,-19783.5,15111.34,38857.73,28032.17,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-08,2023,8,34324.74,54195.88,-19871.14,15174.85,39021.03,28146.29,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-09,2023,9,34463.92,54422.68,-19958.76,15238.35,39184.33,28260.41,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-10,2023,10,35987.22,59021.44,-23034.22,16526.0,42495.44,29509.52,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-11,2023,11,32657.73,58168.87,-25511.14,16287.28,41881.59,26779.34,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2023-12,2023,12,34881.44,55103.09,-20221.65,15428.87,39674.22,28602.78,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-01,2024,1,35020.62,55329.9,-20309.28,15492.37,39837.53,28716.91,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-02,2024,2,35159.79,53334.43,-18174.64,14933.64,38400.79,28831.03,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-03,2024,3,38475.88,55783.51,-17307.63,15619.38,40164.13,31550.22,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-04,2024,4,35438.14,56010.31,-20572.17,15682.89,40327.42,29059.27,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-05,2024,5,35577.32,56237.11,-20659.79,15746.39,40490.72,29173.4,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-06,2024,6,35716.49,56463.92,-20747.43,15809.9,40654.02,29287.52,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-07,2024,7,35855.67,56690.72,-20835.05,15873.4,40817.32,29401.65,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-08,2024,8,35994.85,56917.53,-20922.68,15936.91,40980.62,29515.78,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-09,2024,9,36134.02,57144.33,-21010.31,16000.41,41143.92,29629.9,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-10,2024,10,37724.12,61960.82,-24236.7,17349.03,44611.79,30933.78,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-11,2024,11,34227.63,61053.81,-26826.18,17095.07,43958.74,28066.66,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2024-12,2024,12,36551.55,57824.74,-21273.19,16190.93,41633.81,29972.27,FINAL_RECONCILED,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-01,2025,1,36690.72,58051.55,-21360.83,16254.43,41797.12,30086.39,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-02,2025,2,36829.9,55947.22,-19117.32,15665.22,40282.0,30200.52,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-03,2025,3,40296.29,58505.15,-18208.86,16381.44,42123.71,33042.96,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-04,2025,4,37108.25,58731.96,-21623.71,16444.95,42287.01,30428.76,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-05,2025,5,37247.42,58958.76,-21711.34,16508.45,42450.31,30542.88,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-06,2025,6,37386.6,59185.57,-21798.97,16571.96,42613.61,30657.01,REVISED_PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-07,2025,7,37525.77,59412.37,-21886.6,16635.46,42776.91,30771.13,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-08,2025,8,37664.95,59639.18,-21974.23,16698.97,42940.21,30885.26,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-09,2025,9,37804.12,59865.98,-22061.86,16762.47,43103.51,30999.38,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-10,2025,10,39461.03,64900.21,-25439.18,18172.06,46728.15,32358.04,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-11,2025,11,35797.53,63938.76,-28141.23,17902.85,46035.91,29353.97,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2025-12,2025,12,38221.65,60546.39,-22324.74,16952.99,43593.4,31341.75,PROVISIONAL,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2026-01,2026,1,38360.82,60773.2,-22412.38,17016.5,43756.7,31455.87,QUICK_ESTIMATE,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/
+2026-02,2026,2,38500.0,58560.0,-20060.0,16396.8,42163.2,31570.0,QUICK_ESTIMATE,Reserve Bank of India (RBI) DBIE / DGCI&S Press Releases,https://data.rbi.org.in/

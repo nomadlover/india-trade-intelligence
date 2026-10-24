@@ -251,6 +251,84 @@ PROVENANCE_REGISTRY: Dict[str, MetricProvenance] = {
         calculation="Total Exports = Merchandise Exports + Services Exports; Total Imports = Merchandise Imports + Services Imports; Balance = Exports - Imports.",
         data_status="Derived Composite Status (Inherits Lowest Component Status)",
         notes="Status propagation rule: If merchandise is provisional or services is estimated, the combined total is NOT final."
+    ),
+    "commodity_price_quantity_decomp": MetricProvenance(
+        metric_id="commodity_price_quantity_decomp",
+        name="Commodity Price, Quantity & Unit Value Decomposition",
+        source="Directorate General of Commercial Intelligence and Statistics (DGCI&S)",
+        source_agency="Department of Commerce, Ministry of Commerce and Industry, Government of India",
+        observation_period="FY 2013-14 to FY 2025-26 (Provisional)",
+        frequency="Financial Year (FY: April 1 - March 31)",
+        unit="US$ Million, Metric Units (MT/Million Units), US$/Unit",
+        definition="Decomposition of trade value into quantity volumes and unit value realizations (UV = Value / Quantity) across major export and import items.",
+        calculation="UV = (Value_USD_M * 1,000,000) / (Quantity * 1,000); Log decomposition: ln(V_t/V_0) = ln(P_t/P_0) + ln(Q_t/Q_0).",
+        data_status="Official Final (FY14–FY24); Provisional Q1 (FY25)",
+        notes="Unit values reflect grade mix, processing quality, and product specialization rather than pure exchange-traded commodity spot prices."
+    ),
+    "energy_crude_exposure": MetricProvenance(
+        metric_id="energy_crude_exposure",
+        name="Energy & Strategic Hydrocarbon Exposure",
+        source="Petroleum Planning & Analysis Cell (PPAC) / Ministry of Petroleum & Natural Gas",
+        source_agency="PPAC, MoP&NG & DGCI&S Petroleum Trade Data",
+        observation_period="2010–2025 (Annual)",
+        frequency="Calendar Year (Annual)",
+        unit="US$ per Barrel, Million Metric Tonnes (MMT), US$ Billion",
+        definition="Crude import volume, Indian Basket crude price, Brent benchmark, refined product exports, and net petroleum import burden.",
+        calculation="Net Petroleum Bill = Gross Crude Imports + LNG/LPG Imports - Refined Petroleum Product Exports; Discount = Brent - Indian Basket.",
+        data_status="Official Final",
+        notes="Measures terms-of-trade hydrocarbon vulnerability. India imports ~87% of crude needs while operating significant domestic export refining capacity."
+    ),
+    "external_sector_fx_cad": MetricProvenance(
+        metric_id="external_sector_fx_cad",
+        name="External Sector Vulnerability & Macroeconomic Balances",
+        source="Reserve Bank of India (DBIE) / MoSPI",
+        source_agency="Reserve Bank of India & Ministry of Statistics and Programme Implementation",
+        observation_period="1995–2025 (Annual)",
+        frequency="Annual (CY / FY)",
+        unit="USD Billion, INR/USD, Index (2015-16=100), % of GDP, % per annum",
+        definition="External sector resilience metrics: foreign exchange reserves, Current Account Deficit (CAD % GDP), REER (40-currency basket), INR exchange rate, and Real GDP growth.",
+        calculation="CAD % GDP = (Current Account Balance / Nominal GDP) * 100; Import Cover = FX Reserves / (Annual Merchandise & Services Imports / 12).",
+        data_status="Official Final",
+        notes="Provides macro buffering capacity against global liquidity shocks, terms-of-trade degradation, and capital outflow pressures."
+    ),
+    "trading_partner_macro": MetricProvenance(
+        metric_id="trading_partner_macro",
+        name="Key Trading Partner Macroeconomic & Demand Conditions",
+        source="IMF World Economic Outlook / World Bank / National Statistical Offices",
+        source_agency="IMF WEO, US BEA, China NBS, Eurostat, UAE Central Bank",
+        observation_period="2014–2025 (Annual)",
+        frequency="Annual (Calendar Year)",
+        unit="Percentage (%), Index (Diffusion Index 50=Neutral)",
+        definition="External demand indicators for India's top 4 trading jurisdictions (US, China, UAE, EU) including Real GDP growth, inflation, policy rates, and manufacturing PMI.",
+        calculation="Weighted destination demand proxy and monetary policy stance monitoring.",
+        data_status="Official Final",
+        notes="Partner growth and monetary tightening directly modulate demand for Indian engineering, chemical, and software export lines."
+    ),
+    "trade_policy_events": MetricProvenance(
+        metric_id="trade_policy_events",
+        name="Trade Policy & Geopolitical Events Timeline",
+        source="Ministry of Commerce & Industry / DGFT / Official Gazettes",
+        source_agency="Directorate General of Foreign Trade (DGFT) & Department of Commerce Notifications",
+        observation_period="2020–2026 (Verified Events)",
+        frequency="Event-based / Continuous Chronology",
+        unit="Event Record / Circular Reference",
+        definition="Catalog of verified bilateral free trade agreements (FTAs), tariff adjustments, export bans, PLI schemes, and trade corridor disruptions.",
+        calculation="Documented event timeline matched against bilateral and commodity export-import shifts.",
+        data_status="Official Final",
+        notes="Ground truth for assessing policy-induced structural breaks versus global cyclical shocks."
+    ),
+    "economic_risk_hhi": MetricProvenance(
+        metric_id="economic_risk_hhi",
+        name="Economic Risk & Concentration Metrics",
+        source="Derived Econometric Indices (DGCI&S Customs Ingestion)",
+        source_agency="India Trade Intelligence Econometric Engine",
+        observation_period="FY 2013-14 to FY 2025-26",
+        frequency="Financial Year (FY)",
+        unit="Index (0 to 10,000 HHI), Ratio, Percentage (%)",
+        definition="Herfindahl-Hirschman Index (HHI) for partner and commodity concentration, single-supplier critical import shares (APIs, solar cells, coking coal, crude), and net energy vulnerability.",
+        calculation="HHI = Sum(s_i^2) where s_i is percentage share; Critical Supplier Share = (Imports from Dominant Origin / Total Specific Commodity Imports) * 100.",
+        data_status="Derived Econometric Metric",
+        notes="HHI < 1,500 = unconcentrated; 1,500–2,500 = moderate concentration; > 2,500 = high concentration."
     )
 }
 

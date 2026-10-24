@@ -1,0 +1,65 @@
+name: Semi-Annual Trade Intelligence Refresh & Integrity Verification
+
+on:
+  schedule:
+    # Trigger on 1 April (FY Close / Quick Estimates) and 1 October (Mid-Year DGCI&S Data Revision) at 00:00 UTC
+    - cron: '0 0 1 4,10 *'
+  workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: 'Force complete re-ingestion and database rebuild'
+        required: false
+        default: 'true'
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  semi-annual-refresh:
+    name: Ingest, Validate & Publish Official Economic Data
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Verified Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run India Trade Intelligence Pipeline with Fail-Safe Protection
+        run: |
+          python india_trade_intelligence/run_pipeline.py
+
+      - name: Run Full Econometric & Data Integrity Test Suite
+        run: |
+          python -m pytest india_trade_intelligence/tests/ -v
+
+      - name: Commit and Push Verified Intelligence Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Stage updated SQLite database, raw datasets, and processed records
+          git add india_trade_intelligence/data/
+          
+          # Check if there are any changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes in trade intelligence data. Working tree clean."
+          else
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "chore(data): automated semi-annual trade intelligence refresh [$TIMESTAMP] [skip ci]"
+            git push origin main
+            echo "Successfully published verified trade intelligence data."
+          fi

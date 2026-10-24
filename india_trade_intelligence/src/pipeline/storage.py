@@ -114,6 +114,18 @@ class TradeDataStorage:
                 cursor.execute("CREATE INDEX IF NOT EXISTS idx_macro_year ON macro_annual(year)")
             elif table_name == "monthly_trade":
                 cursor.execute("CREATE INDEX IF NOT EXISTS idx_monthly_period ON monthly_trade(period)")
+            elif table_name == "commodity_price_quantity":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_pq_fy ON commodity_price_quantity(financial_year)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_pq_comm ON commodity_price_quantity(commodity_group)")
+            elif table_name == "energy_commodity_exposure":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_energy_year ON energy_commodity_exposure(year)")
+            elif table_name == "external_sector_macro":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_ext_year ON external_sector_macro(year)")
+            elif table_name == "trading_partner_conditions":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_partner_year ON trading_partner_conditions(year)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_partner_name ON trading_partner_conditions(partner_name)")
+            elif table_name == "trade_policy_events":
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_event_cat ON trade_policy_events(category)")
 
             conn.commit()
             logger.info(f"Persisted {len(df)} rows to table '{table_name}' with indexes.")
@@ -179,3 +191,61 @@ class TradeDataStorage:
             cursor.execute("SELECT * FROM metadata_catalog")
             rows = cursor.fetchall()
             return [dict(row) for row in rows]
+
+    def get_commodity_price_quantity(self, financial_year: Optional[str] = None) -> pd.DataFrame:
+        """Retrieves commodity price, quantity, and unit-value decomposition data."""
+        query = "SELECT * FROM commodity_price_quantity WHERE 1=1"
+        params = []
+        if financial_year:
+            query += " AND financial_year = ?"
+            params.append(financial_year)
+        query += " ORDER BY fy_start_year ASC, value_usd_million DESC"
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def get_energy_commodity_exposure(self) -> pd.DataFrame:
+        """Retrieves energy, crude benchmarks, and strategic commodity exposure metrics."""
+        with self.get_connection() as conn:
+            return pd.read_sql_query("SELECT * FROM energy_commodity_exposure ORDER BY year ASC", conn)
+
+    def get_external_sector_macro(self) -> pd.DataFrame:
+        """Retrieves external sector (FX, CAD, debt, remittances) and domestic macro metrics."""
+        with self.get_connection() as conn:
+            return pd.read_sql_query("SELECT * FROM external_sector_macro ORDER BY year ASC", conn)
+
+    def get_trading_partner_conditions(self, partner_name: Optional[str] = None) -> pd.DataFrame:
+        """Retrieves trading partner macroeconomic conditions."""
+        query = "SELECT * FROM trading_partner_conditions WHERE 1=1"
+        params = []
+        if partner_name:
+            query += " AND partner_name = ?"
+            params.append(partner_name)
+        query += " ORDER BY year ASC"
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def get_trade_policy_events(self, category: Optional[str] = None) -> pd.DataFrame:
+        """Retrieves structured trade policy and geopolitical events catalog."""
+        query = "SELECT * FROM trade_policy_events WHERE 1=1"
+        params = []
+        if category:
+            query += " AND category = ?"
+            params.append(category)
+        query += " ORDER BY effective_date DESC"
+        with self.get_connection() as conn:
+            return pd.read_sql_query(query, conn, params=params)
+
+    def get_latest_refresh_status(self) -> Dict[str, Any]:
+        """Returns metadata regarding the latest automated pipeline execution."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM pipeline_execution_log ORDER BY id DESC LIMIT 1")
+            row = cursor.fetchone()
+            if row:
+                return dict(row)
+            return {
+                "executed_at": "Never",
+                "status": "UNINITIALIZED",
+                "datasets_updated": "None",
+                "notes": "No pipeline run recorded."
+            }

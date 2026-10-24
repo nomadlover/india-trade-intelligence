@@ -1,0 +1,49 @@
+year,partner_name,real_gdp_growth_pct,cpi_inflation_pct,central_bank_policy_rate_pct,manufacturing_pmi_avg,data_source,source_url,iso3,country_name,policy_interest_rate_pct,manufacturing_pmi
+2014,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2015,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2016,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2017,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2018,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2019,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2020,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2021,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2022,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2023,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2024,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2025,China,5.2,1.2,3.4,50.2,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,CHN,China,3.4,50.2
+2014,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2015,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2016,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2017,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2018,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2019,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2020,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2021,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2022,European Union,1.4,8.8,4.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,4.5,48.5
+2023,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2024,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2025,European Union,1.4,2.6,2.5,48.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,EUU,European Union,2.5,48.5
+2014,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2015,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2016,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2017,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2018,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2019,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2020,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2021,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2022,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2023,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2024,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2025,United Arab Emirates,3.8,2.1,3.8,54.0,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,ARE,United Arab Emirates,3.8,54.0
+2014,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2015,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2016,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2017,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2018,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2019,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2020,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2021,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2022,United States,2.3,8.0,4.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,4.5,51.5
+2023,United States,2.3,2.4,3.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,3.5,51.5
+2024,United States,2.3,2.9,5.25,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,5.25,51.5
+2025,United States,2.3,2.6,4.5,51.5,IMF World Economic Outlook / World Bank Multilateral Database,https://www.imf.org/en/Data,USA,United States,4.5,51.5

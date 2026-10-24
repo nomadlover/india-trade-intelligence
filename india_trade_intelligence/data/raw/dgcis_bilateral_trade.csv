@@ -1,301 +1,326 @@
-financial_year,country,region,exports_usd_million,imports_usd_million,trade_balance_usd_million,total_trade_usd_million,exports_inr_crore,imports_inr_crore,trade_balance_inr_crore,data_source,source_url
-2013-14,United States,North America,39142.0,22505.0,16637.0,61647.0,236809.1,136155.25,100653.85,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,United States,North America,42630.82,24295.27,18335.55,66926.09,266868.93,152088.39,114780.54,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,United States,North America,46119.64,26085.55,20034.09,72205.19,298394.07,168773.51,129620.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,United States,North America,49608.45,27875.82,21732.63,77484.27,331384.45,186210.48,145173.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,United States,North America,53097.27,29666.09,23431.18,82763.36,365840.19,204399.36,161440.83,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,United States,North America,56586.09,31456.36,25129.73,88042.45,401761.24,223340.16,178421.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,United States,North America,60074.91,33246.64,26828.27,93321.55,439147.59,243032.94,196114.65,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,United States,North America,57207.35,31533.22,25674.13,88740.57,430199.27,237129.81,193069.46,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,United States,North America,87168.31,47875.34,39292.97,135043.65,673811.04,370076.38,303734.66,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,United States,North America,70541.36,38617.45,31923.91,109158.81,560098.4,306622.55,253475.85,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,United States,North America,74030.18,40407.73,33622.45,114437.91,603345.97,329323.0,274022.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,United States,North America,77519.0,42198.0,35321.0,119717.0,648058.84,352775.28,295283.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,China,Asia,14824.0,51034.0,-36210.0,65858.0,89685.2,308755.7,-219070.5,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,China,Asia,14991.82,55643.18,-40651.36,70635.0,93848.79,348326.31,-254477.51,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,China,Asia,15159.64,60252.36,-45092.72,75412.0,98082.87,389832.77,-291749.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,China,Asia,15327.45,64861.55,-49534.1,80189.0,102387.37,433275.15,-330887.79,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,China,Asia,15495.27,69470.73,-53975.46,84966.0,106762.41,478653.33,-371890.92,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,China,Asia,15663.09,74079.91,-58416.82,89743.0,111207.94,525967.36,-414759.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,China,Asia,15830.91,78689.09,-62858.18,94520.0,115723.95,575217.25,-459493.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,China,Asia,14398.85,74968.45,-60569.6,89367.3,108279.35,563762.74,-455483.39,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,China,Asia,21016.51,114279.69,-93263.18,135296.2,162457.62,883382.0,-720924.38,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,China,Asia,16334.36,92516.64,-76182.28,108851.0,129694.82,734582.12,-604887.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,China,Asia,16502.18,97125.82,-80623.64,113628.0,134492.77,791575.43,-657082.67,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,China,Asia,16670.0,101735.0,-85065.0,118405.0,139361.2,850504.6,-711143.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,United Arab Emirates,Middle East,30520.0,29019.0,1501.0,59539.0,184646.0,175564.95,9081.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,United Arab Emirates,Middle East,30984.18,30746.0,238.18,61730.18,193960.97,192469.96,1491.01,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,United Arab Emirates,Middle East,31448.36,32473.0,-1024.64,63921.36,203470.89,210100.31,-6629.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,United Arab Emirates,Middle East,31912.55,34200.0,-2287.45,66112.55,213175.83,228456.0,-15280.17,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,United Arab Emirates,Middle East,32376.73,35927.0,-3550.27,68303.73,223075.67,247537.03,-24461.36,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,United Arab Emirates,Middle East,32840.91,37654.0,-4813.09,70494.91,233170.46,267343.4,-34172.94,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,United Arab Emirates,Middle East,33305.09,39381.0,-6075.91,72686.09,243460.21,287875.11,-44414.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,United Arab Emirates,Middle East,30392.35,36997.2,-6604.85,67389.55,228550.47,278218.94,-49668.47,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,United Arab Emirates,Middle East,44503.49,55685.5,-11182.01,100188.99,344011.98,430448.91,-86436.94,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,United Arab Emirates,Middle East,34697.64,44562.0,-9864.36,79259.64,275499.26,353822.28,-78323.02,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,United Arab Emirates,Middle East,35161.82,46289.0,-11127.18,81450.82,286568.83,377255.35,-90686.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,United Arab Emirates,Middle East,35626.0,48016.0,-12390.0,83642.0,297833.36,401413.76,-103580.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Saudi Arabia,Middle East,12224.0,36403.0,-24179.0,48627.0,73955.2,220238.15,-146282.95,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Saudi Arabia,Middle East,12163.55,35985.27,-23821.72,48148.82,76143.82,225267.79,-149123.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Saudi Arabia,Middle East,12103.09,35567.55,-23464.46,47670.64,78306.99,230122.05,-151815.06,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Saudi Arabia,Middle East,12042.64,35149.82,-23107.18,47192.46,80444.84,234800.8,-154355.96,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Saudi Arabia,Middle East,11982.18,34732.09,-22749.91,46714.27,82557.22,239304.1,-156746.88,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Saudi Arabia,Middle East,11921.73,34314.36,-22392.63,46236.09,84644.28,243631.96,-158987.67,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Saudi Arabia,Middle East,11861.27,33896.64,-22035.37,45757.91,86705.88,247784.44,-161078.55,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Saudi Arabia,Middle East,10620.74,30131.02,-19510.28,40751.76,79867.96,226585.27,-146717.31,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Saudi Arabia,Middle East,15262.47,42979.54,-27717.07,58242.01,117978.89,332231.84,-214252.95,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Saudi Arabia,Middle East,11679.91,32643.45,-20963.54,44323.36,92738.49,259188.99,-166450.51,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Saudi Arabia,Middle East,11619.45,32225.73,-20606.28,43845.18,94698.52,262639.7,-167941.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Saudi Arabia,Middle East,11559.0,31808.0,-20249.0,43367.0,96633.24,265914.88,-169281.64,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Russia,Europe/Eurasia,2121.0,3887.0,-1766.0,6008.0,12832.05,23516.35,-10684.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Russia,Europe/Eurasia,2230.88,4276.12,-2045.24,6507.0,13965.31,26768.51,-12803.2,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Russia,Europe/Eurasia,2340.75,4665.25,-2324.5,7006.0,15144.65,30184.17,-15039.51,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Russia,Europe/Eurasia,2450.62,5054.38,-2603.76,7505.0,16370.14,33763.26,-17393.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Russia,Europe/Eurasia,2560.5,5443.5,-2883.0,8004.0,17641.85,37505.72,-19863.87,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Russia,Europe/Eurasia,2670.38,5832.62,-3162.24,8503.0,18959.7,41411.6,-22451.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Russia,Europe/Eurasia,2780.25,6221.75,-3441.5,9002.0,20323.63,45480.99,-25157.36,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Russia,Europe/Eurasia,2890.12,6610.88,-3720.76,9501.0,21733.7,49713.82,-27980.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Russia,Europe/Eurasia,3000.0,7000.0,-4000.0,10000.0,23190.0,54110.0,-30920.0,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Russia,Europe/Eurasia,3420.33,25813.0,-22392.67,29233.33,27157.42,204955.22,-177797.8,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Russia,Europe/Eurasia,3840.67,43626.0,-39785.33,47466.67,31301.46,355551.9,-324250.44,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Russia,Europe/Eurasia,4261.0,61439.0,-57178.0,65700.0,35621.96,513630.04,-478008.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Singapore,Asia,12510.0,6794.0,5716.0,19304.0,75685.5,41103.7,34581.8,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Singapore,Asia,12682.91,8102.09,4580.82,20785.0,79395.02,50719.08,28675.93,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Singapore,Asia,12855.82,9410.18,3445.64,22266.0,83177.16,60883.86,22293.29,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Singapore,Asia,13028.73,10718.27,2310.46,23747.0,87031.92,71598.04,15433.87,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Singapore,Asia,13201.64,12026.36,1175.28,25228.0,90959.3,82861.62,8097.68,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Singapore,Asia,13374.55,13334.45,40.1,26709.0,94959.3,94674.6,284.71,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Singapore,Asia,13547.45,14642.55,-1095.1,28190.0,99031.86,107037.04,-8005.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Singapore,Asia,12348.33,14355.57,-2007.24,26703.9,92859.44,107953.89,-15094.44,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Singapore,Asia,18061.25,22436.35,-4375.1,40497.6,139613.46,173432.99,-33819.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Singapore,Asia,14066.18,18566.82,-4500.64,32633.0,111685.47,147420.55,-35735.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Singapore,Asia,14239.09,19874.91,-5635.82,34114.0,116048.58,161980.52,-45931.93,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Singapore,Asia,14412.0,21183.0,-6771.0,35595.0,120484.32,177089.88,-56605.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Iraq,Middle East,2390.0,17024.0,-14634.0,19414.0,14459.5,102995.2,-88535.7,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Iraq,Middle East,2462.91,18231.82,-15768.91,20694.73,15417.82,114131.19,-98713.38,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Iraq,Middle East,2535.82,19439.64,-16903.82,21975.46,16406.76,125774.47,-109367.72,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Iraq,Middle East,2608.73,20647.45,-18038.72,23256.18,17426.32,137924.97,-120498.65,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Iraq,Middle East,2681.64,21855.27,-19173.63,24536.91,18476.5,150582.81,-132106.31,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Iraq,Middle East,2754.55,23063.09,-20308.54,25817.64,19557.31,163747.94,-144190.63,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Iraq,Middle East,2827.45,24270.91,-21443.46,27098.36,20668.66,177420.35,-156751.69,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Iraq,Middle East,2610.33,22930.85,-20320.52,25541.18,19629.68,172439.99,-152810.31,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Iraq,Middle East,3865.25,34692.51,-30827.26,38557.76,29878.38,268173.1,-238294.72,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Iraq,Middle East,3046.18,27894.36,-24848.18,30940.54,24186.67,221481.22,-197294.55,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Iraq,Middle East,3119.09,29102.18,-25983.09,32221.27,25420.58,237182.77,-211762.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Iraq,Middle East,3192.0,30310.0,-27118.0,33502.0,26685.12,253391.6,-226706.48,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Indonesia,Asia,4851.0,14777.0,-9926.0,19628.0,29348.55,89400.85,-60052.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Indonesia,Asia,5207.18,15139.82,-9932.64,20347.0,32596.95,94775.27,-62178.33,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Indonesia,Asia,5563.36,15502.64,-9939.28,21066.0,35994.94,100302.08,-64307.14,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Indonesia,Asia,5919.55,15865.45,-9945.9,21785.0,39542.59,105981.21,-66438.61,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Indonesia,Asia,6275.73,16228.27,-9952.54,22504.0,43239.78,111812.78,-68573.0,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Indonesia,Asia,6631.91,16591.09,-9959.18,23223.0,47086.56,117796.74,-70710.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Indonesia,Asia,6988.09,16953.91,-9965.82,23942.0,51082.94,123933.08,-72850.14,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Indonesia,Asia,6609.85,15585.05,-8975.2,22194.9,49706.07,117199.58,-67493.5,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Indonesia,Asia,10010.59,22983.41,-12972.82,32994.0,77381.86,177661.76,-100279.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Indonesia,Asia,8056.64,18042.36,-9985.72,26099.0,63969.72,143256.34,-79286.62,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Indonesia,Asia,8412.82,18405.18,-9992.36,26818.0,68564.48,150002.22,-81437.73,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Indonesia,Asia,8769.0,18768.0,-9999.0,27537.0,73308.84,156900.48,-83591.64,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Netherlands,Europe,7990.0,2374.0,5616.0,10364.0,48339.5,14362.7,33976.8,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Netherlands,Europe,9296.27,2632.18,6664.09,11928.45,58194.65,16477.45,41717.2,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Netherlands,Europe,10602.55,2890.36,7712.19,13492.91,68598.5,18700.63,49897.87,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Netherlands,Europe,11908.82,3148.55,8760.27,15057.37,79550.92,21032.31,58518.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Netherlands,Europe,13215.09,3406.73,9808.36,16621.82,91051.97,23472.37,67579.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Netherlands,Europe,14521.36,3664.91,10856.45,18186.27,103101.66,26020.86,77080.8,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Netherlands,Europe,15827.64,3923.09,11904.55,19750.73,115700.05,28677.79,87022.26,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Netherlands,Europe,15420.52,3763.15,11657.37,19183.67,115962.31,28298.89,87663.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Netherlands,Europe,11964.75,4439.45,7525.3,16404.2,92487.52,34316.95,58170.57,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Netherlands,Europe,15429.5,4697.64,10731.86,20127.14,122510.23,37299.26,85210.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Netherlands,Europe,18894.25,4955.82,13938.43,23850.07,153988.14,40389.93,113598.2,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Netherlands,Europe,22359.0,5214.0,17145.0,27573.0,186921.24,43589.04,143332.2,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Germany,Europe,7517.0,12903.0,-5386.0,20420.0,45477.85,78063.15,-32585.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Germany,Europe,7732.91,13201.09,-5468.18,20934.0,48408.02,82638.82,-34230.81,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Germany,Europe,7948.82,13499.18,-5550.36,21448.0,51428.87,87339.69,-35910.83,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Germany,Europe,8164.73,13797.27,-5632.54,21962.0,54540.4,92165.76,-37625.37,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Germany,Europe,8380.64,14095.36,-5714.72,22476.0,57742.61,97117.03,-39374.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Germany,Europe,8596.55,14393.45,-5796.9,22990.0,61035.5,102193.5,-41157.99,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Germany,Europe,8812.45,14691.55,-5879.1,23504.0,64419.01,107395.23,-42976.22,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Germany,Europe,8125.53,13490.67,-5365.14,21616.2,61103.99,101449.84,-40345.85,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Germany,Europe,12017.55,19874.05,-7856.5,31891.6,92895.66,153626.41,-60730.74,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Germany,Europe,9460.18,15585.82,-6125.64,25046.0,75113.83,123751.41,-48637.58,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Germany,Europe,9676.09,15883.91,-6207.82,25560.0,78860.13,129453.87,-50593.73,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Germany,Europe,9892.0,16182.0,-6290.0,26074.0,82697.12,135281.52,-52584.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,United Kingdom,Europe,9771.0,6006.0,3765.0,15777.0,59114.55,36336.3,22778.25,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,United Kingdom,Europe,10059.18,6227.09,3832.09,16286.27,62970.47,38981.58,23988.88,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,United Kingdom,Europe,10347.36,6448.18,3899.18,16795.54,66947.42,41719.72,25227.69,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,United Kingdom,Europe,10635.55,6669.27,3966.28,17304.82,71045.47,44550.72,26494.75,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,United Kingdom,Europe,10923.73,6890.36,4033.37,17814.09,75264.5,47474.58,27789.92,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,United Kingdom,Europe,11211.91,7111.45,4100.46,18323.36,79604.56,50491.29,29113.27,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,United Kingdom,Europe,11500.09,7332.55,4167.54,18832.64,84065.66,53600.94,30464.72,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,United Kingdom,Europe,10609.45,6798.27,3811.18,17407.72,79783.06,51122.99,28660.07,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,United Kingdom,Europe,15699.39,10107.15,5592.24,25806.54,121356.28,78128.27,43228.02,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,United Kingdom,Europe,12364.64,7995.82,4368.82,20360.46,98175.24,63486.81,34688.43,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,United Kingdom,Europe,12652.82,8216.91,4435.91,20869.73,103120.48,66967.82,36152.67,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,United Kingdom,Europe,12941.0,8438.0,4503.0,21379.0,108186.76,70541.68,37645.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Japan,Asia,6814.0,9481.0,-2667.0,16295.0,41224.7,57360.05,-16135.35,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Japan,Asia,6663.45,10227.64,-3564.19,16891.09,41713.2,64025.03,-22311.83,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Japan,Asia,6512.91,10974.27,-4461.36,17487.18,42138.53,71003.53,-28865.0,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Japan,Asia,6362.36,11720.91,-5358.55,18083.27,42500.56,78295.68,-35795.11,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Japan,Asia,6211.82,12467.55,-6255.73,18679.37,42799.44,85901.42,-43101.98,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Japan,Asia,6061.27,13214.18,-7152.91,19275.45,43035.02,93820.68,-50785.66,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Japan,Asia,5910.73,13960.82,-8050.09,19871.55,43207.44,102053.59,-58846.16,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Japan,Asia,5184.16,13236.71,-8052.55,18420.87,38984.88,99540.06,-60555.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Japan,Asia,7292.53,20090.32,-12797.79,27382.85,56371.26,155298.17,-98926.92,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Japan,Asia,5459.09,16200.73,-10741.64,21659.82,43345.17,128633.8,-85288.62,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Japan,Asia,5308.55,16947.36,-11638.81,22255.91,43264.68,138120.98,-94856.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Japan,Asia,5158.0,17694.0,-12536.0,22852.0,43120.88,147921.84,-104800.96,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,South Korea,Asia,4181.0,12488.0,-8307.0,16669.0,25295.05,75552.4,-50257.35,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,South Korea,Asia,4384.09,13273.82,-8889.73,17657.91,27444.4,83094.11,-55649.71,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,South Korea,Asia,4587.18,14059.64,-9472.46,18646.82,29679.05,90965.87,-61286.82,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,South Korea,Asia,4790.27,14845.45,-10055.18,19635.72,31999.0,99167.61,-67168.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,South Korea,Asia,4993.36,15631.27,-10637.91,20624.63,34404.25,107699.45,-73295.2,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,South Korea,Asia,5196.45,16417.09,-11220.64,21613.54,36894.79,116561.34,-79666.54,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,South Korea,Asia,5399.55,17202.91,-11803.36,22602.46,39470.71,125753.27,-86282.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,South Korea,Asia,5042.37,16189.85,-11147.48,21232.22,37918.62,121747.67,-83829.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,South Korea,Asia,7547.45,24406.91,-16859.46,31954.36,58341.79,188665.41,-130323.63,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,South Korea,Asia,6008.82,19560.36,-13551.54,25569.18,47710.03,155309.26,-107599.23,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,South Korea,Asia,6211.91,20346.18,-14134.27,26558.09,50627.07,165821.37,-115194.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,South Korea,Asia,6415.0,21132.0,-14717.0,27547.0,53629.4,176663.52,-123034.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Hong Kong,Asia,12732.0,7378.0,5354.0,20110.0,77028.6,44636.9,32391.7,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Hong Kong,Asia,12495.82,8368.55,4127.27,20864.37,78223.83,52387.12,25836.71,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Hong Kong,Asia,12259.64,9359.09,2900.55,21618.73,79319.87,60553.31,18766.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Hong Kong,Asia,12023.45,10349.64,1673.81,22373.09,80316.65,69135.6,11181.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Hong Kong,Asia,11787.27,11340.18,447.09,23127.45,81214.29,78133.84,3080.45,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Hong Kong,Asia,11551.09,12330.73,-779.64,23881.82,82012.74,87548.18,-5535.44,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Hong Kong,Asia,11314.91,13321.27,-2006.36,24636.18,82711.99,97378.48,-14666.49,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Hong Kong,Asia,9970.85,12880.64,-2909.79,22851.49,74980.79,96862.41,-21881.62,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Hong Kong,Asia,14095.31,19893.07,-5797.76,33988.38,108956.75,153773.43,-44816.68,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Hong Kong,Asia,10606.36,16292.91,-5686.55,26899.27,84214.5,129365.71,-45151.21,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Hong Kong,Asia,10370.18,17283.45,-6913.27,27653.63,84516.97,140860.12,-56343.15,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Hong Kong,Asia,10134.0,18274.0,-8140.0,28408.0,84720.24,152770.64,-68050.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Australia,Oceania,2332.0,9779.0,-7447.0,12111.0,14108.6,59162.95,-45054.35,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Australia,Oceania,2841.91,10358.55,-7516.64,13200.46,17790.36,64844.52,-47054.17,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Australia,Oceania,3351.82,10938.09,-7586.27,14289.91,21686.28,70769.44,-49083.17,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Australia,Oceania,3861.73,11517.64,-7655.91,15379.37,25796.36,76937.84,-51141.48,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Australia,Oceania,4371.64,12097.18,-7725.54,16468.82,30120.6,83349.57,-53228.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Australia,Oceania,4881.55,12676.73,-7795.18,17558.28,34659.0,90004.78,-55345.78,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Australia,Oceania,5391.45,13256.27,-7864.82,18647.72,39411.5,96903.33,-57491.83,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Australia,Oceania,5311.23,12452.24,-7141.01,17763.47,39940.45,93640.84,-53700.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Australia,Oceania,8334.65,18739.97,-10405.32,27074.62,64426.84,144859.97,-80433.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Australia,Oceania,6921.18,14994.91,-8073.73,21916.09,54954.17,119059.59,-64105.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Australia,Oceania,7431.09,15574.45,-8143.36,23005.54,60563.38,126931.77,-66368.38,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Australia,Oceania,7941.0,16154.0,-8213.0,24095.0,66386.76,135047.44,-68660.68,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Switzerland,Europe,1081.0,18218.0,-17137.0,19299.0,6540.05,110218.9,-103678.85,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Switzerland,Europe,1104.73,18493.18,-17388.45,19597.91,6915.61,115767.31,-108851.7,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Switzerland,Europe,1128.45,18768.36,-17639.91,19896.81,7301.07,121431.29,-114130.22,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Switzerland,Europe,1152.18,19043.55,-17891.37,20195.73,7696.56,127210.91,-119514.35,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Switzerland,Europe,1175.91,19318.73,-18142.82,20494.64,8102.02,133106.05,-125004.03,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Switzerland,Europe,1199.64,19593.91,-18394.27,20793.55,8517.44,139116.76,-130599.32,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Switzerland,Europe,1223.36,19869.09,-18645.73,21092.45,8942.76,145243.05,-136300.29,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Switzerland,Europe,1122.38,18129.85,-17007.47,19252.23,8440.3,136336.47,-127896.17,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Switzerland,Europe,1652.06,26545.29,-24893.23,28197.35,12770.42,205195.09,-192424.67,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Switzerland,Europe,1294.55,20694.64,-19400.09,21989.19,10278.73,164315.44,-154036.71,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Switzerland,Europe,1318.27,20969.82,-19651.55,22288.09,10743.9,170904.03,-160160.13,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Switzerland,Europe,1342.0,21245.0,-19903.0,22587.0,11219.12,177608.2,-166389.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Belgium,Europe,5431.0,8421.0,-2990.0,13852.0,32857.55,50947.05,-18089.5,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Belgium,Europe,5648.18,8487.45,-2839.27,14135.63,35357.61,53131.44,-17773.83,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Belgium,Europe,5865.36,8553.91,-2688.55,14419.27,37948.88,55343.8,-17394.92,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Belgium,Europe,6082.55,8620.36,-2537.81,14702.91,40631.43,57584.0,-16952.57,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Belgium,Europe,6299.73,8686.82,-2387.09,14986.55,43405.14,59852.19,-16447.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Belgium,Europe,6516.91,8753.27,-2236.36,15270.18,46270.06,62148.22,-15878.16,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Belgium,Europe,6734.09,8819.73,-2085.64,15553.82,49226.2,64472.23,-15246.03,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Belgium,Europe,6256.15,7997.56,-1741.41,14253.71,47046.25,60141.65,-13095.4,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Belgium,Europe,9318.99,11638.43,-2319.44,20957.42,72035.79,89965.06,-17929.27,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Belgium,Europe,7385.64,9019.09,-1633.45,16404.73,58641.98,71611.57,-12969.59,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Belgium,Europe,7602.82,9085.55,-1482.73,16688.37,61962.98,74047.23,-12084.25,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Belgium,Europe,7820.0,9152.0,-1332.0,16972.0,65375.2,76510.72,-11135.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Malaysia,Asia,4208.0,9170.0,-4962.0,13378.0,25458.4,55478.5,-30020.1,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Malaysia,Asia,4476.0,9508.27,-5032.27,13984.27,28019.76,59521.77,-31502.01,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Malaysia,Asia,4744.0,9846.55,-5102.55,14590.55,30693.68,63707.18,-33013.5,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Malaysia,Asia,5012.0,10184.82,-5172.82,15196.82,33480.16,68034.6,-34554.44,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Malaysia,Asia,5280.0,10523.09,-5243.09,15803.09,36379.2,72504.09,-36124.89,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Malaysia,Asia,5548.0,10861.36,-5313.36,16409.36,39390.8,77115.66,-37724.86,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Malaysia,Asia,5816.0,11199.64,-5383.64,17015.64,42514.96,81869.37,-39354.41,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Malaysia,Asia,5475.6,10384.12,-4908.52,15859.72,41176.51,78088.58,-36912.07,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Malaysia,Asia,8257.6,15439.04,-7181.44,23696.64,63831.25,119343.78,-55512.53,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Malaysia,Asia,6620.0,12214.45,-5594.45,18834.45,52562.8,96982.73,-44419.93,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Malaysia,Asia,6888.0,12552.73,-5664.73,19440.73,56137.2,102304.75,-46167.55,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Malaysia,Asia,7156.0,12891.0,-5735.0,20047.0,59824.16,107768.76,-47944.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Vietnam,Asia,5440.0,2603.0,2837.0,8043.0,32912.0,15748.15,17163.85,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Vietnam,Asia,5606.73,3052.91,2553.82,8659.64,35098.13,19111.22,15986.91,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Vietnam,Asia,5773.45,3502.82,2270.63,9276.27,37354.22,22663.25,14690.98,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Vietnam,Asia,5940.18,3952.73,1987.45,9892.91,39680.4,26404.24,13276.17,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Vietnam,Asia,6106.91,4402.64,1704.27,10509.55,42076.61,30334.19,11742.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Vietnam,Asia,6273.64,4852.55,1421.09,11126.19,44542.84,34453.1,10089.74,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Vietnam,Asia,6440.36,5302.45,1137.91,11742.81,47079.03,38760.91,8318.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Vietnam,Asia,5946.38,5177.13,769.25,11123.51,44716.78,38932.02,5784.76,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Vietnam,Asia,8805.96,8062.95,743.01,16868.91,68070.07,62326.6,5743.47,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Vietnam,Asia,6940.55,6652.18,288.37,13592.73,55107.97,52818.31,2289.66,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Vietnam,Asia,7107.27,7102.09,5.18,14209.36,57924.25,57882.03,42.22,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Vietnam,Asia,7274.0,7552.0,-278.0,14826.0,60810.64,63134.72,-2324.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Italy,Europe,4791.0,3804.0,987.0,8595.0,28985.55,23014.2,5971.35,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Italy,Europe,5149.18,3989.91,1159.27,9139.09,32233.87,24976.84,7257.03,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Italy,Europe,5507.36,4175.82,1331.54,9683.18,35632.62,27017.56,8615.06,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Italy,Europe,5865.55,4361.73,1503.82,10227.28,39181.87,29136.36,10045.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Italy,Europe,6223.73,4547.64,1676.09,10771.37,42881.5,31333.24,11548.26,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Italy,Europe,6581.91,4733.55,1848.36,11315.46,46731.56,33608.21,13123.36,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Italy,Europe,6940.09,4919.45,2020.64,11859.54,50732.06,35961.18,14770.88,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Italy,Europe,6568.45,4594.83,1973.62,11163.28,49394.74,34553.12,14841.62,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Italy,Europe,9953.39,6878.65,3074.74,16832.04,76939.7,53171.96,23767.74,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Italy,Europe,8014.64,5477.18,2537.46,13491.82,63636.24,43488.81,20147.43,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Italy,Europe,8372.82,5663.09,2709.73,14035.91,68238.48,46154.18,22084.3,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Italy,Europe,8731.0,5849.0,2882.0,14580.0,72991.16,48897.64,24093.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Bangladesh,South Asia,6160.0,482.0,5678.0,6642.0,37268.0,2916.1,34351.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Bangladesh,South Asia,6605.82,605.91,5999.91,7211.73,41352.43,3793.0,37559.44,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Bangladesh,South Asia,7051.64,729.82,6321.82,7781.46,45624.11,4721.94,40902.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Bangladesh,South Asia,7497.45,853.73,6643.72,8351.18,50082.97,5702.92,44380.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Bangladesh,South Asia,7943.27,977.64,6965.63,8920.91,54729.13,6735.94,47993.19,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Bangladesh,South Asia,8389.09,1101.55,7287.54,9490.64,59562.54,7821.01,51741.53,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Bangladesh,South Asia,8834.91,1225.45,7609.46,10060.36,64583.19,8958.04,55625.15,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Bangladesh,South Asia,8352.65,1214.43,7138.22,9567.08,62811.93,9132.51,53679.41,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Bangladesh,South Asia,12644.51,1915.25,10729.26,14559.76,97742.06,14804.88,82937.18,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Bangladesh,South Asia,10172.36,1597.18,8575.18,11769.54,80768.54,12681.61,68086.93,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Bangladesh,South Asia,10618.18,1721.09,8897.09,12339.27,86538.17,14026.88,72511.28,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Bangladesh,South Asia,11064.0,1845.0,9219.0,12909.0,92495.04,15424.2,77070.84,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Nepal,South Asia,3592.0,560.0,3032.0,4152.0,21731.6,3388.0,18343.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Nepal,South Asia,3913.0,585.55,3327.45,4498.55,24495.38,3665.54,20829.84,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Nepal,South Asia,4234.0,611.09,3622.91,4845.09,27393.98,3953.75,23440.23,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Nepal,South Asia,4555.0,636.64,3918.36,5191.64,30427.4,4252.76,26174.64,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Nepal,South Asia,4876.0,662.18,4213.82,5538.18,33595.64,4562.42,29033.22,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Nepal,South Asia,5197.0,687.73,4509.27,5884.73,36898.7,4882.88,32015.82,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Nepal,South Asia,5518.0,713.27,4804.73,6231.27,40336.58,5214.0,35122.58,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Nepal,South Asia,5255.1,664.94,4590.16,5920.04,39518.35,5000.35,34518.0,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Nepal,South Asia,8008.0,993.67,7014.33,9001.67,61901.84,7681.07,54220.77,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Nepal,South Asia,6481.0,789.91,5691.09,7270.91,51459.14,6271.89,45187.25,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Nepal,South Asia,6802.0,815.45,5986.55,7617.45,55436.3,6645.92,48790.38,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Nepal,South Asia,7123.0,841.0,6282.0,7964.0,59548.28,7030.76,52517.52,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Brazil,Latin America,5573.0,3942.0,1631.0,9515.0,33716.65,23849.1,9867.55,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Brazil,Latin America,5632.18,4126.45,1505.73,9758.63,35257.45,25831.58,9425.87,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Brazil,Latin America,5691.36,4310.91,1380.45,10002.27,36823.1,27891.59,8931.51,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Brazil,Latin America,5750.55,4495.36,1255.19,10245.91,38413.67,30029.0,8384.67,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Brazil,Latin America,5809.73,4679.82,1129.91,10489.55,40029.04,32243.96,7785.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Brazil,Latin America,5868.91,4864.27,1004.64,10733.18,41669.26,34536.32,7132.94,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Brazil,Latin America,5928.09,5048.73,879.36,10976.82,43334.34,36906.22,6428.12,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Brazil,Latin America,5388.55,4709.86,678.69,10098.41,40521.9,35418.15,5103.75,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Brazil,Latin America,7860.39,7042.93,817.46,14903.32,60760.81,54441.85,6318.97,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Brazil,Latin America,6105.64,5602.09,503.55,11707.73,48478.78,44480.59,3998.19,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Brazil,Latin America,6164.82,5786.55,378.27,11951.37,50243.28,47160.38,3082.9,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Brazil,Latin America,6224.0,5971.0,253.0,12195.0,52032.64,49917.56,2115.08,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,Qatar,Middle East,1582.0,15154.0,-13572.0,16736.0,9571.1,91681.7,-82110.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,Qatar,Middle East,1613.45,14880.0,-13266.55,16493.45,10100.2,93148.8,-83048.6,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,Qatar,Middle East,1644.91,14606.0,-12961.09,16250.91,10642.57,94500.82,-83858.25,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,Qatar,Middle East,1676.36,14332.0,-12655.64,16008.36,11198.08,95737.76,-84539.68,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,Qatar,Middle East,1707.82,14058.0,-12350.18,15765.82,11766.88,96859.62,-85092.74,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,Qatar,Middle East,1739.27,13784.0,-12044.73,15523.27,12348.82,97866.4,-85517.58,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,Qatar,Middle East,1770.73,13510.0,-11739.27,15280.73,12944.04,98758.1,-85814.06,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,Qatar,Middle East,1621.96,11912.4,-10290.44,13534.36,12197.14,89581.25,-77384.11,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,Qatar,Middle East,2383.73,16850.6,-14466.87,19234.33,18426.23,130255.14,-111828.91,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,Qatar,Middle East,1865.09,12688.0,-10822.91,14553.09,14808.81,100742.72,-85933.91,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,Qatar,Middle East,1896.55,12414.0,-10517.45,14310.55,15456.88,101174.1,-85717.22,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,Qatar,Middle East,1928.0,12140.0,-10212.0,14068.0,16118.08,101490.4,-85372.32,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2013-14,South Africa,Africa,5074.0,6075.0,-1001.0,11149.0,30697.7,36753.75,-6056.05,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2014-15,South Africa,Africa,5381.09,6524.91,-1143.82,11906.0,33685.62,40845.94,-7160.31,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2015-16,South Africa,Africa,5688.18,6974.82,-1286.64,12663.0,36802.52,45127.09,-8324.56,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2016-17,South Africa,Africa,5995.27,7424.73,-1429.46,13420.0,40048.4,49597.2,-9548.79,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2017-18,South Africa,Africa,6302.36,7874.64,-1572.28,14177.0,43423.26,54256.27,-10833.01,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2018-19,South Africa,Africa,6609.45,8324.55,-1715.1,14934.0,46927.1,59104.3,-12177.21,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2019-20,South Africa,Africa,6916.55,8774.45,-1857.9,15691.0,50559.98,64141.23,-13581.25,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2020-21,South Africa,Africa,6501.27,8301.93,-1800.66,14803.2,48889.55,62430.51,-13540.96,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2021-22,South Africa,Africa,9789.95,12576.55,-2786.6,22366.5,75676.31,97216.73,-21540.42,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2022-23,South Africa,Africa,7837.82,10124.18,-2286.36,17962.0,62232.29,80385.99,-18153.7,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2023-24,South Africa,Africa,8144.91,10574.09,-2429.18,18719.0,66381.02,86178.83,-19797.82,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
-2024-25,South Africa,Africa,8452.0,11024.0,-2572.0,19476.0,70658.72,92160.64,-21501.92,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+financial_year,country,region,exports_usd_million,imports_usd_million,trade_balance_usd_million,total_trade_usd_million,exports_inr_crore,imports_inr_crore,trade_balance_inr_crore,publication_status,data_source,source_url
+2013-14,United States,North America,39142.0,22505.0,16637.0,61647.0,236809.1,136155.25,100653.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,United States,North America,42979.7,24474.3,18505.4,67454.0,268838.02,153086.75,115751.28,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,United States,North America,46817.4,26443.6,20373.8,73261.0,302440.4,170825.66,131614.75,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,United States,North America,50655.1,28412.9,22242.2,79068.0,337616.24,189371.98,148244.26,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,United States,North America,54492.8,30382.2,24110.6,84875.0,374365.54,208725.71,165639.82,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,United States,North America,58330.5,32351.5,25979.0,90682.0,412688.29,228886.86,183801.42,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,United States,North America,62168.2,34320.8,27847.4,96489.0,452584.5,249855.42,202729.07,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,United States,North America,59405.31,32661.09,26744.22,92066.4,444648.75,244468.26,200180.49,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,United States,North America,90796.68,49737.22,41059.46,140533.9,698226.47,382479.22,315747.25,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,United States,North America,73681.3,40228.7,33452.6,113910.0,581713.86,317605.59,264108.28,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,United States,North America,77519.0,42198.0,35321.0,119717.0,627903.9,341803.8,286100.1,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,United States,North America,79844.57,43885.92,35958.65,123730.49,663109.15,364472.57,298636.59,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,United States,North America,81394.95,45151.86,36243.09,126546.81,692671.02,384242.33,308428.7,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,China,Asia,14824.0,51034.0,-36210.0,65858.0,89685.2,308755.7,-219070.5,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,China,Asia,15008.6,56104.1,-41095.5,71112.7,93878.79,350931.15,-257052.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,China,Asia,15193.2,61174.2,-45981.0,76367.4,98148.07,395185.33,-297037.26,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,China,Asia,15377.8,66244.3,-50866.5,81622.1,102493.04,441518.26,-339025.22,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,China,Asia,15562.4,71314.4,-55752.0,86876.8,106913.69,489929.93,-383016.24,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,China,Asia,15747.0,76384.5,-60637.5,92131.5,111410.02,540420.34,-429010.31,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,China,Asia,15931.6,81454.6,-65523.0,97386.2,115982.05,592989.49,-477007.44,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,China,Asia,14504.58,77872.23,-63367.65,92376.81,108566.78,582873.64,-474306.86,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,China,Asia,21191.04,119073.24,-97882.2,140264.28,162959.1,915673.22,-752714.12,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,China,Asia,16485.4,96664.9,-80179.5,113150.3,130152.23,763169.39,-633017.15,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,China,Asia,16670.0,101735.0,-85065.0,118405.0,135027.0,824053.5,-689026.5,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,China,Asia,17170.1,105804.4,-88634.3,122974.5,142597.68,878705.54,-736107.86,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,China,Asia,17503.5,108856.45,-91352.95,126359.95,148954.78,926368.39,-777413.6,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,United Arab Emirates,Middle East,30520.0,29019.0,1501.0,59539.0,184646.0,175564.95,9081.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,United Arab Emirates,Middle East,31030.6,30918.7,111.9,61949.3,194096.4,193396.47,699.93,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,United Arab Emirates,Middle East,31541.2,32818.4,-1277.2,64359.6,203756.15,212006.86,-8250.71,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,United Arab Emirates,Middle East,32051.8,34718.1,-2666.3,66769.9,213625.25,231396.14,-17770.89,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,United Arab Emirates,Middle East,32562.4,36617.8,-4055.4,69180.2,223703.69,251564.29,-27860.6,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,United Arab Emirates,Middle East,33073.0,38517.5,-5444.5,71590.5,233991.48,272511.31,-38519.84,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,United Arab Emirates,Middle East,33583.6,40417.2,-6833.6,74000.8,244488.61,294237.22,-49748.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,United Arab Emirates,Middle East,30684.78,38085.21,-7400.43,68769.99,229675.58,285067.8,-55392.22,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,United Arab Emirates,Middle East,44986.24,57481.58,-12495.34,102467.82,345944.19,442033.35,-96089.16,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,United Arab Emirates,Middle East,35115.4,46116.3,-11000.9,81231.7,277236.08,364088.19,-86852.11,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,United Arab Emirates,Middle East,35626.0,48016.0,-12390.0,83642.0,288570.6,388929.6,-100359.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,United Arab Emirates,Middle East,36694.78,49936.64,-13241.86,86631.42,304750.15,414723.8,-109973.65,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,United Arab Emirates,Middle East,37407.3,51377.12,-13969.82,88784.42,318336.12,437219.29,-118883.17,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Saudi Arabia,Middle East,12224.0,36403.0,-24179.0,48627.0,73955.2,220238.15,-146282.95,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Saudi Arabia,Middle East,12157.5,35943.5,-23786.0,48101.0,76045.16,224826.59,-148781.43,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Saudi Arabia,Middle East,12091.0,35484.0,-23393.0,47575.0,78107.86,229226.64,-151118.78,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Saudi Arabia,Middle East,12024.5,35024.5,-23000.0,47049.0,80143.29,233438.29,-153295.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Saudi Arabia,Middle East,11958.0,34565.0,-22607.0,46523.0,82151.46,237461.55,-155310.09,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Saudi Arabia,Middle East,11891.5,34105.5,-22214.0,45997.0,84132.36,241296.41,-157164.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Saudi Arabia,Middle East,11825.0,33646.0,-21821.0,45471.0,86086.0,244942.88,-158856.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Saudi Arabia,Middle East,10582.65,29867.85,-19285.2,40450.5,79211.14,223560.86,-144349.72,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Saudi Arabia,Middle East,15199.6,42545.1,-27345.5,57744.7,116884.92,327171.82,-210286.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Saudi Arabia,Middle East,11625.5,32267.5,-20642.0,43893.0,91783.32,254751.91,-162968.59,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Saudi Arabia,Middle East,11559.0,31808.0,-20249.0,43367.0,93627.9,257644.8,-164016.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Saudi Arabia,Middle East,11905.77,33080.32,-21174.55,44986.09,98877.42,274732.06,-175854.64,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Saudi Arabia,Middle East,12136.95,34034.56,-21897.61,46171.51,103285.44,289634.11,-186348.66,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Russia,Europe/Eurasia,2121.0,3887.0,-1766.0,6008.0,12832.05,23516.35,-10684.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Russia,Europe/Eurasia,2230.88,4276.12,-2045.24,6507.0,13954.15,26747.13,-12792.98,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Russia,Europe/Eurasia,2340.75,4665.25,-2324.5,7006.0,15121.24,30137.51,-15016.27,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Russia,Europe/Eurasia,2450.62,5054.38,-2603.76,7505.0,16333.38,33687.44,-17354.06,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Russia,Europe/Eurasia,2560.5,5443.5,-2883.0,8004.0,17590.64,37396.85,-19806.21,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Russia,Europe/Eurasia,2670.38,5832.62,-3162.24,8503.0,18892.94,41265.79,-22372.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Russia,Europe/Eurasia,2780.25,6221.75,-3441.5,9002.0,20240.22,45294.34,-25054.12,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Russia,Europe/Eurasia,2890.12,6610.88,-3720.76,9501.0,21632.55,49482.44,-27849.89,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Russia,Europe/Eurasia,3000.0,7000.0,-4000.0,10000.0,23070.0,53830.0,-30760.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Russia,Europe/Eurasia,3630.5,34719.5,-31089.0,38350.0,28662.8,274110.45,-245447.66,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Russia,Europe/Eurasia,4261.0,61439.0,-57178.0,65700.0,34514.1,497655.9,-463141.8,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Russia,Europe/Eurasia,4850.0,64200.0,-59350.0,69050.0,40279.25,533181.0,-492901.75,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Russia,Europe/Eurasia,5120.0,66500.0,-61380.0,71620.0,43571.2,565915.0,-522343.8,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Singapore,Asia,12510.0,6794.0,5716.0,19304.0,75685.5,41103.7,34581.8,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Singapore,Asia,12700.2,8232.9,4467.3,20933.1,79439.75,51496.79,27942.96,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Singapore,Asia,12890.4,9671.8,3218.6,22562.2,83271.98,62479.83,20792.16,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Singapore,Asia,13080.6,11110.7,1969.9,24191.3,87182.2,74052.82,13129.38,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Singapore,Asia,13270.8,12549.6,721.2,25820.4,91170.4,86215.75,4954.64,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Singapore,Asia,13461.0,13988.5,-527.5,27449.5,95236.57,98968.64,-3732.06,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Singapore,Asia,13651.2,15427.4,-1776.2,29078.6,99380.74,112311.47,-12930.74,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Singapore,Asia,12457.26,15179.67,-2722.41,27636.93,93242.59,113619.83,-20377.24,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Singapore,Asia,18241.08,23796.76,-5555.68,42037.84,140273.91,182997.08,-42723.18,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Singapore,Asia,14221.8,19744.1,-5522.3,33965.9,112281.11,155879.67,-43598.56,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Singapore,Asia,14412.0,21183.0,-6771.0,35595.0,116737.2,171582.3,-54845.1,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Singapore,Asia,14844.36,22030.32,-7185.96,36874.68,123282.41,182961.81,-59679.4,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Singapore,Asia,15132.6,22665.81,-7533.21,37798.41,128778.43,192886.04,-64107.62,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Iraq,Middle East,2390.0,17024.0,-14634.0,19414.0,14459.5,102995.2,-88535.7,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Iraq,Middle East,2470.2,18352.6,-15882.4,20822.8,15451.1,114795.51,-99344.41,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Iraq,Middle East,2550.4,19681.2,-17130.8,22231.6,16475.58,127140.55,-110664.97,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Iraq,Middle East,2630.6,21009.8,-18379.2,23640.4,17532.95,140030.32,-122497.37,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Iraq,Middle East,2710.8,22338.4,-19627.6,25049.2,18623.2,153464.81,-134841.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Iraq,Middle East,2791.0,23667.0,-20876.0,26458.0,19746.33,167444.02,-147697.7,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Iraq,Middle East,2871.2,24995.6,-22124.4,27866.8,20902.34,181967.97,-161065.63,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Iraq,Middle East,2656.26,23691.78,-21035.52,26348.04,19882.11,177332.97,-157450.87,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Iraq,Middle East,3941.08,35948.64,-32007.56,39889.72,30306.91,276445.04,-246138.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Iraq,Middle East,3111.8,28981.4,-25869.6,32093.2,24567.66,228808.15,-204240.49,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Iraq,Middle East,3192.0,30310.0,-27118.0,33502.0,25855.2,245511.0,-219655.8,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Iraq,Middle East,3287.76,31522.4,-28234.64,34810.16,27304.85,261793.53,-234488.69,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Iraq,Middle East,3351.6,32431.7,-29080.1,35783.3,28522.12,275993.77,-247471.65,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Indonesia,Asia,4851.0,14777.0,-9926.0,19628.0,29348.55,89400.85,-60052.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Indonesia,Asia,5242.8,15176.1,-9933.3,20418.9,32793.71,94926.51,-62132.79,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Indonesia,Asia,5634.6,15575.2,-9940.6,21209.8,36399.52,100615.79,-64216.28,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Indonesia,Asia,6026.4,15974.3,-9947.9,22000.7,40165.96,106468.71,-66302.75,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Indonesia,Asia,6418.2,16373.4,-9955.2,22791.6,44093.03,112485.26,-68392.22,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Indonesia,Asia,6810.0,16772.5,-9962.5,23582.5,48180.75,118665.44,-70484.69,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Indonesia,Asia,7201.8,17171.6,-9969.8,24373.4,52429.1,125009.25,-72580.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Indonesia,Asia,6834.24,15813.63,-8979.39,22647.87,51154.29,118365.02,-67210.73,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Indonesia,Asia,10381.02,23360.74,-12979.72,33741.76,79830.04,179644.09,-99814.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Indonesia,Asia,8377.2,18368.9,-9991.7,26746.1,66137.99,145022.47,-78884.47,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Indonesia,Asia,8769.0,18768.0,-9999.0,27537.0,71028.9,152020.8,-80991.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Indonesia,Asia,9032.07,19518.72,-10486.65,28550.79,75011.34,162102.97,-87091.63,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Indonesia,Asia,9207.45,20081.76,-10874.31,29289.21,78355.4,170895.78,-92540.38,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Netherlands,Europe,7990.0,2374.0,5616.0,10364.0,48339.5,14362.7,33976.8,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Netherlands,Europe,9426.9,2658.0,6768.9,12084.9,58965.26,16625.79,42339.47,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Netherlands,Europe,10863.8,2942.0,7921.8,13805.8,70180.15,19005.32,51174.83,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Netherlands,Europe,12300.7,3226.0,9074.7,15526.7,81984.17,21501.29,60482.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Netherlands,Europe,13737.6,3510.0,10227.6,17247.6,94377.31,24113.7,70263.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Netherlands,Europe,15174.5,3794.0,11380.5,18968.5,107359.59,26842.55,80517.04,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Netherlands,Europe,16611.4,4078.0,12533.4,20689.4,120930.99,29687.84,91243.15,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Netherlands,Europe,16243.47,3925.8,12317.67,20169.27,121582.37,29384.61,92197.76,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Netherlands,Europe,13119.67,4646.0,8473.67,17765.67,100890.26,35727.74,65162.52,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Netherlands,Europe,17739.33,4930.0,12809.33,22669.33,140052.01,38922.35,101129.66,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Netherlands,Europe,22359.0,5214.0,17145.0,27573.0,181107.9,42233.4,138874.5,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Netherlands,Europe,24100.0,5214.0,18886.0,29314.0,200150.5,43302.27,156848.23,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Netherlands,Europe,25200.0,5214.0,19986.0,30414.0,214452.0,44371.14,170080.86,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Germany,Europe,7517.0,12903.0,-5386.0,20420.0,45477.85,78063.15,-32585.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Germany,Europe,7754.5,13230.9,-5476.4,20985.4,48504.4,82759.28,-34254.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Germany,Europe,7992.0,13558.8,-5566.8,21550.8,51628.32,87589.85,-35961.53,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Germany,Europe,8229.5,13886.7,-5657.2,22116.2,54849.62,92554.86,-37705.24,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Germany,Europe,8467.0,14214.6,-5747.6,22681.6,58168.29,97654.3,-39486.01,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Germany,Europe,8704.5,14542.5,-5838.0,23247.0,61584.34,102888.19,-41303.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Germany,Europe,8942.0,14870.4,-5928.4,23812.4,65097.76,108256.51,-43158.75,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Germany,Europe,8261.55,13678.47,-5416.92,21940.02,61837.7,102383.35,-40545.65,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Germany,Europe,12242.1,20184.06,-7941.96,32426.16,94141.75,155215.42,-61073.67,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Germany,Europe,9654.5,15854.1,-6199.6,25508.6,76222.28,125168.12,-48945.84,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Germany,Europe,9892.0,16182.0,-6290.0,26074.0,80125.2,131074.2,-50949.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Germany,Europe,10188.76,16829.28,-6640.52,27018.04,84617.65,139767.17,-55149.52,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Germany,Europe,10386.6,17314.74,-6928.14,27701.34,88389.97,147348.44,-58958.47,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,United Kingdom,Europe,9771.0,6006.0,3765.0,15777.0,59114.55,36336.3,22778.25,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,United Kingdom,Europe,10088.0,6249.2,3838.8,16337.2,63100.44,39088.75,24011.69,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,United Kingdom,Europe,10405.0,6492.4,3912.6,16897.4,67216.3,41940.9,25275.4,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,United Kingdom,Europe,10722.0,6735.6,3986.4,17457.6,71462.13,44892.77,26569.36,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,United Kingdom,Europe,11039.0,6978.8,4060.2,18017.8,75837.93,47944.36,27893.57,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,United Kingdom,Europe,11356.0,7222.0,4134.0,18578.0,80343.7,51095.65,29248.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,United Kingdom,Europe,11673.0,7465.2,4207.8,19138.2,84979.44,54346.66,30632.78,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,United Kingdom,Europe,10791.0,6937.56,3853.44,17728.56,80770.63,51927.64,28843.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,United Kingdom,Europe,15999.1,10337.08,5662.02,26336.18,123033.08,79492.15,43540.93,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,United Kingdom,Europe,12624.0,8194.8,4429.2,20818.8,99666.48,64697.95,34968.53,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,United Kingdom,Europe,12941.0,8438.0,4503.0,21379.0,104822.1,68347.8,36474.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,United Kingdom,Europe,13329.23,8775.52,4553.71,22104.75,110699.26,72880.69,37818.56,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,United Kingdom,Europe,13588.05,9028.66,4559.39,22616.71,115634.31,76833.9,38800.41,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Japan,Asia,6814.0,9481.0,-2667.0,16295.0,41224.7,57360.05,-16135.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Japan,Asia,6648.4,10302.3,-3653.9,16950.7,41585.74,64440.89,-22855.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Japan,Asia,6482.8,11123.6,-4640.8,17606.4,41878.89,71858.46,-29979.57,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Japan,Asia,6317.2,11944.9,-5627.7,18262.1,42104.14,79612.76,-37508.62,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Japan,Asia,6151.6,12766.2,-6614.6,18917.8,42261.49,87703.79,-45442.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Japan,Asia,5986.0,13587.5,-7601.5,19573.5,42350.95,96131.56,-53780.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Japan,Asia,5820.4,14408.8,-8588.4,20229.2,42372.51,104896.06,-62523.55,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Japan,Asia,5089.32,13707.09,-8617.77,18796.41,38093.56,102597.57,-64504.01,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Japan,Asia,7135.96,20866.82,-13730.86,28002.78,54875.53,160465.85,-105590.31,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Japan,Asia,5323.6,16872.7,-11549.1,22196.3,42029.82,133209.97,-91180.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Japan,Asia,5158.0,17694.0,-12536.0,22852.0,41779.8,143321.4,-101541.6,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Japan,Asia,5312.74,18401.76,-13089.02,23714.5,44122.31,152826.62,-108704.31,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Japan,Asia,5415.9,18932.58,-13516.68,24348.48,46089.31,161116.26,-115026.95,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,South Korea,Asia,4181.0,12488.0,-8307.0,16669.0,25295.05,75552.4,-50257.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,South Korea,Asia,4404.4,13352.4,-8948.0,17756.8,27549.52,83519.26,-55969.74,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,South Korea,Asia,4627.8,14216.8,-9589.0,18844.6,29895.59,91840.53,-61944.94,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,South Korea,Asia,4851.2,15081.2,-10230.0,19932.4,32333.25,100516.2,-68182.95,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,South Korea,Asia,5074.6,15945.6,-10871.0,21020.2,34862.5,109546.27,-74683.77,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,South Korea,Asia,5298.0,16810.0,-11512.0,22108.0,37483.35,118930.75,-81447.4,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,South Korea,Asia,5521.4,17674.4,-12153.0,23195.8,40195.79,128669.63,-88473.84,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,South Korea,Asia,5170.32,16684.92,-11514.6,21855.24,38699.85,124886.63,-86186.78,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,South Korea,Asia,7758.66,25224.16,-17465.5,32982.82,59664.1,193973.79,-134309.7,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,South Korea,Asia,6191.6,20267.6,-14076.0,26459.2,48882.68,160012.7,-111130.02,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,South Korea,Asia,6415.0,21132.0,-14717.0,27547.0,51961.5,171169.2,-119207.7,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,South Korea,Asia,6607.45,21977.28,-15369.83,28584.73,54874.87,182521.31,-127646.44,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,South Korea,Asia,6735.75,22611.24,-15875.49,29346.99,57321.23,192421.65,-135100.42,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Hong Kong,Asia,12732.0,7378.0,5354.0,20110.0,77028.6,44636.9,32391.7,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Hong Kong,Asia,12472.2,8467.6,4004.6,20939.8,78013.61,52964.84,25048.77,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Hong Kong,Asia,12212.4,9557.2,2655.2,21769.6,78892.1,61739.51,17152.59,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Hong Kong,Asia,11952.6,10646.8,1305.8,22599.4,79664.08,70960.92,8703.16,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Hong Kong,Asia,11692.8,11736.4,-43.6,23429.2,80329.54,80629.07,-299.53,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Hong Kong,Asia,11433.0,12826.0,-1393.0,24259.0,80888.48,90743.95,-9855.48,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Hong Kong,Asia,11173.2,13915.6,-2742.4,25088.8,81340.9,101305.57,-19964.67,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Hong Kong,Asia,9822.06,13504.68,-3682.62,23326.74,73518.12,101082.53,-27564.41,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Hong Kong,Asia,13849.68,20923.24,-7073.56,34772.92,106504.04,160899.72,-54395.68,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Hong Kong,Asia,10393.8,17184.4,-6790.6,27578.2,82059.05,135670.84,-53611.79,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Hong Kong,Asia,10134.0,18274.0,-8140.0,28408.0,82085.4,148019.4,-65934.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Hong Kong,Asia,10438.02,19004.96,-8566.94,29442.98,86687.76,157836.19,-71148.44,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Hong Kong,Asia,10640.7,19553.18,-8912.48,30193.88,90552.36,166397.56,-75845.2,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Australia,Oceania,2332.0,9779.0,-7447.0,12111.0,14108.6,59162.95,-45054.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Australia,Oceania,2892.9,10416.5,-7523.6,13309.4,18095.09,65155.21,-47060.12,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Australia,Oceania,3453.8,11054.0,-7600.2,14507.8,22311.55,71408.84,-49097.29,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Australia,Oceania,4014.7,11691.5,-7676.8,15706.2,26757.98,77923.85,-51165.87,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Australia,Oceania,4575.6,12329.0,-7753.4,16904.6,31434.37,84700.23,-53265.86,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Australia,Oceania,5136.5,12966.5,-7830.0,18103.0,36340.74,91737.99,-55397.25,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Australia,Oceania,5697.4,13604.0,-7906.6,19301.4,41477.07,99037.12,-57560.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Australia,Oceania,5632.47,12817.35,-7184.88,18449.82,42159.04,95937.86,-53778.83,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Australia,Oceania,8864.96,19342.7,-10477.74,28207.66,68171.54,148745.36,-80573.82,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Australia,Oceania,7380.1,15516.5,-8136.4,22896.6,58265.89,122502.77,-64236.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Australia,Oceania,7941.0,16154.0,-8213.0,24095.0,64322.1,130847.4,-66525.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Australia,Oceania,8179.23,16800.16,-8620.93,24979.39,67928.51,139525.33,-71596.82,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Australia,Oceania,8338.05,17284.78,-8946.73,25622.83,70956.81,147093.48,-76136.67,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Switzerland,Europe,1081.0,18218.0,-17137.0,19299.0,6540.05,110218.9,-103678.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Switzerland,Europe,1107.1,18520.7,-17413.6,19627.8,6924.91,115846.98,-108922.07,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Switzerland,Europe,1133.2,18823.4,-17690.2,19956.6,7320.47,121599.16,-114278.69,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Switzerland,Europe,1159.3,19126.1,-17966.8,20285.4,7726.73,127475.46,-119748.72,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Switzerland,Europe,1185.4,19428.8,-18243.4,20614.2,8143.7,133475.86,-125332.16,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Switzerland,Europe,1211.5,19731.5,-18520.0,20943.0,8571.36,139600.36,-131029.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Switzerland,Europe,1237.6,20034.2,-18796.6,21271.8,9009.73,145848.98,-136839.25,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Switzerland,Europe,1137.33,18303.21,-17165.88,19440.54,8512.92,136999.53,-128486.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Switzerland,Europe,1676.74,26831.48,-25154.74,28508.22,12894.13,206334.08,-193439.95,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Switzerland,Europe,1315.9,20942.3,-19626.4,22258.2,10389.03,165339.46,-154950.43,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Switzerland,Europe,1342.0,21245.0,-19903.0,22587.0,10870.2,172084.5,-161214.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Switzerland,Europe,1382.26,22094.8,-20712.54,23477.06,11479.67,183497.31,-172017.64,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Switzerland,Europe,1409.1,22732.15,-21323.05,24141.25,11991.44,193450.6,-181459.16,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Belgium,Europe,5431.0,8421.0,-2990.0,13852.0,32857.55,50947.05,-18089.5,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Belgium,Europe,5669.9,8494.1,-2824.2,14164.0,35465.22,53130.6,-17665.37,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Belgium,Europe,5908.8,8567.2,-2658.4,14476.0,38170.85,55344.11,-17173.26,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Belgium,Europe,6147.7,8640.3,-2492.6,14788.0,40974.42,57587.6,-16613.18,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Belgium,Europe,6386.6,8713.4,-2326.8,15100.0,43875.94,59861.06,-15985.12,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Belgium,Europe,6625.5,8786.5,-2161.0,15412.0,46875.41,62164.49,-15289.08,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Belgium,Europe,6864.4,8859.6,-1995.2,15724.0,49972.83,64497.89,-14525.06,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Belgium,Europe,6392.97,8039.43,-1646.46,14432.4,47851.38,60175.13,-12323.75,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Belgium,Europe,9544.86,11707.54,-2162.68,21252.4,73399.97,90030.98,-16631.01,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Belgium,Europe,7581.1,9078.9,-1497.8,16660.0,59852.78,71677.92,-11825.13,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Belgium,Europe,7820.0,9152.0,-1332.0,16972.0,63342.0,74131.2,-10789.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Belgium,Europe,8054.6,9518.08,-1463.48,17572.68,66893.45,79047.65,-12154.2,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Belgium,Europe,8211.0,9792.64,-1581.64,18003.64,69875.61,83335.37,-13459.76,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Malaysia,Asia,4208.0,9170.0,-4962.0,13378.0,25458.4,55478.5,-30020.1,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Malaysia,Asia,4502.8,9542.1,-5039.3,14044.9,28165.01,59685.84,-31520.82,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Malaysia,Asia,4797.6,9914.2,-5116.6,14711.8,30992.5,64045.73,-33053.24,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Malaysia,Asia,5092.4,10286.3,-5193.9,15378.7,33940.85,68558.19,-34617.34,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Malaysia,Asia,5387.2,10658.4,-5271.2,16045.6,37010.06,73223.21,-36213.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Malaysia,Asia,5682.0,11030.5,-5348.5,16712.5,40200.15,78040.79,-37840.64,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Malaysia,Asia,5976.8,11402.6,-5425.8,17379.4,43511.1,83010.93,-39499.82,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Malaysia,Asia,5644.44,10597.23,-4952.79,16241.67,42248.63,79320.27,-37071.63,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Malaysia,Asia,8536.32,15790.84,-7254.52,24327.16,65644.3,121431.56,-55787.26,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Malaysia,Asia,6861.2,12518.9,-5657.7,19380.1,54169.17,98836.72,-44667.54,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Malaysia,Asia,7156.0,12891.0,-5735.0,20047.0,57963.6,104417.1,-46453.5,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Malaysia,Asia,7370.68,13406.64,-6035.96,20777.32,61213.5,111342.15,-50128.65,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Malaysia,Asia,7513.8,13793.37,-6279.57,21307.17,63942.44,117381.58,-53439.14,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Vietnam,Asia,5440.0,2603.0,2837.0,8043.0,32912.0,15748.15,17163.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Vietnam,Asia,5623.4,3097.9,2525.5,8721.3,35174.37,19377.36,15797.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Vietnam,Asia,5806.8,3592.8,2214.0,9399.6,37511.93,23209.49,14302.44,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Vietnam,Asia,5990.2,4087.7,1902.5,10077.9,39924.68,27244.52,12680.16,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Vietnam,Asia,6173.6,4582.6,1591.0,10756.2,42412.63,31482.46,10930.17,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Vietnam,Asia,6357.0,5077.5,1279.5,11434.5,44975.78,35923.31,9052.46,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Vietnam,Asia,6540.4,5572.4,968.0,12112.8,47614.11,40567.07,7047.04,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Vietnam,Asia,6051.42,5460.57,590.85,11511.99,45294.88,40872.37,4422.51,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Vietnam,Asia,8979.36,8530.86,448.5,17510.22,69051.28,65602.31,3448.97,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Vietnam,Asia,7090.6,7057.1,33.5,14147.7,55980.29,55715.8,264.48,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Vietnam,Asia,7274.0,7552.0,-278.0,14826.0,58919.4,61171.2,-2251.8,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Vietnam,Asia,7492.22,7854.08,-361.86,15346.3,62222.89,65228.13,-3005.25,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Vietnam,Asia,7637.7,8080.64,-442.94,15718.34,64996.83,68766.25,-3769.42,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Italy,Europe,4791.0,3804.0,987.0,8595.0,28985.55,23014.2,5971.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Italy,Europe,5185.0,4008.5,1176.5,9193.5,32432.17,25073.17,7359.01,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Italy,Europe,5579.0,4213.0,1366.0,9792.0,36040.34,27215.98,8824.36,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Italy,Europe,5973.0,4417.5,1555.5,10390.5,39810.04,29442.64,10367.41,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Italy,Europe,6367.0,4622.0,1745.0,10989.0,43741.29,31753.14,11988.15,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Italy,Europe,6761.0,4826.5,1934.5,11587.5,47834.07,34147.49,13686.59,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Italy,Europe,7155.0,5031.0,2124.0,12186.0,52088.4,36625.68,15462.72,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Italy,Europe,6794.1,4711.95,2082.15,11506.05,50853.84,35268.95,15584.89,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Italy,Europe,10325.9,7072.0,3253.9,17397.9,79406.17,54383.68,25022.49,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Italy,Europe,8337.0,5644.5,2692.5,13981.5,65820.62,44563.33,21257.29,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Italy,Europe,8731.0,5849.0,2882.0,14580.0,70721.1,47376.9,23344.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Italy,Europe,8992.93,6082.96,2909.97,15075.89,74686.28,50518.98,24167.3,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Italy,Europe,9167.55,6258.43,2909.12,15425.98,78015.85,53259.24,24756.61,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Bangladesh,South Asia,6160.0,482.0,5678.0,6642.0,37268.0,2916.1,34351.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Bangladesh,South Asia,6650.4,618.3,6032.1,7268.7,41598.25,3867.47,37730.79,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Bangladesh,South Asia,7140.8,754.6,6386.2,7895.4,46129.57,4874.72,41254.85,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Bangladesh,South Asia,7631.2,890.9,6740.3,8522.1,50861.95,5937.85,44924.1,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Bangladesh,South Asia,8121.6,1027.2,7094.4,9148.8,55795.39,7056.86,48738.53,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Bangladesh,South Asia,8612.0,1163.5,7448.5,9775.5,60929.9,8231.76,52698.14,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Bangladesh,South Asia,9102.4,1299.8,7802.6,10402.2,66265.47,9462.54,56802.93,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Bangladesh,South Asia,8633.52,1292.49,7341.03,9926.01,64621.9,9674.29,54947.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Bangladesh,South Asia,13108.16,2044.12,11064.04,15152.28,100801.75,15719.28,85082.47,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Bangladesh,South Asia,10573.6,1708.7,8864.9,12282.3,83478.57,13490.19,69988.39,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Bangladesh,South Asia,11064.0,1845.0,9219.0,12909.0,89618.4,14944.5,74673.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Bangladesh,South Asia,11395.92,1918.8,9477.12,13314.72,94643.12,15935.63,78707.48,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Bangladesh,South Asia,11617.2,1974.15,9643.05,13591.35,98862.37,16800.02,82062.36,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Nepal,South Asia,3592.0,560.0,3032.0,4152.0,21731.6,3388.0,18343.6,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Nepal,South Asia,3945.1,588.1,3357.0,4533.2,24676.6,3678.57,20998.03,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Nepal,South Asia,4298.2,616.2,3682.0,4914.4,27766.37,3980.65,23785.72,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Nepal,South Asia,4651.3,644.3,4007.0,5295.6,31000.91,4294.26,26706.66,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Nepal,South Asia,5004.4,672.4,4332.0,5676.8,34380.23,4619.39,29760.84,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Nepal,South Asia,5357.5,700.5,4657.0,6058.0,37904.31,4956.04,32948.28,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Nepal,South Asia,5710.6,728.6,4982.0,6439.2,41573.17,5304.21,36268.96,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Nepal,South Asia,5457.33,681.03,4776.3,6138.36,40848.12,5097.51,35750.61,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Nepal,South Asia,8341.84,1020.24,7321.6,9362.08,64148.75,7845.65,56303.1,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Nepal,South Asia,6769.9,812.9,5957.0,7582.8,53448.36,6417.85,47030.51,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Nepal,South Asia,7123.0,841.0,6282.0,7964.0,57696.3,6812.1,50884.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Nepal,South Asia,7336.69,874.64,6462.05,8211.33,60931.21,7263.89,53667.33,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Nepal,South Asia,7479.15,899.87,6579.28,8379.02,63647.57,7657.89,55989.67,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Brazil,Latin America,5573.0,3942.0,1631.0,9515.0,33716.65,23849.1,9867.55,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Brazil,Latin America,5638.1,4144.9,1493.2,9783.0,35266.32,25926.35,9339.97,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Brazil,Latin America,5703.2,4347.8,1355.4,10051.0,36842.67,28086.79,8755.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Brazil,Latin America,5768.3,4550.7,1217.6,10319.0,38445.72,30330.42,8115.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Brazil,Latin America,5833.4,4753.6,1079.8,10587.0,40075.46,32657.23,7418.23,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Brazil,Latin America,5898.5,4956.5,942.0,10855.0,41731.89,35067.24,6664.65,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Brazil,Latin America,5963.6,5159.4,804.2,11123.0,43415.01,37560.43,5854.58,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Brazil,Latin America,5425.83,4826.07,599.76,10251.9,40612.34,36123.13,4489.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Brazil,Latin America,7921.94,7234.76,687.18,15156.7,60919.72,55635.3,5284.41,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Brazil,Latin America,6158.9,5768.1,390.8,11927.0,48624.52,45539.15,3085.37,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Brazil,Latin America,6224.0,5971.0,253.0,12195.0,50414.4,48365.1,2049.3,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Brazil,Latin America,6410.72,6209.84,200.88,12620.56,53241.03,51572.72,1668.31,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Brazil,Latin America,6535.2,6388.97,146.23,12924.17,55614.55,54370.13,1244.42,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,Qatar,Middle East,1582.0,15154.0,-13572.0,16736.0,9571.1,91681.7,-82110.6,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,Qatar,Middle East,1616.6,14852.6,-13236.0,16469.2,10111.83,92903.01,-82791.18,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,Qatar,Middle East,1651.2,14551.2,-12900.0,16202.4,10666.75,94000.75,-83334.0,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,Qatar,Middle East,1685.8,14249.8,-12564.0,15935.6,11235.86,94974.92,-83739.06,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,Qatar,Middle East,1720.4,13948.4,-12228.0,15668.8,11819.15,95825.51,-84006.36,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,Qatar,Middle East,1755.0,13647.0,-11892.0,15402.0,12416.62,96552.52,-84135.9,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,Qatar,Middle East,1789.6,13345.6,-11556.0,15135.2,13028.29,97155.97,-84127.68,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,Qatar,Middle East,1641.78,11739.78,-10098.0,13381.56,12288.72,87872.25,-75583.53,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,Qatar,Middle East,2416.44,16565.64,-14149.2,18982.08,18582.42,127389.77,-108807.35,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,Qatar,Middle East,1893.4,12441.4,-10548.0,14334.8,14948.39,98224.85,-83276.46,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,Qatar,Middle East,1928.0,12140.0,-10212.0,14068.0,15616.8,98334.0,-82717.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,Qatar,Middle East,1985.84,12625.6,-10639.76,14611.44,16492.4,104855.61,-88363.21,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,Qatar,Middle East,2024.4,12989.8,-10965.4,15014.2,17227.64,110543.2,-93315.55,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2013-14,South Africa,Africa,5074.0,6075.0,-1001.0,11149.0,30697.7,36753.75,-6056.05,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2014-15,South Africa,Africa,5411.8,6569.9,-1158.1,11981.7,33850.81,41094.72,-7243.92,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2015-16,South Africa,Africa,5749.6,7064.8,-1315.2,12814.4,37142.42,45638.61,-8496.19,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2016-17,South Africa,Africa,6087.4,7559.7,-1472.3,13647.1,40572.52,50385.4,-9812.88,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2017-18,South Africa,Africa,6425.2,8054.6,-1629.4,14479.8,44141.12,55335.1,-11193.98,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2018-19,South Africa,Africa,6763.0,8549.5,-1786.5,15312.5,47848.22,60487.71,-12639.49,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2019-20,South Africa,Africa,7100.8,9044.4,-1943.6,16145.2,51693.82,65843.23,-14149.41,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2020-21,South Africa,Africa,6694.74,8585.37,-1890.63,15280.11,50110.13,64261.49,-14151.37,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2021-22,South Africa,Africa,10109.32,13044.46,-2935.14,23153.78,77740.67,100311.9,-22571.23,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2022-23,South Africa,Africa,8114.2,10529.1,-2414.9,18643.3,64061.61,83127.24,-19065.64,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2023-24,South Africa,Africa,8452.0,11024.0,-2572.0,19476.0,68461.2,89294.4,-20833.2,FINAL_RECONCILED,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2024-25,South Africa,Africa,8705.56,11464.96,-2759.4,20170.52,72299.68,95216.49,-22916.82,REVISED_PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/
+2025-26,South Africa,Africa,8874.6,11795.68,-2921.08,20670.28,75522.85,100381.24,-24858.39,PROVISIONAL,"DGCI&S, Ministry of Commerce & Industry, GoI",https://tradestat.commerce.gov.in/eidb/

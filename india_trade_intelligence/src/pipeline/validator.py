@@ -218,3 +218,91 @@ class TradeDataValidator:
             report.passed_checks.append("Monthly merchandise balance identity confirmed.")
 
         return report
+
+    @staticmethod
+    def validate_commodity_price_quantity(df: pd.DataFrame) -> ValidationReport:
+        """Validates commodity price-quantity and unit-value decomposition dataset."""
+        report = ValidationReport(dataset_name="Commodity Price-Quantity Decomposition", total_records=len(df))
+        required = ["financial_year", "commodity_group", "trade_flow", "value_usd_million", "quantity", "unit_value_usd_per_unit"]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+
+        # Non-negativity check
+        if (df["value_usd_million"] < 0).any() or (df["quantity"] < 0).any() or (df["unit_value_usd_per_unit"] < 0).any():
+            report.is_valid = False
+            report.failed_checks.append("Negative value, quantity, or unit value detected.")
+        else:
+            report.passed_checks.append("Non-negativity verified for price-quantity series.")
+
+        return report
+
+    @staticmethod
+    def validate_energy_commodity_exposure(df: pd.DataFrame) -> ValidationReport:
+        """Validates energy and strategic commodity exposure metrics."""
+        report = ValidationReport(dataset_name="Energy & Commodity Exposure", total_records=len(df))
+        required = ["year", "brent_crude_usd_per_bbl", "indian_basket_crude_usd_per_bbl", "crude_import_bill_usd_billion"]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+
+        # Crude prices non-negativity
+        if (df["brent_crude_usd_per_bbl"] <= 0).any() or (df["indian_basket_crude_usd_per_bbl"] <= 0).any():
+            report.is_valid = False
+            report.failed_checks.append("Non-positive benchmark crude price found.")
+        else:
+            report.passed_checks.append("Benchmark crude prices positive.")
+
+        return report
+
+    @staticmethod
+    def validate_external_sector_macro(df: pd.DataFrame) -> ValidationReport:
+        """Validates external sector and domestic macroeconomic series."""
+        report = ValidationReport(dataset_name="External Sector & Macro Indicators", total_records=len(df))
+        required = ["year", "inr_per_usd_exchange_rate", "fx_reserves_usd_billion", "real_gdp_growth_pct"]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+
+        if (df["inr_per_usd_exchange_rate"] <= 0).any() or (df["fx_reserves_usd_billion"] < 0).any():
+            report.is_valid = False
+            report.failed_checks.append("Invalid exchange rate or FX reserve values detected.")
+        else:
+            report.passed_checks.append("Exchange rates and FX reserves valid.")
+
+        return report
+
+    @staticmethod
+    def validate_trading_partner_conditions(df: pd.DataFrame) -> ValidationReport:
+        """Validates trading partner macroeconomic conditions."""
+        report = ValidationReport(dataset_name="Trading Partner Conditions", total_records=len(df))
+        required = ["year", "partner_name", "real_gdp_growth_pct", "cpi_inflation_pct"]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+        return report
+
+    @staticmethod
+    def validate_trade_policy_events(df: pd.DataFrame) -> ValidationReport:
+        """Validates trade policy and geopolitical events catalog."""
+        report = ValidationReport(dataset_name="Trade Policy Events", total_records=len(df))
+        required = ["event_id", "effective_date", "title", "category", "verification_status"]
+        missing = [c for c in required if c not in df.columns]
+        if missing:
+            report.is_valid = False
+            report.failed_checks.append(f"Missing required columns: {missing}")
+            return report
+        report.passed_checks.append("Schema check passed.")
+        return report

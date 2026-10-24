@@ -438,3 +438,248 @@ def plot_commodity_basket_comparison(basket_start: Dict[str, Any], basket_curren
     layout["height"] = 420
     fig.update_layout(layout)
     return fig
+
+
+def plot_price_quantity_decomposition(df_decomp: pd.DataFrame, commodity: str, flow: str = "Export") -> go.Figure:
+    """Plots log-additive Price vs Quantity decomposition and Unit Value trajectory."""
+    df_sub = df_decomp[(df_decomp["commodity_group"] == commodity) & (df_decomp["trade_flow"] == flow)].copy()
+    if df_sub.empty:
+        df_sub = df_decomp[df_decomp["trade_flow"] == flow].copy()
+
+    fig = go.Figure()
+    if not df_sub.empty:
+        # Grouped bar of Price Effect vs Quantity Effect
+        fig.add_trace(go.Bar(
+            x=df_sub["financial_year"],
+            y=df_sub.get("price_effect_log_pct", [0]*len(df_sub)),
+            name="Price (Unit Value) Effect (%)",
+            marker_color=COLOR_ACCENT,
+            opacity=0.85,
+            hovertemplate="<b>%{x}</b><br>Price Effect: %{y:.1f}%<extra></extra>"
+        ))
+        fig.add_trace(go.Bar(
+            x=df_sub["financial_year"],
+            y=df_sub.get("quantity_effect_log_pct", [0]*len(df_sub)),
+            name="Quantity (Volume) Effect (%)",
+            marker_color=COLOR_EXPORTS if flow == "Export" else COLOR_IMPORTS,
+            opacity=0.85,
+            hovertemplate="<b>%{x}</b><br>Quantity Effect: %{y:.1f}%<extra></extra>"
+        ))
+        # Total Value YoY Growth Line
+        if "value_growth_pct" in df_sub.columns:
+            fig.add_trace(go.Scatter(
+                x=df_sub["financial_year"],
+                y=df_sub["value_growth_pct"],
+                name="Total Value Growth (%)",
+                mode="lines+markers",
+                line=dict(color=COLOR_BALANCE, width=2.5, dash="solid"),
+                marker=dict(size=6, color=COLOR_BALANCE),
+                hovertemplate="<b>%{x}</b><br>Value Growth: %{y:.1f}%<extra></extra>"
+            ))
+
+    layout = get_base_layout(f"Price vs Quantity Decomposition: {commodity} ({flow})", height=450)
+    layout["barmode"] = "group"
+    layout["yaxis"]["title"] = "Annual Growth / Decomposition (%)"
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_energy_exposure_trajectory(df_energy: pd.DataFrame) -> go.Figure:
+    """Plots Brent vs Indian Basket Crude pricing and Net Petroleum Bill."""
+    fig = go.Figure()
+
+    if not df_energy.empty:
+        # Brent Benchmark Line
+        fig.add_trace(go.Scatter(
+            x=df_energy["year"],
+            y=df_energy["brent_crude_usd_bbl"],
+            name="Brent Crude ($/bbl)",
+            mode="lines+markers",
+            line=dict(color=COLOR_ACCENT, width=2.8),
+            marker=dict(size=5, color=COLOR_ACCENT),
+            hovertemplate="<b>%{x}</b><br>Brent: $%{y:.1f}/bbl<extra></extra>"
+        ))
+        # Indian Basket Crude Line
+        fig.add_trace(go.Scatter(
+            x=df_energy["year"],
+            y=df_energy["indian_basket_crude_usd_bbl"],
+            name="Indian Basket Crude ($/bbl)",
+            mode="lines+markers",
+            line=dict(color=COLOR_EXPORTS, width=2.8),
+            marker=dict(size=5, color=COLOR_EXPORTS),
+            hovertemplate="<b>%{x}</b><br>Indian Basket: $%{y:.1f}/bbl<extra></extra>"
+        ))
+        # Net Petroleum Import Bill Bar
+        fig.add_trace(go.Bar(
+            x=df_energy["year"],
+            y=df_energy["net_petroleum_import_bill_usd_b"],
+            name="Net Petroleum Bill ($B)",
+            marker_color=COLOR_DEFICIT,
+            opacity=0.75,
+            yaxis="y2",
+            hovertemplate="<b>%{x}</b><br>Net Oil Bill: $%{y:.1f}B<extra></extra>"
+        ))
+
+    layout = get_base_layout("Energy Exposure: Global Crude Benchmarks vs Net Petroleum Bill", height=480)
+    layout["yaxis"]["title"] = "Crude Oil Benchmark ($/bbl)"
+    layout["yaxis2"] = dict(
+        title="Net Oil Bill (US$ Billion)",
+        overlaying="y",
+        side="right",
+        showgrid=False,
+        color=TEXT_MUTED,
+        tickfont=dict(color=TEXT_MUTED, size=11)
+    )
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_external_sector_dashboard(df_ext: pd.DataFrame) -> go.Figure:
+    """Plots FX Reserves buffer and Current Account Deficit (% GDP)."""
+    fig = go.Figure()
+
+    if not df_ext.empty:
+        # FX Reserves Line
+        fig.add_trace(go.Scatter(
+            x=df_ext["year"],
+            y=df_ext["foreign_exchange_reserves_usd_b"],
+            name="FX Reserves ($B)",
+            mode="lines+markers",
+            fill="tozeroy",
+            fillcolor="rgba(56, 189, 248, 0.15)",
+            line=dict(color=COLOR_EXPORTS, width=3.0),
+            marker=dict(size=5, color=COLOR_EXPORTS),
+            hovertemplate="<b>%{x}</b><br>FX Reserves: $%{y:.1f}B<extra></extra>"
+        ))
+        # Inward Remittances Line
+        if "inward_remittances_usd_b" in df_ext.columns:
+            fig.add_trace(go.Scatter(
+                x=df_ext["year"],
+                y=df_ext["inward_remittances_usd_b"],
+                name="Inward Remittances ($B)",
+                mode="lines+markers",
+                line=dict(color=COLOR_BALANCE, width=2.5, dash="dot"),
+                marker=dict(size=4, color=COLOR_BALANCE),
+                hovertemplate="<b>%{x}</b><br>Remittances: $%{y:.1f}B<extra></extra>"
+            ))
+        # Current Account Deficit (% GDP) Bar
+        colors = [COLOR_BALANCE if val >= 0 else COLOR_DEFICIT for val in df_ext["current_account_deficit_pct_gdp"]]
+        fig.add_trace(go.Bar(
+            x=df_ext["year"],
+            y=df_ext["current_account_deficit_pct_gdp"],
+            name="CAD (% of GDP)",
+            marker_color=colors,
+            opacity=0.8,
+            yaxis="y2",
+            hovertemplate="<b>%{x}</b><br>CAD: %{y:.1f}% of GDP<extra></extra>"
+        ))
+
+    layout = get_base_layout("External Sector Resilience: FX Reserves & Current Account Deficit", height=480)
+    layout["yaxis"]["title"] = "Foreign Exchange Reserves (US$ Billion)"
+    layout["yaxis2"] = dict(
+        title="Current Account Deficit (% of GDP)",
+        overlaying="y",
+        side="right",
+        showgrid=False,
+        color=TEXT_MUTED,
+        tickfont=dict(color=TEXT_MUTED, size=11)
+    )
+    # Add horizontal warning line for CAD threshold at -2.5%
+    fig.add_hline(y=-2.5, line_dash="dash", line_color=COLOR_DEFICIT, line_width=1.5, yref="y2",
+                  annotation_text="Vulnerability Threshold (-2.5%)", annotation_position="bottom right",
+                  annotation_font=dict(size=10, color=COLOR_DEFICIT))
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_partner_macro_matrix(df_partners: pd.DataFrame, year: int = 2024) -> go.Figure:
+    """Plots Partner GDP Growth (%) and Manufacturing PMI across key trading partners."""
+    df_yr = df_partners[df_partners["year"] == year].copy()
+    if df_yr.empty and not df_partners.empty:
+        df_yr = df_partners[df_partners["year"] == df_partners["year"].max()].copy()
+
+    fig = go.Figure()
+    if not df_yr.empty:
+        fig.add_trace(go.Bar(
+            x=df_yr["country_name"],
+            y=df_yr["real_gdp_growth_pct"],
+            name="Real GDP Growth (%)",
+            marker_color=COLOR_TEAL,
+            opacity=0.85,
+            hovertemplate="<b>%{x}</b><br>GDP Growth: %{y:.1f}%<extra></extra>"
+        ))
+        fig.add_trace(go.Bar(
+            x=df_yr["country_name"],
+            y=df_yr["manufacturing_pmi"],
+            name="Manufacturing PMI (50=Neutral)",
+            marker_color=COLOR_PURPLE,
+            opacity=0.85,
+            yaxis="y2",
+            hovertemplate="<b>%{x}</b><br>Mfg PMI: %{y:.1f}<extra></extra>"
+        ))
+
+    layout = get_base_layout(f"Top Trading Partner Demand Conditions ({year})", height=420)
+    layout["barmode"] = "group"
+    layout["yaxis"]["title"] = "Real GDP Growth Rate (%)"
+    layout["yaxis2"] = dict(
+        title="Manufacturing PMI (Diffusion Index)",
+        overlaying="y",
+        side="right",
+        range=[40, 60],
+        showgrid=False,
+        color=TEXT_MUTED,
+        tickfont=dict(color=TEXT_MUTED, size=11)
+    )
+    fig.add_hline(y=50.0, line_dash="dot", line_color="#94a3b8", line_width=1.5, yref="y2",
+                  annotation_text="PMI Neutral (50.0)", annotation_position="top left",
+                  annotation_font=dict(size=10, color="#94a3b8"))
+    fig.update_layout(layout)
+    return fig
+
+
+def plot_economic_risk_gauges(df_risk: pd.DataFrame) -> go.Figure:
+    """Plots Single-Supplier Critical Import Dependencies against the risk threshold."""
+    if df_risk.empty:
+        return go.Figure()
+
+    latest_fy = df_risk["financial_year"].max()
+    row = df_risk[df_risk["financial_year"] == latest_fy].iloc[0]
+
+    items = [
+        "China APIs (Pharma)",
+        "China Solar Cells & Modules",
+        "Australia Coking Coal",
+        "Russia Crude Oil",
+        "Switzerland Gold",
+        "Russia/Saudi Fertilisers"
+    ]
+    shares = [
+        row.get("api_china_share_pct", 68.0),
+        row.get("solar_cells_china_share_pct", 62.0),
+        row.get("coking_coal_australia_share_pct", 52.0),
+        row.get("crude_oil_russia_share_pct", 36.8),
+        row.get("gold_switzerland_share_pct", 38.0),
+        row.get("fertiliser_top_supplier_share_pct", 31.5)
+    ]
+    colors = [COLOR_DEFICIT if s >= 50.0 else COLOR_ACCENT for s in shares]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=items,
+        x=shares,
+        orientation="h",
+        marker_color=colors,
+        text=[f"{s:.1f}%" for s in shares],
+        textposition="auto",
+        hovertemplate="<b>%{y}</b>: %{x:.1f}% of total Indian imports<extra></extra>"
+    ))
+
+    layout = get_base_layout(f"Single-Supplier Critical Import Dependency Shares ({latest_fy})", height=420)
+    layout["xaxis"]["title"] = "Dominant Supplier Share of Indian Inward Volume (%)"
+    layout["xaxis"]["range"] = [0, 80]
+    fig.add_vline(x=50.0, line_dash="dash", line_color=COLOR_DEFICIT, line_width=1.8,
+                  annotation_text="High Dependency Threshold (50%)", annotation_position="top right",
+                  annotation_font=dict(size=10, color=COLOR_DEFICIT))
+    fig.update_layout(layout)
+    return fig
+

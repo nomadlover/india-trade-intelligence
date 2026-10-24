@@ -216,3 +216,38 @@ class TradeDataFetcher:
         if not filepath.exists():
             raise FileNotFoundError(f"Missing raw RBI monthly trade file at {filepath}")
         return pd.read_csv(filepath)
+
+    def load_raw_commodity_price_quantity(self) -> pd.DataFrame:
+        """Loads raw commodity price, quantity, and unit-value decomposition dataset."""
+        filepath = self.raw_dir / "commodity_price_quantity.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw commodity price-quantity file at {filepath}")
+        return pd.read_csv(filepath)
+
+    def load_raw_energy_commodity_exposure(self) -> pd.DataFrame:
+        """Loads raw energy and strategic commodity exposure dataset."""
+        filepath = self.raw_dir / "energy_commodity_exposure.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw energy commodity exposure file at {filepath}")
+        return pd.read_csv(filepath)
+
+    def load_raw_external_sector_macro(self) -> pd.DataFrame:
+        """Loads raw external sector and domestic macroeconomic indicators dataset."""
+        filepath = self.raw_dir / "external_sector_macro.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw external sector macro file at {filepath}")
+        return pd.read_csv(filepath)
+
+    def load_raw_trading_partner_conditions(self) -> pd.DataFrame:
+        """Loads raw trading partner macroeconomic conditions dataset."""
+        filepath = self.raw_dir / "trading_partner_conditions.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw partner conditions file at {filepath}")
+        return pd.read_csv(filepath)
+
+    def load_raw_trade_policy_events(self) -> pd.DataFrame:
+        """Loads raw structured trade policy and geopolitical events dataset."""
+        filepath = self.raw_dir / "trade_policy_events.csv"
+        if not filepath.exists():
+            raise FileNotFoundError(f"Missing raw trade policy events file at {filepath}")
+        return pd.read_csv(filepath)

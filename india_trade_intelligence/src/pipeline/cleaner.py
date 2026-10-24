@@ -137,3 +137,82 @@ class TradeDataCleaner:
         df.to_csv(output_path, index=False)
         logger.info(f"Saved cleaned monthly trade to {output_path}")
         return df
+
+    def clean_commodity_price_quantity(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans and standardizes commodity price-quantity and unit-value decomposition data."""
+        df = df_raw.copy()
+        df["fy_start_year"] = df["financial_year"].apply(lambda x: int(x.split("-")[0]))
+        df["fy_end_year"] = df["fy_start_year"] + 1
+        df["value_usd_billion"] = df["value_usd_million"] / 1000.0
+        df["unit_of_measure"] = df["unit_of_measurement"]
+        df["unit_value_usd"] = df["unit_value_usd_per_unit"]
+        
+        df = df.sort_values(by=["financial_year", "trade_flow", "value_usd_million"], ascending=[True, True, False]).reset_index(drop=True)
+        output_path = self.processed_dir / "commodity_price_quantity_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned commodity price-quantity data to {output_path}")
+        return df
+
+    def clean_energy_commodity_exposure(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans energy, crude benchmarks, and strategic commodity exposure data."""
+        df = df_raw.copy().sort_values("year").reset_index(drop=True)
+        
+        # Calculate derived energy exposure ratios and standardize aliases
+        df["brent_crude_usd_bbl"] = df["brent_crude_usd_per_bbl"]
+        df["indian_basket_crude_usd_bbl"] = df["indian_basket_crude_usd_per_bbl"]
+        df["crude_oil_import_volume_mmt"] = df["crude_import_quantity_mmt"]
+        df["gross_crude_oil_imports_usd_b"] = df["crude_import_bill_usd_billion"]
+        df["petroleum_product_exports_usd_b"] = df["petroleum_product_export_usd_billion"]
+
+        if "crude_import_bill_usd_billion" in df.columns and "petroleum_product_export_usd_billion" in df.columns:
+            df["net_petroleum_import_bill_usd_billion"] = (df["crude_import_bill_usd_billion"] - df["petroleum_product_export_usd_billion"]).round(2)
+            df["net_petroleum_import_bill_usd_b"] = df["net_petroleum_import_bill_usd_billion"]
+        
+        output_path = self.processed_dir / "energy_commodity_exposure_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned energy commodity exposure to {output_path}")
+        return df
+
+    def clean_external_sector_macro(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans external sector and macroeconomic indicators."""
+        df = df_raw.copy().sort_values("year").reset_index(drop=True)
+        
+        output_path = self.processed_dir / "external_sector_macro_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned external sector macro to {output_path}")
+        return df
+
+    def clean_trading_partner_conditions(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans trading partner macroeconomic conditions."""
+        df = df_raw.copy()
+        partner_iso = {
+            "United States": "USA",
+            "China": "CHN",
+            "United Arab Emirates": "ARE",
+            "European Union": "EUU"
+        }
+        df["iso3"] = df["partner_name"].map(partner_iso).fillna("OTH")
+        df["country_name"] = df["partner_name"]
+        df["policy_interest_rate_pct"] = df["central_bank_policy_rate_pct"]
+        df["manufacturing_pmi"] = df["manufacturing_pmi_avg"]
+        df = df.sort_values(by=["partner_name", "year"]).reset_index(drop=True)
+        
+        output_path = self.processed_dir / "trading_partner_conditions_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned trading partner conditions to {output_path}")
+        return df
+
+    def clean_trade_policy_events(self, df_raw: pd.DataFrame) -> pd.DataFrame:
+        """Cleans and verifies structured trade policy and geopolitical events."""
+        df = df_raw.copy()
+        df["effective_date_dt"] = pd.to_datetime(df["effective_date"])
+        df["event_name"] = df["title"]
+        df["official_circular_ref"] = df["official_source"]
+        df["economic_significance"] = df["summary_description"]
+        df["empirical_verification_status"] = df["verification_status"]
+        df = df.sort_values("effective_date_dt", ascending=False).reset_index(drop=True)
+        
+        output_path = self.processed_dir / "trade_policy_events_cleaned.csv"
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved cleaned trade policy events to {output_path}")
+        return df
